@@ -1,0 +1,9 @@
+# Standard packages used by all of our Django applications.
+Django==5.2.10
+django-bootstrap5==25.1
+psycopg==3.2.9
+gunicorn==23.0.0
+whitenoise==6.9.0
+
+# Add optional packages below.
+# django-simple-history==3.8.0 

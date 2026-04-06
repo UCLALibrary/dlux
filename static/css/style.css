@@ -1,0 +1,14 @@
+.checkbox-bold {
+  border: 2px solid var(--bs-gray-600);
+}
+
+#table-container td {
+  word-break: break-all;
+}
+
+/* Used to add an asterisk on label
+for required input fields*/
+label.required-field-label::after {
+  content: " *";
+  color: red;
+}

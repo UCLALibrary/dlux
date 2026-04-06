@@ -1,0 +1,46 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<nav class="navbar navbar-expand-lg p-2">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'default_view' %}">Home</a>
+                </li>
+            </ul>
+
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">Account</a>
+
+                <ul class="dropdown-menu dropdown-menu-md-end">
+                    <li>
+                        <a class="dropdown-item" href="/admin/">Admin Console</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/logs/">Logs</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/release_notes/">Release Notes</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <form class="d-inline" method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-default dropdown-item">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="h-100 d-flex justify-content-center align-items-center">
+    <div class="container w-50 p-5 bg-light rounded shadow-sm border">
+        <h1>Log In</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form layout="horizontal" %}
+            {% bootstrap_button button_type="submit" content="Log In" %}
+        </form>
+    </div>
+</div>
+{% endblock %}

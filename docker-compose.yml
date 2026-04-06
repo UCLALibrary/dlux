@@ -1,0 +1,27 @@
+# Docker-compose file for local development
+services:
+  django:
+    build: .
+    volumes:
+      - .:/home/django/django_app
+    env_file:
+      - path: .docker-compose_django.env
+        required: true
+      - path: .docker-compose_db.env
+        required: true
+      # Local development only, can be optional
+      - path: .docker-compose_local_secrets.env
+        required: false
+    ports:
+      # Variables here must be set in environment, or in .env - not in any env_file
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:16
+    env_file:
+      - .docker-compose_db.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+volumes:
+  pg_data:

@@ -1,0 +1,34 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUR APPLICATION TITLE HERE</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <!-- HTMX -->
+    <script src="{% static 'js/htmx-v1.9.12.min.js' %}" defer></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+</head>
+
+<body class="container-fluid h-100 d-flex flex-column gap-2">
+    <header class="flex-shrink-0">
+        {% if not request.resolver_match.view_name == 'login' %}
+        {% include 'partials/navbar.html' %}
+        {% endif %}
+    </header>
+
+    <main class="flex-grow-1">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>
