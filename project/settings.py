@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_bootstrap5",
-    "my_app_name",
+    "dlux",
 ]
 
 MIDDLEWARE = [

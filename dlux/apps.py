@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MyAppNameConfig(AppConfig):
+class DluxConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'my_app_name'
+    name = 'dlux'

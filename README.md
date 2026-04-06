@@ -1,59 +1,5 @@
-# systems-django-template
-Template repository for Systems Team Django projects
-
-## Template Instructions
-Use this template repository to create repositories for real Django applications.
-
-Then, in the real application repo, delete this template info from `README.md` and edit the below 
-to fill in specifics for your new application.
-
-## First-Time Setup
-This requires Github permissions to create a repository, normally reserved for DIIT Github admins.
-Once the new repo is created and changes pushed to main (see below), it's ready for all developers
-to begin contributing as usual.
-
-1. Create a new Github repository, using this as the template.
-2. Clone the new repository to your local machine.
-3. Go into the top-level directory of the newly-cloned repository.
-4. Build the image.
-5. Run the script to rename the template application to your desired real application name.
-6. Add, commit, and push the changes.
-7. Start the application and confirm you have a running Django system.
-
-```
-# 1: Create repository, via Github. For this example, the new repo is my-example-repo-name.
-
-# 2: Clone the new repo.
-git clone git@github.com:UCLALibrary/my-example-repo-name.git
-
-# 3: Go into the top-level directory of the new repo.
-cd my-example-repo-name
-
-# 4: Build the image.
-docker compose build
-
-# 5: Run the script to rename the template app.  For this example, the new app is my_real_app.
-docker compose run django python set_app_name.py --new_app_name my_real_app
-
-Changed my_app_name to my_real_app in my_app_name/apps.py
-Changed MyAppName to MyRealApp in my_app_name/apps.py
-Changed my_app_name to my_real_app in project/urls.py
-Changed my_app_name to my_real_app in project/settings.py
-Renamed directory my_app_name to my_real_app
-
-# 6: Add, commit and push the changes.
-git add .
-git commit -m "Initial configuration of my_app_name"
-git push origin main
-
-# 7: Start the application and confirm you have a running Django system.
-# http://127.0.0.1:8000/ should show an empty screen, with Home on the left and
-# Account drop-down list on the right.  Everything should work.  Admin access
-# via Account -> Admin console requires login, with admin/admin the default local credentials.
-```
-
-# your-repository-name
-This is a Django application for .......
+# DLux
+This is a Django application for managing digital library metadata.
 
 ## Developer Information
 
@@ -69,8 +15,8 @@ This project comes with a basic dev container definition, in `.devcontainer/devc
 and may work with other IDEs like PyCharm.  For VS Code, it also installs the Python, Black (formatter), and Flake8 (linter)
 extensions.
 
-When prompted by VS Code, click "Reopen in container".  This will (re)build the Django container, `your-repository-name-django`. It will also
-(re)build a copy of that container, `vsc-your-repository-name-<long_hash>-uid`, install VS Code development tools & extensions within that container,
+When prompted by VS Code, click "Reopen in container".  This will (re)build the Django container, `dlux-django`. It will also
+(re)build a copy of that container, `vsc-dlux-<long_hash>-uid`, install VS Code development tools & extensions within that container,
 and start the `docker compose` system.  VS Code will be connected to the Django container, with all code available for editing in that context.
 
 The project's directory is available within the container at `/home/django/django_app`.
