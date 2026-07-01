@@ -14,8 +14,16 @@
 			],
 			"settings": {
 				"editor.formatOnSave": true,
-				"python.analysis.typeCheckingMode": "off", // use mypy instead
-				"editor.defaultFormatter": "charliermarsh.ruff"
+				"python.analysis.typeCheckingMode": "basic", // fallback for things that silently crash mypy
+				"ruff.configurationPreference": "filesystemFirst",
+				"ruff.enable": true,
+				"[python]": {
+					"editor.codeActionsOnSave": {
+						"source.fixAll": "explicit",
+						"source.organizeImports": "never"  // ruff handles it
+					},
+					"editor.defaultFormatter": "charliermarsh.ruff"
+				}
 			}
 		}
 	},
