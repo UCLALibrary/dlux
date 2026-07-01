@@ -1,7 +1,12 @@
 # Docker-compose file for local development
 services:
   django:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        - DJANGO_UID=${DJANGO_UID:-1000}
     volumes:
       - .:/home/django/django_app
     env_file:
@@ -16,12 +21,22 @@ services:
       # Variables here must be set in environment, or in .env - not in any env_file
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+
   db:
     image: postgres:16
     env_file:
       - .docker-compose_db.env
     volumes:
       - pg_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U django_db -d django_db"]
+      interval: 1s
+      timeout: 1s
+      retries: 5
+      start_period: 1s
+
+
 volumes:
   pg_data:

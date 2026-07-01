@@ -1,0 +1,12 @@
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".vscode"]
+line-length = 100
+# Assume Python 3.13
+target-version = "py313"
+
+[lint]
+select = [
+    "ANN",  # flake8-annotations 
+    "E501", # line-too-long
+    "F401", # unused imports
+    "I",    # import sorting
+]

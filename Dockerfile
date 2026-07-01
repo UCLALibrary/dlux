@@ -1,16 +1,18 @@
-FROM python:3.13-slim-bookworm
+FROM python:3.13-slim-bookworm AS base
 
-RUN apt-get update
+ARG DJANGO_UID=1000
 
 # Set correct timezone
 RUN ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 
-# Install dependencies needed to build psycopg python module, for
-# connection to our standard postgresql databases.
-RUN apt-get install -y gcc python3-dev libpq-dev
 
 # Create django user
-RUN useradd -c "django app user" -d /home/django -s /bin/bash -m django
+RUN useradd --comment "django app user" \
+            --home-dir /home/django \
+            --shell /bin/bash \
+            --uid ${DJANGO_UID} \
+            --create-home \
+            django
 
 # Switch to application directory, creating it if needed
 WORKDIR /home/django/django_app
@@ -39,3 +41,16 @@ EXPOSE 8000
 
 # When container starts, run script for environment-specific actions
 CMD [ "sh", "docker_scripts/entrypoint.sh" ]
+
+
+FROM base AS dev
+
+RUN pip install --no-cache-dir -r requirements-dev.txt --user --no-warn-script-location
+ENV DJANGO_RUN_ENV=dev
+
+
+# put prod last to make it the default build
+FROM base AS prod
+
+ENV DJANGO_RUN_ENV=prod
+

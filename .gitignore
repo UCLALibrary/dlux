@@ -207,6 +207,9 @@ marimo/_lsp/
 __marimo__/
 
 ##### START LOCAL CHANGES #####
+
+.DS_Store
+
 # Local secrets
 *password*
 *secret*

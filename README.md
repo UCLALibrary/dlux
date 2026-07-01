@@ -12,8 +12,12 @@ The development environment requires:
 #### Dev container
 
 This project comes with a basic dev container definition, in `.devcontainer/devcontainer.json`. It's known to work with VS Code,
-and may work with other IDEs like PyCharm.  For VS Code, it also installs the Python, Black (formatter), and Flake8 (linter)
-extensions.
+and may work with other IDEs like PyCharm.  For VS Code, it also installs the following extensions:
+- Python
+- ruff (formatter and linter)
+- mypy (type checker)
+- tamasfe.even-better-toml (linter for toml config files)
+- redhat.vscode-yaml (schema-aware yaml linter)
 
 When prompted by VS Code, click "Reopen in container".  This will (re)build the Django container, `dlux-django`. It will also
 (re)build a copy of that container, `vsc-dlux-<long_hash>-uid`, install VS Code development tools & extensions within that container,
@@ -35,7 +39,7 @@ The container runs via `docker_scripts/entrypoint.sh`, which
 * Waits for the database to be completely available.  This can take 5-10 seconds, depending on your hardware.
 * Applies any pending migrations (DEV environment only).
 * Creates a generic Django superuser, if one does not already exist (DEV environment only).
-* Loads fixtures to populate lookup tables and to add a few sample records.
+<!-- * Loads fixtures to populate lookup tables and to add a few sample records. -->
 * Starts the Django application server.
 
 ## Setup

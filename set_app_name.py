@@ -10,9 +10,7 @@ def _get_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Rename a template Django application to a real name."
     )
-    parser.add_argument(
-        "--new_app_name", help="New name for the Django application", required=True
-    )
+    parser.add_argument("--new_app_name", help="New name for the Django application", required=True)
     return parser.parse_args()
 
 
@@ -61,9 +59,7 @@ def main() -> None:
             if search_text in file_contents:
                 file_contents = file_contents.replace(search_text, replace_text)
                 changed = True
-                messages.append(
-                    f"Changed {search_text} to {replace_text} in {python_file}"
-                )
+                messages.append(f"Changed {search_text} to {replace_text} in {python_file}")
         if changed:
             python_file.write_text(file_contents, encoding="utf-8")
     for message in messages:
