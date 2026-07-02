@@ -1,5 +1,0 @@
-Django==5.2.15
-django-bootstrap5==26.2
-psycopg[binary]==3.3.4
-gunicorn==26.0.0
-whitenoise==6.12.0

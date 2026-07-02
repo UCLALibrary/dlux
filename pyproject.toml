@@ -1,0 +1,39 @@
+[project]
+name = "dlux"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "django>=5.2.15,<6",
+    "django-bootstrap5>=26.2",
+    "gunicorn>=26.0.0",
+    "psycopg[binary]>=3.3.4",
+    "whitenoise>=6.12.0",
+]
+
+[dependency-groups]
+dev = ["django-stubs[compatible-mypy]>=6.0.6", "mypy>=2.1.0", "ruff>=0.15.20"]
+
+[tool.ruff]
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".vscode"]
+line-length = 100
+# Assume Python 3.13
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "ANN",  # flake8-annotations 
+    "E501", # line-too-long
+    "F401", # unused imports
+    "I",    # import sorting
+]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+strict = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+
+[tool.django-stubs]
+django_settings_module = "project.settings"
