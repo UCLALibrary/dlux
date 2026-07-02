@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG")
+DEBUG: bool | str | None = os.getenv("DJANGO_DEBUG")
 # Helm charts pass "false" instead of Python False, and
 # Python "false" is True...
 if DEBUG in ["false", "False"]:

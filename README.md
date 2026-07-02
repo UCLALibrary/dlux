@@ -12,12 +12,20 @@ The development environment requires:
 #### Dev container
 
 This project comes with a basic dev container definition, in `.devcontainer/devcontainer.json`. It's known to work with VS Code,
-and may work with other IDEs like PyCharm.  For VS Code, it also installs the Python, Black (formatter), and Flake8 (linter)
-extensions.
+and may work with other IDEs like PyCharm.  For VS Code, it also installs the following extensions:
+- Python
+- ruff (formatter and linter)
+- mypy (type checker)
+- tamasfe.even-better-toml (linter for toml config files)
+- redhat.vscode-yaml (schema-aware yaml linter)
 
 When prompted by VS Code, click "Reopen in container".  This will (re)build the Django container, `dlux-django`. It will also
 (re)build a copy of that container, `vsc-dlux-<long_hash>-uid`, install VS Code development tools & extensions within that container,
 and start the `docker compose` system.  VS Code will be connected to the Django container, with all code available for editing in that context.
+
+##### Problems
+* If VS Code says "No Python found" and offers to have `uv` install it, click either "Don't ask me any more" (or similar), or "No/Cancel".  The combination of VS Code + `uv` + dev containers can cause this.  Python is present in the container, which is what matters here.
+* If running on Linux / WSL, starting the system via `docker compose up` for the first time will create a `.venv` directory in your local project folder. This `.venv` directory may be owned by `root`.  This is caused by the anonymous `VOLUME` specified in the `Dockerfile`.  This is harmless, but may be annoying; if so, `chown your_user:your_user .venv` will fix it, and the permissions should not revert to `root` on subsequent runs.
 
 The project's directory is available within the container at `/home/django/django_app`.
 
@@ -35,7 +43,7 @@ The container runs via `docker_scripts/entrypoint.sh`, which
 * Waits for the database to be completely available.  This can take 5-10 seconds, depending on your hardware.
 * Applies any pending migrations (DEV environment only).
 * Creates a generic Django superuser, if one does not already exist (DEV environment only).
-* Loads fixtures to populate lookup tables and to add a few sample records.
+<!-- * Loads fixtures to populate lookup tables and to add a few sample records. -->
 * Starts the Django application server.
 
 ## Setup

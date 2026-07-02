@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class DluxConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'dlux'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "dlux"
