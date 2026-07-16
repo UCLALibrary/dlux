@@ -13,10 +13,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["django-stubs[compatible-mypy]>=6.0.6", "mypy>=2.1.0", "ruff>=0.15.20"]
+dev = ["django-types>=0.24.0", "pyright>=1.1.411", "ruff>=0.15.20"]
 
 [tool.ruff]
-exclude = [".git", ".mypy_cache", ".ruff_cache", ".vscode"]
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".vscode", "**/migrations/*"]
 line-length = 100
 # Assume Python 3.13
 target-version = "py313"
