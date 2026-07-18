@@ -23,10 +23,19 @@ target-version = "py313"
 
 [tool.ruff.lint]
 select = [
-    "ANN",  # flake8-annotations 
-    "E501", # line-too-long
-    "F401", # unused imports
-    "I",    # import sorting
+    "ANN",  # flake8-annotations https://docs.astral.sh/ruff/rules/#flake8-annotations-ann
+    "D",    # pydocstyle         https://docs.astral.sh/ruff/rules/#pydocstyle-d
+    "E501", # line-too-long      https://docs.astral.sh/ruff/rules/line-too-long/
+    "F401", # unused imports     https://docs.astral.sh/ruff/rules/unused-import/
+    "I",    # import sorting     https://docs.astral.sh/ruff/rules/#isort-i
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests.py" = [
+    "D100", # don't need module-level docstrings in tests per https://google.github.io/styleguide/pyguide.html#3821-test-modules
 ]
 
 [tool.mypy]

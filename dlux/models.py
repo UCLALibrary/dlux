@@ -1,10 +1,23 @@
+"""Django models for dlux.
+
+Our data model is defined in dlux-specific FieldGroup and DluxField objects, which should probably
+be moved outside the standard django file structure. Django models are then created programmatically
+from those objects.
+"""
+
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 from dlux.fields import DluxField, FieldGroup, with_field_groups
 
+#
+#   FieldGroups to define data model (move to another file?)
+#
+
 
 class RequiredFields(FieldGroup):
+    """Required fields for all dlux records."""
+
     ark = DluxField(
         django=models.CharField(unique=True, blank=False, max_length=2000),
         csv=["Item ARK"],
@@ -13,6 +26,11 @@ class RequiredFields(FieldGroup):
 
 
 class BaseWork(FieldGroup):
+    """Base fields to include in any "work-level" record.
+
+    Defines membership in a collection.
+    """
+
     collection = DluxField(
         django=models.ForeignKey(
             "dlux.Collection",
@@ -30,6 +48,11 @@ class BaseWork(FieldGroup):
 
 
 class BaseChildWork(FieldGroup):
+    """Base fields for "child-work-level" records.
+
+    Records defined as ordered children of a particular parent work.
+    """
+
     _constraints = [models.UniqueConstraint(fields=["parent", "order"], name="unique_parent_order")]
 
     parent = DluxField(
@@ -42,6 +65,7 @@ class BaseChildWork(FieldGroup):
         solr=[],
     )
 
+    # there's probably a library out there that we should be using
     order = DluxField(
         django=models.IntegerField(),
         csv=[],
@@ -50,6 +74,9 @@ class BaseChildWork(FieldGroup):
 
 
 class UnsortedFieldsGroup(FieldGroup):
+    """'Kitchen-Sink' style FieldGroup for fields we haven't sorted yet."""
+
+    # move this? should be required for Collection and Work records, maybe optional for ChildWorks?
     title = DluxField(
         django=models.CharField(blank=False, max_length=250),
         csv=["Title"],
@@ -64,7 +91,6 @@ class UnsortedFieldsGroup(FieldGroup):
 
     # TODO: this should be multivalued, but the standard django Arrayfield can't handle 'choices'.
     # this is for demonstration; change to a django_jsonform Arrayfield for the final widget
-
     resource_type = DluxField(
         # ArrayField(
         django=models.CharField(
@@ -99,25 +125,70 @@ class UnsortedFieldsGroup(FieldGroup):
     )
 
 
+#
+#   Django Models
+#
+
+
 @with_field_groups(RequiredFields, UnsortedFieldsGroup)
 class Collection(models.Model):
+    """A dlux collection.
+
+    Record is displayed publicly at https://digital.library.ucla.edu/catalog?f%5Bhas_model_ssim%5D%5B%5D=Collection&view=list
+
+    A dlux Collection is parent to a number of member Works.
+    """
+
+    # manually annotate, since fields added via with_field_groups() are invisible to type checker.
     title: "models.CharField[str]"
 
     def __str__(self) -> str:
+        """Return the record title as a user-friendly representation of the object."""
         return self.title
 
 
 @with_field_groups(RequiredFields, BaseWork, UnsortedFieldsGroup)
 class Work(models.Model):
+    """A dlux work.
+
+    Record is displayed publicly at https://digital.library.ucla.edu/catalog?utf8=✓&view=list&f%5Bhas_model_ssim%5D%5B%5D=Collection&q=&search_field=all_fields
+
+    A dlux Work is a member of a collection and can optionally be parent to a number of ChildWorks.
+    """
+
+    # manually annotate, since fields added via with_field_groups() are invisible to type checker.
     title: "models.CharField[str]"
 
     def __str__(self) -> str:
+        """Return the record title as a user-friendly representation of the object."""
         return self.title
 
 
 @with_field_groups(RequiredFields, BaseChildWork, UnsortedFieldsGroup)
 class ChildWork(models.Model):
-    title: "models.CharField[str]"
+    """A dlux child work: for example a page in a Manuscript.
+
+    Record is not intended to be displayed publicly via its own item page on https://digital.library.ucla.edu
+    (A few old records might currently have accessible item pages, but this is not intended and they
+    are never included in search results.)
+
+    The data is used in the creation of iiif manifests (see https://github.com/uclalibrary/fester),
+    through which they can be browsed in the viewer section of the parent work.
+
+    A dlux ChildWork must be the child of a Work.
+    """
+
+    # manually annotate, since fields added via with_field_groups() are invisible to type checker.
+
+    title: "models.CharField[str]"  # not optional now, but maybe should be?
+    parent: "models.ForeignKey[Work]"
+    order: "models.IntegerField[int]"
 
     def __str__(self) -> str:
-        return self.title
+        """Return a user-friendly representation of the object.
+
+        Representation includes parent record's title, the order within parent record, and the
+        record's own title.
+        """
+        # type annotations get tricky here, even with the manual annotations
+        return f"{self.parent.title} ({self.order}): {self.title}"  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]

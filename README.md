@@ -1,6 +1,85 @@
 # DLux
 This is a Django application for managing digital library metadata.
 
+## System Architecture
+
+-  basics: dlux uses standard Django models to define data types, and the django admin site as the primary management interface. 
+- won't write any views, but will make liberal use of django's admin site customizations. [link to admin site docs] 
+- how it's different: organized first by field
+
+### Field-first organization
+
+Basic Django paradigm: organize first by concern (e.g. MVC: models.py, fields.py, admin.py,)
+
+experience w/ Californica: we work mainly by field, thus a given task requires synchrinizing work across a bunch of files
+
+alternate ways of organizing: react / vue components
+-> still keep javascript, html, and css parts separate (and separate e.g. state from logic within js)
+-> BUT only within a limited-scope component. Easy to jump back and forth between 
+
+### Principles
+
+- define everyting in dluxfield objects, somewhere separate from the typical django models.py, admin.py, etc.
+- most of the attributes of DluxField should be basic Django types, for example Field subclasses, or 
+- in models.py, admin.py, and other django files, programmatically generate everything by combining elements from DluxField
+
+### Implications
+
+#### Type checking / IDE autocompletes
+
+good for typing the basic django types that go into the DluxField objects
+
+won't know attributes of models - for example, won't autocomplete `Work.ti` to `Work.title`. This is actually okay, because we shouldn't actually be referring directly to these in the code! Instead, we should be iterating over DLuxField objects and programmatically creating whatever needs to be created
+
+in the django console, on the other hand, autocompletion is based on Django introspecting the fully created models, so we can use it to explore the actual fields of individual models / records
+
+### Example
+
+models.py:
+```
+from django.db.models import CharField, IntegerField, Model
+from dlux.fields import DluxField, FieldGroup, with_field_groups
+
+# DLux-specific, stuff, organized by fields
+
+class CharacterMetadata(FieldGroup):
+    name = DluxField(
+        django = CharField(max_length=200),
+        csv = ["Name"],
+        solr = ["name_tesi"],
+    )
+
+class MinionMetadata(FieldGroup):
+    n_eyes = DluxField(
+        django = IntegerField(),
+        csv = ["Eyes"],
+        solr = ["eyes_isi"],
+    )
+
+# Create django objects based on the FieldGroup and DluxField objects
+
+@with_field_groups(CharacterMetadata, MinionMetadata)
+class Minion(Model):
+    # Don't need this in practice, only here since we're not in models.py
+    class Meta:
+        app_label="dlux"
+
+```
+
+From the django shell you could then run:
+```
+>>> james = Minion(name="James", n_eyes=1)
+>>> james.name
+"James"
+
+>>> james.n_eyes
+1
+
+>>> james._meta.get_fields()
+(<django.db.models.fields.BigAutoField: id>, <django.db.models.fields.CharField: name>,
+<django.db.models.fields.IntegerField: n_eyes>)
+```
+
 ## Developer Information
 
 ### Overview of environment
@@ -13,9 +92,8 @@ The development environment requires:
 
 This project comes with a basic dev container definition, in `.devcontainer/devcontainer.json`. It's known to work with VS Code,
 and may work with other IDEs like PyCharm.  For VS Code, it also installs the following extensions:
-- Python
+- Python (which includes our type checker, pyright, as part of the pylance language server)
 - ruff (formatter and linter)
-- mypy (type checker)
 - tamasfe.even-better-toml (linter for toml config files)
 - redhat.vscode-yaml (schema-aware yaml linter)
 
