@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from django.contrib.postgres.fields import ArrayField
@@ -8,8 +8,8 @@ from django.db.models.fields import CharField
 
 @dataclass
 class DluxExtra:
-    csv: list[str] = []
-    solr: list[str] = []
+    csv: list[str] = field(default_factory=list[str])
+    solr: list[str] = field(default_factory=list[str])
 
 
 class MappedCharField(CharField):  # pyright: ignore[reportMissingTypeArgument]
