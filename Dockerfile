@@ -46,7 +46,14 @@ CMD [ "sh", "docker_scripts/entrypoint.sh" ]
 FROM base AS dev
 
 USER root
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y \
+    git \
+    openssh-client \
+    ca-certificates \
+    curl \
+    less \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
 USER django
 
 # add the dev requirements
