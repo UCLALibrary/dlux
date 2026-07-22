@@ -5,8 +5,8 @@ from pathlib import Path
 def _get_arguments() -> argparse.Namespace:
     """Parse command line arguments.
 
-    :return: Parsed arguments."""
-
+    :return: Parsed arguments.
+    """
     parser = argparse.ArgumentParser(
         description="Rename a template Django application to a real name."
     )
@@ -20,7 +20,6 @@ def _convert_to_pascal_case(input: str) -> str:
     :param input: Value to be converted.
     :return output: Converted value.
     """
-
     # input may be in snake_case or kebab-case; replace underscores and hyphens with space,
     # temporarily, so words are still separated by spaces.
     tmp = input.replace("_", " ").replace("-", " ")

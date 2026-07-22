@@ -46,9 +46,10 @@ CMD [ "sh", "docker_scripts/entrypoint.sh" ]
 FROM base AS dev
 
 USER root
+# libatomic1 - pyright dependency
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  apt-get update && apt-get install -y git openssh-client
+  apt-get update && apt-get install -y git libatomic1 openssh-client
 USER django
 
 # add the dev requirements
