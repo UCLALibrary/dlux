@@ -5,133 +5,69 @@ be moved outside the standard django file structure. Django models are then crea
 from those objects.
 """
 
-from django.contrib.postgres.fields import ArrayField
-from django.db import models
+from django.db.models import Model, UniqueConstraint
 
-from dlux.fields import DluxField, FieldGroup, with_field_groups
+from dlux import dlux_fields
 
 #
-#   FieldGroups to define data model (move to another file?)
+#   Abstract models define bundles of related fields
 #
 
 
-class RequiredFields(FieldGroup):
-    """Required fields for all dlux records."""
+class BaseDluxRecord(Model):
+    """Base model for all dlux record types.
 
-    ark = DluxField(
-        django=models.CharField(unique=True, blank=False, max_length=2000),
-        csv=["Item ARK"],
-        solr=["ark_ssi"],
-    )
-
-
-class BaseWork(FieldGroup):
-    """Base fields to include in any "work-level" record.
-
-    Defines membership in a collection.
+    Contains universally-required fields and utilities for dlux record models
     """
 
-    collection = DluxField(
-        django=models.ForeignKey(
-            "dlux.Collection",
-            on_delete=models.PROTECT,
-            related_name="works",
-        ),
-        csv=["Parent ARK"],
-        solr=[
-            # TODO add a hook so we can look up titles, create ursus IDs
-            "dlcs_collection_name_tesim",
-            "member_of_collection_ids_ssim",
-            "member_of_collections_ssim",
-        ],
-    )
+    class Meta:
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+        constraints = [
+            UniqueConstraint(fields=["ark"], name="%(app_label)s_%(class)s_test_constraint")
+        ]
+
+    ark = dlux_fields.ark.django
+
+    @classmethod
+    def get_dlux_fields(cls, include_parents: bool = True) -> list[dlux_fields.DluxField]:
+        """Return the original DluxField objects for a record's fields."""
+        return [
+            getattr(dlux_fields, field.name)
+            for field in cls._meta.get_fields(include_parents=include_parents)
+            if isinstance(getattr(dlux_fields, field.name, None), dlux_fields.DluxField)
+        ]
 
 
-class BaseChildWork(FieldGroup):
-    """Base fields for "child-work-level" records.
-
-    Records defined as ordered children of a particular parent work.
-    """
-
-    _constraints = [models.UniqueConstraint(fields=["parent", "order"], name="unique_parent_order")]
-
-    parent = DluxField(
-        django=models.ForeignKey(
-            "dlux.Work",
-            on_delete=models.CASCADE,
-            related_name="child_works",
-        ),
-        csv=["Parent ARK"],
-        solr=[],
-    )
-
-    # there's probably a library out there that we should be using
-    order = DluxField(
-        django=models.IntegerField(),
-        csv=[],
-        solr=[],
-    )
-
-
-class UnsortedFieldsGroup(FieldGroup):
+class UnsortedFields(Model):
     """'Kitchen-Sink' style FieldGroup for fields we haven't sorted yet."""
 
+    class Meta:
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
     # move this? should be required for Collection and Work records, maybe optional for ChildWorks?
-    title = DluxField(
-        django=models.CharField(blank=False, max_length=250),
-        csv=["Title"],
-        solr=["title_tesim", "title_sim", "sort_title_tsort", "sort_title_ssort"],
-    )
-
-    description = DluxField(
-        django=ArrayField(models.TextField(), blank=True),
-        csv=["Description.note"],
-        solr=["description_tesim"],
-    )
-
-    # TODO: this should be multivalued, but the standard django Arrayfield can't handle 'choices'.
-    # this is for demonstration; change to a django_jsonform Arrayfield for the final widget
-    resource_type = DluxField(
-        # ArrayField(
-        django=models.CharField(
-            blank=False,
-            choices=[
-                ("http://id.loc.gov/vocabulary/resourceTypes/car", "cartographic"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/col", "collection"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/mix", "mixed material"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/mov", "moving image"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/not", "notated music"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/aud", "sound recording"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/aum", "sound recording-musical"),
-                (
-                    "http://id.loc.gov/vocabulary/resourceTypes/aun",
-                    "sound recording-nonmusical",
-                ),
-                ("http://id.loc.gov/vocabulary/resourceTypes/img", "still image"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/txt", "text"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/art", "three dimensional object"),
-            ],
-            max_length=250,
-        ),
-        # ),
-        csv=["Type.typeOfResource"],
-        solr=[
-            "human_readable_resource_type_tesim",
-            "human_readable_resource_type_sim",
-            "resource_type_sim",
-            "resource_type_ssim",
-            "resource_type_tesim",
-        ],
-    )
+    title = dlux_fields.title.django
+    description = dlux_fields.description.django
+    resource_type = dlux_fields.resource_type.django
 
 
 #
-#   Django Models
+#   Concerete Models
 #
 
 
-@with_field_groups(RequiredFields, UnsortedFieldsGroup)
-class Collection(models.Model):
+class Collection(BaseDluxRecord, UnsortedFields):
     """A dlux collection.
 
     Record is displayed publicly at https://digital.library.ucla.edu/catalog?f%5Bhas_model_ssim%5D%5B%5D=Collection&view=list
@@ -139,16 +75,23 @@ class Collection(models.Model):
     A dlux Collection is parent to a number of member Works.
     """
 
-    # manually annotate, since fields added via with_field_groups() are invisible to type checker.
-    title: "models.CharField[str]"
+    class Meta(BaseDluxRecord.Meta, UnsortedFields.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+
+        Included here because including the parent Meta classes silences a type error.
+        """
+
+        pass
 
     def __str__(self) -> str:
         """Return the record title as a user-friendly representation of the object."""
         return self.title
 
 
-@with_field_groups(RequiredFields, BaseWork, UnsortedFieldsGroup)
-class Work(models.Model):
+class Work(BaseDluxRecord, UnsortedFields):
     """A dlux work.
 
     Record is displayed publicly at https://digital.library.ucla.edu/catalog?utf8=✓&view=list&f%5Bhas_model_ssim%5D%5B%5D=Collection&q=&search_field=all_fields
@@ -156,16 +99,25 @@ class Work(models.Model):
     A dlux Work is a member of a collection and can optionally be parent to a number of ChildWorks.
     """
 
-    # manually annotate, since fields added via with_field_groups() are invisible to type checker.
-    title: "models.CharField[str]"
+    class Meta(BaseDluxRecord.Meta, UnsortedFields.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+
+        Included here to silence a type error.
+        """
+
+        pass
+
+    collection = dlux_fields.collection.django
 
     def __str__(self) -> str:
         """Return the record title as a user-friendly representation of the object."""
         return self.title
 
 
-@with_field_groups(RequiredFields, BaseChildWork, UnsortedFieldsGroup)
-class ChildWork(models.Model):
+class ChildWork(BaseDluxRecord, UnsortedFields):
     """A dlux child work: for example a page in a Manuscript.
 
     Record is not intended to be displayed publicly via its own item page on https://digital.library.ucla.edu
@@ -178,11 +130,22 @@ class ChildWork(models.Model):
     A dlux ChildWork must be the child of a Work.
     """
 
-    # manually annotate, since fields added via with_field_groups() are invisible to type checker.
+    class Meta(BaseDluxRecord.Meta, UnsortedFields.Meta):
+        """Django model Meta options.
 
-    title: "models.CharField[str]"  # not optional now, but maybe should be?
-    parent: "models.ForeignKey[Work]"
-    order: "models.IntegerField[int]"
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        constraints = [
+            UniqueConstraint(
+                fields=["parent", "order"],
+                name="childwork_unique_order_per_parent",
+            )
+        ]
+
+    parent = dlux_fields.parent.django
+    order = dlux_fields.order.django
 
     def __str__(self) -> str:
         """Return a user-friendly representation of the object.
