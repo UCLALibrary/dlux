@@ -36,11 +36,5 @@
 				}
 			}
 		}
-	},
-	"features": {
-		"ghcr.io/devcontainers/features/git": {
-			"ppa": true
-		},
-		"ghcr.io/devcontainers/features/common-utils:2": {} // for ssh, to push to github
 	}
 }
