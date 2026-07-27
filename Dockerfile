@@ -2,9 +2,10 @@ FROM debian:bookworm AS base
 
 ARG DJANGO_UID=1000
 
-# Set correct timezone
+# Set correct local and timezone
 RUN ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 # Create django user
 RUN useradd --comment "django app user" \

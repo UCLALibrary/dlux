@@ -13,7 +13,12 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["django-types>=0.24.0", "pyright>=1.1.411", "ruff>=0.15.20"]
+dev = [
+    "bpython>=0.26",        # Automatically pulled in to make django shell fancier
+    "django-types>=0.24.0",
+    "pyright>=1.1.411",
+    "ruff>=0.15.20",
+]
 
 [tool.ruff]
 exclude = [".git", ".mypy_cache", ".ruff_cache", ".vscode", "**/migrations/*"]
@@ -34,15 +39,6 @@ select = [
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
-"**/tests.py" = [
+"**/tests/*.py" = [
     "D100", # don't need module-level docstrings in tests per https://google.github.io/styleguide/pyguide.html#3821-test-modules
 ]
-
-[tool.mypy]
-plugins = ["mypy_django_plugin.main"]
-strict = true
-disallow_untyped_defs = true
-check_untyped_defs = true
-
-[tool.django-stubs]
-django_settings_module = "project.settings"

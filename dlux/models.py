@@ -28,24 +28,44 @@ class BaseDluxRecord(Model):
         """
 
         abstract = True
-        constraints = [
-            UniqueConstraint(fields=["ark"], name="%(app_label)s_%(class)s_test_constraint")
-        ]
 
     ark = dlux_fields.ark.django
 
     @classmethod
-    def get_dlux_fields(cls, include_parents: bool = True) -> list[dlux_fields.DluxField]:
-        """Return the original DluxField objects for a record's fields."""
-        return [
-            getattr(dlux_fields, field.name)
-            for field in cls._meta.get_fields(include_parents=include_parents)
+    def get_dlux_fields(cls, exclude_parents: bool = True) -> dict[str, dlux_fields.DluxField]:
+        """Return the original DluxField objects for a record's fields.
+
+        If exclude_parents is false (default), returns all fields defined by DluxField objects in
+        dlux.dlux_fields. If exclude_parents is true, returns only those fields created directly on
+        the model, rather than inherited from an abstract model.
+        """
+        if exclude_parents:
+            # It turns out the `include_parents` argument of django's Model._meta.get_fields only
+            # refers to concrete inheritance – abstract parent models are treated as local.
+            # Moreover, the usual python ways of checking if a property is local vs inherited
+            # (using vars() or .__dict__ vs dir()) don't work, possibly because django's magic
+            # inserts *everything* into the base class.
+
+            ignored_fields = {
+                field.name
+                for parent_model in cls.__bases__
+                if issubclass(parent_model, Model)
+                for field in parent_model._meta.get_fields()
+            }
+
+        else:
+            ignored_fields = {}
+
+        return {
+            field.name: getattr(dlux_fields, field.name)
+            for field in cls._meta.get_fields(include_parents=True)
+            if field.name not in ignored_fields
             if isinstance(getattr(dlux_fields, field.name, None), dlux_fields.DluxField)
-        ]
+        }
 
 
 class UnsortedFields(Model):
-    """'Kitchen-Sink' style FieldGroup for fields we haven't sorted yet."""
+    """All fields that haven't yet been asigned to a different abstract Model."""
 
     class Meta:
         """Django model Meta options.
