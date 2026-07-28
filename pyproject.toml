@@ -39,6 +39,9 @@ select = [
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
+"**/apps.py" = [
+    "D", # docstrings
+]
 "**/tests/*.py" = [
     "D100", # don't need module-level docstrings in tests per https://google.github.io/styleguide/pyguide.html#3821-test-modules
 ]
