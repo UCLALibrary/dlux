@@ -8,7 +8,6 @@ from those objects.
 from dataclasses import dataclass
 from typing import Any, Callable
 
-from django.contrib.postgres.fields import ArrayField
 from django.db.models import (
     CASCADE,
     PROTECT,
@@ -19,6 +18,7 @@ from django.db.models import (
     Model,
     TextField,
 )
+from django_jsonform.models.fields import ArrayField
 
 #
 #   Base dataclass for schema fields
@@ -89,31 +89,37 @@ description = DluxField(
     solr=["description_tesim"],
 )
 
-# TODO: this should be multivalued, but the standard django Arrayfield can't handle 'choices'.
-# this is for demonstration; change to a django_jsonform Arrayfield for the final widget
-resource_type = DluxField(
-    # ArrayField(
-    django=CharField(
-        blank=False,
-        choices=[
-            ("http://id.loc.gov/vocabulary/resourceTypes/car", "cartographic"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/col", "collection"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/mix", "mixed material"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/mov", "moving image"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/not", "notated music"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/aud", "sound recording"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/aum", "sound recording-musical"),
-            (
-                "http://id.loc.gov/vocabulary/resourceTypes/aun",
-                "sound recording-nonmusical",
-            ),
-            ("http://id.loc.gov/vocabulary/resourceTypes/img", "still image"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/txt", "text"),
-            ("http://id.loc.gov/vocabulary/resourceTypes/art", "three dimensional object"),
-        ],
-        max_length=250,
+RESOURCE_TYPES = [
+    ("http://id.loc.gov/vocabulary/resourceTypes/car", "cartographic"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/col", "collection"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/mix", "mixed material"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/mov", "moving image"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/not", "notated music"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/aud", "sound recording"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/aum", "sound recording-musical"),
+    (
+        "http://id.loc.gov/vocabulary/resourceTypes/aun",
+        "sound recording-nonmusical",
     ),
-    # ),
+    ("http://id.loc.gov/vocabulary/resourceTypes/img", "still image"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/txt", "text"),
+    ("http://id.loc.gov/vocabulary/resourceTypes/art", "three dimensional object"),
+]
+resource_type = DluxField(
+    django=ArrayField(
+        CharField(
+            choices=RESOURCE_TYPES,
+            max_length=250,
+        ),
+        schema={
+            "type": "array",
+            "items": {
+                "type": "string",
+                "choices": [{"title": label, "value": id} for id, label in RESOURCE_TYPES],
+                "widget": "multiselect",
+            },
+        },
+    ),  # type: ignore
     csv=["Type.typeOfResource"],
     solr=[
         "human_readable_resource_type_tesim",

@@ -6,7 +6,7 @@ export PYTHONUNBUFFERED=1
 # Pick up any local changes to requirements.txt, which do *not* automatically get re-installed when starting the container.
 # Do this only in dev environment!
 if [ "$DJANGO_RUN_ENV" = "dev" ]; then
-  pip install --no-cache-dir -r requirements.txt --user --no-warn-script-location
+  uv sync
 fi
 
 # Check when database is ready for connections
