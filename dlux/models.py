@@ -79,7 +79,7 @@ class UnsortedFields(Model):
     # move this? should be required for Collection and Work records, maybe optional for ChildWorks?
     title = dlux_fields.title.django
     description = dlux_fields.description.django
-    resource_type = dlux_fields.resource_type.django
+    # resource_type = dlux_fields.resource_type.django
 
 
 #
