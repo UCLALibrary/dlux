@@ -13,7 +13,7 @@ class TestBaseDluxRecord(SimpleTestCase):
     def test_get_fields_with_parents(self) -> None:
         """BaseDluxModel.get_dlux_fields() returns DluxField objects for a model."""
         cases: list[tuple[type[BaseDluxRecord], bool, list[str]]] = [
-            (Work, False, ["ark", "collection", "title", "description", "resource_type"]),
+            (Work, False, ["ark", "collection", "title", "description"]),
             (Work, True, ["collection"]),
             (Collection, True, []),
             (ChildWork, True, ["parent", "order"]),
