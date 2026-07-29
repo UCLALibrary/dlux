@@ -7,7 +7,6 @@ requires-python = ">=3.13,<3.14"
 dependencies = [
     "django>=5.2.15,<6",
     "django-bootstrap5>=26.2",
-    "django-jsonform>=2.23.2",
     "gunicorn>=26.0.0",
     "psycopg[binary]>=3.3.4",
     "whitenoise>=6.12.0",
@@ -19,15 +18,6 @@ dev = [
     "django-types>=0.24.0",
     "pyright>=1.1.411",
     "ruff>=0.15.20",
-]
-
-[tool.pyright]
-exclude = [
-    "**/migrations/*.py",
-    "**/node_modules",    # pylance complains if it's missing so  ̄\_(ツ)_/ ̄
-    "**/__pycache__",
-    "**/.*",
-    ".venv",
 ]
 
 [tool.ruff]

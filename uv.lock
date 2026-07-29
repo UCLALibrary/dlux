@@ -143,18 +143,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-jsonform"
-version = "2.23.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9b/a8/83c57acbc153b86615be279cee5a194ce1163b578f29a9f6d658f267785e/django_jsonform-2.23.2.tar.gz", hash = "sha256:6fa2ba7c082be51d738e6c66e35075a3cb9ebc2f941e3a477c988900a7fe3269", size = 108182, upload-time = "2025-01-29T22:31:34.093Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/3a/8e/8766f4bc535917ccbc6b3dcb57caf82210a6bacd613c3d9dbaec81018935/django_jsonform-2.23.2-py3-none-any.whl", hash = "sha256:1b7f94c5a2bd22c844e035a9940a9c8586f7b8fc3346ef2a6a13ba608e0059d7", size = 109148, upload-time = "2025-01-29T22:31:31.186Z" },
-]
-
-[[package]]
 name = "django-types"
 version = "0.24.0"
 source = { registry = "https://pypi.org/simple" }
@@ -173,7 +161,6 @@ source = { virtual = "." }
 dependencies = [
     { name = "django" },
     { name = "django-bootstrap5" },
-    { name = "django-jsonform" },
     { name = "gunicorn" },
     { name = "psycopg", extra = ["binary"] },
     { name = "whitenoise" },
@@ -191,7 +178,6 @@ dev = [
 requires-dist = [
     { name = "django", specifier = ">=5.2.15,<6" },
     { name = "django-bootstrap5", specifier = ">=26.2" },
-    { name = "django-jsonform", specifier = ">=2.23.2" },
     { name = "gunicorn", specifier = ">=26.0.0" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3.4" },
     { name = "whitenoise", specifier = ">=6.12.0" },
