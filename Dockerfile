@@ -2,9 +2,10 @@ FROM debian:bookworm AS base
 
 ARG DJANGO_UID=1000
 
-# Set correct timezone
+# Set correct local and timezone
 RUN ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 # Create django user
 RUN useradd --comment "django app user" \
@@ -46,9 +47,10 @@ CMD [ "sh", "docker_scripts/entrypoint.sh" ]
 FROM base AS dev
 
 USER root
+# libatomic1 - pyright dependency
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  apt-get update && apt-get install -y git openssh-client
+  apt-get update && apt-get install -y git libatomic1 openssh-client
 USER django
 
 # add the dev requirements

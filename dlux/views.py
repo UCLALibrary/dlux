@@ -1,10 +1,12 @@
+"""URLs for dlux.
+
+These should only include a few utility views like logs and release notes. Most functionality is
+accessed via the django admin site.
+"""
+
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-
-
-def default_view(request: HttpRequest) -> HttpResponse:
-    return render(request, "base.html")
 
 
 def show_log(request: HttpRequest, line_count: int = 200) -> HttpResponse:
