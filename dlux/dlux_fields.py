@@ -5,41 +5,19 @@ be moved outside the standard django file structure. Django models are then crea
 from those objects.
 """
 
-from dataclasses import dataclass
-from typing import Any, Callable
-
-from django.contrib.postgres.fields import ArrayField
 from django.db.models import (
     CASCADE,
     PROTECT,
     CharField,
-    Field,
     ForeignKey,
     IntegerField,
-    Model,
     TextField,
 )
 
-#
-#   Base dataclass for schema fields
-#
-
-
-@dataclass
-class DluxField:
-    """Container for Django classes and other information related to a dlux metadata term."""
-
-    django: "Field[Any, Any]"
-    csv: list[str] | Callable[[dict[str, Any]], dict[str, Any]]
-    solr: list[str] | Callable[[Model], dict[str, Any]]
-
-
-#
-#   Definitions for dlux fields
-#
+from dlux.fields import ArrayField, DluxField
 
 ark = DluxField(
-    django=CharField(unique=True, blank=False, max_length=2000),
+    django=CharField(unique=True),
     csv=["Item ARK"],
     solr=["ark_ssi"],
 )
@@ -76,9 +54,8 @@ order = DluxField(
     solr=[],
 )
 
-# should be required for Collection and Work records, maybe optional for ChildWorks?
 title = DluxField(
-    django=CharField(blank=False, max_length=250),
+    django=CharField(),
     csv=["Title"],
     solr=["title_tesim", "title_sim", "sort_title_tsort", "sort_title_ssort"],
 )
@@ -92,7 +69,6 @@ description = DluxField(
 resource_type = DluxField(
     django=ArrayField(
         CharField(
-            blank=False,
             choices=[
                 ("http://id.loc.gov/vocabulary/resourceTypes/car", "cartographic"),
                 ("http://id.loc.gov/vocabulary/resourceTypes/col", "collection"),
@@ -109,8 +85,9 @@ resource_type = DluxField(
                 ("http://id.loc.gov/vocabulary/resourceTypes/txt", "text"),
                 ("http://id.loc.gov/vocabulary/resourceTypes/art", "three dimensional object"),
             ],
-            max_length=250,
         ),
+        blank=True,
+        default=list,
     ),
     csv=["Type.typeOfResource"],
     solr=[

@@ -13,7 +13,6 @@
 			],
 			"settings": {
 				"editor.formatOnSave": true,
-				"python.analysis.typeCheckingMode": "strict",
 				"python.defaultInterpreterPath": "/home/django/django_app/.venv/bin/python",
 				"python.terminal.activateEnvInCurrentTerminal": false, // very annoying; rely on $PATH instead
 				"python.testing.unittestArgs": [

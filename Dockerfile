@@ -26,7 +26,7 @@ RUN chown -R django:django /home/django
 USER django
 
 # Install UV
-COPY --from=ghcr.io/astral-sh/uv:0.11.26 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.12.1 /uv /uvx /bin/
 
 # "activate" the virtualenv
 ENV PATH="/home/django/django_app/.venv/bin:$PATH"
@@ -49,8 +49,8 @@ FROM base AS dev
 USER root
 # libatomic1 - pyright dependency
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-  --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  apt-get update && apt-get install -y git libatomic1 openssh-client
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && apt-get install -y git libatomic1 openssh-client
 USER django
 
 # add the dev requirements
