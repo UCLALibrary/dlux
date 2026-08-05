@@ -14,6 +14,7 @@ from django.db.models import (
     TextField,
 )
 
+from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
 
 ark = DluxField(
@@ -61,7 +62,11 @@ title = DluxField(
 )
 
 description = DluxField(
-    django=ArrayField(TextField(), blank=True),
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
     csv=["Description.note"],
     solr=["description_tesim"],
 )
@@ -69,22 +74,9 @@ description = DluxField(
 resource_type = DluxField(
     django=ArrayField(
         CharField(
-            choices=[
-                ("http://id.loc.gov/vocabulary/resourceTypes/car", "cartographic"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/col", "collection"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/mix", "mixed material"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/mov", "moving image"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/not", "notated music"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/aud", "sound recording"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/aum", "sound recording-musical"),
-                (
-                    "http://id.loc.gov/vocabulary/resourceTypes/aun",
-                    "sound recording-nonmusical",
-                ),
-                ("http://id.loc.gov/vocabulary/resourceTypes/img", "still image"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/txt", "text"),
-                ("http://id.loc.gov/vocabulary/resourceTypes/art", "three dimensional object"),
-            ],
+            blank=False,
+            choices=RESOURCE_TYPE_CHOICES,
+            max_length=250,
         ),
         blank=True,
         default=list,
@@ -97,4 +89,122 @@ resource_type = DluxField(
         "resource_type_ssim",
         "resource_type_tesim",
     ],
+)
+
+caption = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Description.caption"],
+    solr=["caption_tesim"],
+)
+
+creator = DluxField(
+    django=ArrayField(
+        CharField(blank=False, max_length=250),
+        blank=True,
+        default=list,
+    ),
+    csv=["Creator", "Name.creator"],
+    solr=["creator_tesim", "creator_sim"],
+)
+
+genre = DluxField(
+    django=ArrayField(
+        CharField(blank=False, max_length=250),
+        blank=True,
+        default=list,
+    ),
+    csv=["Type.genre", "Genre"],
+    solr=["genre_tesim", "genre_sim"],
+)
+
+inscription = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Inscription"],
+    solr=["inscription_tesim"],
+)
+
+language = DluxField(
+    django=ArrayField(
+        CharField(
+            blank=False,
+            choices=LANGUAGE_CHOICES,
+            max_length=100,
+        ),
+        blank=True,
+        default=list,
+    ),
+    csv=["Language"],
+    solr=[
+        "language_tesim",
+        "language_sim",
+        "human_readable_language_tesim",  # NOTE: is filtered in `feed_ursus`
+        "human_readable_language_sim",
+    ],
+)
+
+photographer = DluxField(
+    django=ArrayField(
+        CharField(
+            blank=False,
+            max_length=250,
+        ),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "Name.photographer",
+        "Personal or Corporate Name.photographer",
+    ],
+    solr=["photographer_tesim", "photographer_sim"],
+)
+
+publisher = DluxField(
+    django=ArrayField(
+        CharField(
+            blank=False,
+            max_length=250,
+        ),
+        blank=True,
+        default=list,
+    ),
+    csv=["Publisher.publisherName"],
+    solr=["publisher_tesim", "publisher_sim"],
+)
+
+subject = DluxField(
+    django=ArrayField(
+        CharField(
+            blank=False,
+            max_length=250,
+        ),
+        blank=True,
+        default=list,
+    ),
+    csv=["Subject"],
+    solr=["subject_tesim", "subject_sim"],
+)
+
+subject_topic = DluxField(
+    django=ArrayField(
+        CharField(
+            blank=False,
+            max_length=250,
+        ),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "Subject topic",
+        "Subject.conceptTopic",
+        "Subject.descriptiveTopic",
+    ],
+    solr=["subject_topic_tesim", "subject_topic_sim"],
 )
