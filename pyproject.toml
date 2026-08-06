@@ -16,8 +16,8 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "bpython>=0.26",       # Automatically pulled in to make django shell fancier
     "django-stubs>=6.0.7",
+    "ipython>=9.16.1",     # Automatically pulled in to make django shell fancier
     "pyright>=1.1.411",
     "ruff>=0.15.20",
 ]
