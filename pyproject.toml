@@ -15,12 +15,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "django-stubs>=6.0.7",
-    "ipython>=9.16.1",     # Automatically pulled in to make django shell fancier
-    "pyright>=1.1.411",
-    "ruff>=0.15.20",
-]
+dev = ["django-stubs>=6.0.7", "pyright>=1.1.411", "ruff>=0.15.20"]
 
 [tool.pyright]
 typeCheckingMode = "strict" # Options: "off", "basic", "standard", "strict"
