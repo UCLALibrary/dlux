@@ -16,13 +16,13 @@ from dlux.models import ChildWork, Collection, Work
 
 
 @admin.register(Collection)
-class CollectionAdmin(admin.ModelAdmin):  # pyright: ignore[reportMissingTypeArgument]
+class CollectionAdmin(admin.ModelAdmin[Collection]):
     """Django admin for Collection records."""
 
     pass
 
 
-class ChildWorkInline(admin.StackedInline):  # pyright: ignore[reportMissingTypeArgument]
+class ChildWorkInline(admin.StackedInline[ChildWork, Work]):
     """Django admin inline for "childwork-level" records.
 
     At present (July 2026), there is only a single, generic "ChildWork" record supporting all
@@ -35,7 +35,7 @@ class ChildWorkInline(admin.StackedInline):  # pyright: ignore[reportMissingType
 
 
 @admin.register(Work)
-class WorkAdmin(admin.ModelAdmin):  # pyright: ignore[reportMissingTypeArgument]
+class WorkAdmin(admin.ModelAdmin[Work]):
     """Django admin for "work-level" records.
 
     At present (July 2026), there is only a single, generic "Work" record supporting all metadata
@@ -43,4 +43,4 @@ class WorkAdmin(admin.ModelAdmin):  # pyright: ignore[reportMissingTypeArgument]
     Manuscript or SimpleImage.
     """
 
-    inlines = [ChildWorkInline]
+    inlines = [ChildWorkInline]  # pyright: ignore[reportUnknownVariableType]

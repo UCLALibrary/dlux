@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+import django_stubs_ext
+
+# Monkeypatch various django classes to accept generic type parameters without crashing at runtime.
+# Very simple change with no runtime effect:
+# https://github.com/typeddjango/django-stubs/blob/master/ext/django_stubs_ext/patch.py#L140-L144
+django_stubs_ext.monkeypatch()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,11 +30,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG: bool | str | None = os.getenv("DJANGO_DEBUG")
 # Helm charts pass "false" instead of Python False, and
 # Python "false" is True...
-if DEBUG in ["false", "False"]:
-    DEBUG = False
+DEBUG: bool = os.getenv("DJANGO_DEBUG", "").lower() == "true"
 
 # Define the list of allowed hosts to connect to this application
 # This is passed in via the environment variable DJANGO_ALLOWED_HOSTS
@@ -52,6 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "dlux",
+    "django_jsonform",
 ]
 
 MIDDLEWARE = [

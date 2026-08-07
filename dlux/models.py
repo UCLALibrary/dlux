@@ -30,9 +30,11 @@ class BaseDluxRecord(Model):
         abstract = True
 
     ark = dlux_fields.ark.django
+    title = dlux_fields.title.django
+    resource_type = dlux_fields.resource_type.django
 
     @classmethod
-    def get_dlux_fields(cls, exclude_parents: bool = True) -> dict[str, dlux_fields.DluxField]:
+    def get_dlux_fields(cls, exclude_parents: bool = False) -> dict[str, dlux_fields.DluxField]:
         """Return the original DluxField objects for a record's fields.
 
         If exclude_parents is false (default), returns all fields defined by DluxField objects in
@@ -77,9 +79,7 @@ class UnsortedFields(Model):
         abstract = True
 
     # move this? should be required for Collection and Work records, maybe optional for ChildWorks?
-    title = dlux_fields.title.django
     description = dlux_fields.description.django
-    # resource_type = dlux_fields.resource_type.django
 
 
 #

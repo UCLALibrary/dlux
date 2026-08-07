@@ -2,10 +2,11 @@ FROM debian:bookworm AS base
 
 ARG DJANGO_UID=1000
 
+# Keep virtualenv out of the project directory
+ENV UV_PROJECT_ENVIRONMENT=/home/django/venv
+
 # Set correct local and timezone
 RUN ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
 
 # Create django user
 RUN useradd --comment "django app user" \
@@ -26,14 +27,13 @@ RUN chown -R django:django /home/django
 USER django
 
 # Install UV
-COPY --from=ghcr.io/astral-sh/uv:0.11.26 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.12.1 /uv /uvx /bin/
 
 # "activate" the virtualenv
-ENV PATH="/home/django/django_app/.venv/bin:$PATH"
+ENV PATH="$UV_PROJECT_ENVIRONMENT/bin:$PATH"
 
 # Install requirements for this application
 COPY --chown=django:django pyproject.toml uv.lock ./
-VOLUME /home/django/django_app/.venv
 RUN --mount=type=cache,target=/home/django/.cache/uv,uid=${DJANGO_UID} \
     uv sync --locked --no-dev
 
@@ -49,8 +49,8 @@ FROM base AS dev
 USER root
 # libatomic1 - pyright dependency
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-  --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  apt-get update && apt-get install -y git libatomic1 openssh-client
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && apt-get install -y git libatomic1 openssh-client
 USER django
 
 # add the dev requirements
