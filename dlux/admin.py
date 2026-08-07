@@ -10,16 +10,65 @@ words, avoid naming specific fields in this file – put that information in dlu
 a way to pull it in here.
 """
 
-from django.contrib import admin
+from typing import TYPE_CHECKING, Never
 
-from dlux.models import ChildWork, Collection, Work
+from django.contrib import admin
+from django.http.request import HttpRequest
+
+from dlux.models import BaseDluxRecord, ChildWork, Collection, Work
+
+if TYPE_CHECKING:
+    from django.contrib.admin.options import (
+        _FieldOpts,  # pyright: ignore[reportPrivateUsage]
+        _FieldsetSpec,  # pyright: ignore[reportPrivateUsage]
+    )
+    from django.utils.functional import _StrPromise  # pyright: ignore[reportPrivateUsage]
 
 
 @admin.register(Collection)
-class CollectionAdmin(admin.ModelAdmin[Collection]):
+class BaseDluxAdmin(admin.ModelAdmin[BaseDluxRecord]):
     """Django admin for Collection records."""
 
-    pass
+    def get_fieldsets(
+        self,
+        request: HttpRequest,
+        obj: BaseDluxRecord | None = None,
+    ) -> """list[tuple[str | _StrPromise | None, _FieldOpts]]
+        | tuple[tuple[str | _StrPromise | None, _FieldOpts], ...]
+        | tuple[Never]""":
+        """Use django fieldsets to group metadata fields in collapsable groups.
+
+        See https://docs.djangoproject.com/en/6.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets
+
+        The structure of the fieldsets is based on the grouping of fields into abstract models from
+        which self.model inherits, as returned by BaseDluxRecord.get_dlux_fields().
+        """
+        dlux_fields = self.model.get_dlux_fields(by_base_class=True)
+
+        fieldsets: "_FieldsetSpec" = [
+            (
+                None,
+                {
+                    "fields": [
+                        *dlux_fields.pop("BaseDluxRecord", dict()).keys(),
+                        *dlux_fields.pop(self.model.__name__, dict()).keys(),
+                    ]
+                },
+            )
+        ]
+
+        for cls, fields in dlux_fields.items():
+            fieldsets.append(
+                (
+                    cls,
+                    {
+                        "classes": ["collapse"],
+                        "fields": list(fields.keys()),
+                    },
+                )
+            )
+
+        return fieldsets
 
 
 class ChildWorkInline(admin.StackedInline[ChildWork, Work]):
@@ -35,7 +84,7 @@ class ChildWorkInline(admin.StackedInline[ChildWork, Work]):
 
 
 @admin.register(Work)
-class WorkAdmin(admin.ModelAdmin[Work]):
+class WorkAdmin(BaseDluxAdmin):
     """Django admin for "work-level" records.
 
     At present (July 2026), there is only a single, generic "Work" record supporting all metadata

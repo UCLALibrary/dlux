@@ -5,13 +5,19 @@ be moved outside the standard django file structure. Django models are then crea
 from those objects.
 """
 
+from typing import Literal, overload
+
 from django.db.models import Model, UniqueConstraint
 
 from dlux import dlux_fields
+from dlux.fields import DluxField
 
 #
 #   Abstract models define bundles of related fields
 #
+
+DluxFieldsList = dict[str, DluxField]
+DluxFieldsByBaseClass = dict[str, DluxFieldsList]
 
 
 class BaseDluxRecord(Model):
@@ -33,37 +39,45 @@ class BaseDluxRecord(Model):
     title = dlux_fields.title.django
     resource_type = dlux_fields.resource_type.django
 
+    @overload
     @classmethod
-    def get_dlux_fields(cls, exclude_parents: bool = False) -> dict[str, dlux_fields.DluxField]:
+    def get_dlux_fields(cls, by_base_class: Literal[False]) -> DluxFieldsList: ...
+
+    @overload
+    @classmethod
+    def get_dlux_fields(cls, by_base_class: Literal[True]) -> DluxFieldsByBaseClass: ...
+
+    @classmethod
+    def get_dlux_fields(
+        cls,
+        by_base_class: bool = False,
+    ) -> DluxFieldsList | DluxFieldsByBaseClass:
         """Return the original DluxField objects for a record's fields.
 
         If exclude_parents is false (default), returns all fields defined by DluxField objects in
         dlux.dlux_fields. If exclude_parents is true, returns only those fields created directly on
         the model, rather than inherited from an abstract model.
         """
-        if exclude_parents:
-            # It turns out the `include_parents` argument of django's Model._meta.get_fields only
-            # refers to concrete inheritance – abstract parent models are treated as local.
-            # Moreover, the usual python ways of checking if a property is local vs inherited
-            # (using vars() or .__dict__ vs dir()) don't work, possibly because django's magic
-            # inserts *everything* into the base class.
-
-            ignored_fields = {
-                field.name
-                for parent_model in cls.__bases__
-                if issubclass(parent_model, Model)
-                for field in parent_model._meta.get_fields()
-            }
-
-        else:
-            ignored_fields = {}
-
-        return {
+        all_fields: DluxFieldsList = {
             field.name: getattr(dlux_fields, field.name)
             for field in cls._meta.get_fields(include_parents=True)
-            if field.name not in ignored_fields
             if isinstance(getattr(dlux_fields, field.name, None), dlux_fields.DluxField)
         }
+
+        if by_base_class:
+            result: DluxFieldsByBaseClass = {cls.__name__: all_fields}
+
+            for subcls in cls.__bases__:
+                if issubclass(subcls, Model):
+                    result[subcls.__name__] = {
+                        field.name: result[cls.__name__].pop(field.name)
+                        for field in subcls._meta.get_fields()
+                    }
+
+            return result
+
+        else:
+            return all_fields
 
 
 class UnsortedFields(Model):
