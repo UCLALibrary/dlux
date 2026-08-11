@@ -10,42 +10,40 @@ words, avoid naming specific fields in this file – put that information in dlu
 a way to pull it in here.
 """
 
-from typing import TYPE_CHECKING, Never
+from typing import override
 
 from django.contrib import admin
 from django.http.request import HttpRequest
 
-from dlux.models import BaseDluxRecord, ChildWork, Collection, Work
+# Attempting to manually annotate the return type of ModelAdmin.get_fieldsets() runs into a lot of
+# "incompatible override" errors; easiest to use the django-stubs FieldsetSpec type
+from django_stubs_ext import FieldsetSpec  # pyright: ignore[reportPrivateUsage]
 
-if TYPE_CHECKING:
-    from django.contrib.admin.options import (
-        _FieldOpts,  # pyright: ignore[reportPrivateUsage]
-        _FieldsetSpec,  # pyright: ignore[reportPrivateUsage]
-    )
-    from django.utils.functional import _StrPromise  # pyright: ignore[reportPrivateUsage]
+from dlux.models import BaseDluxRecord, ChildWork, Collection, Work
 
 
 @admin.register(Collection)
 class BaseDluxAdmin(admin.ModelAdmin[BaseDluxRecord]):
     """Django admin for Collection records."""
 
+    @override
     def get_fieldsets(
         self,
         request: HttpRequest,
         obj: BaseDluxRecord | None = None,
-    ) -> """list[tuple[str | _StrPromise | None, _FieldOpts]]
-        | tuple[tuple[str | _StrPromise | None, _FieldOpts], ...]
-        | tuple[Never]""":
+    ) -> FieldsetSpec:
         """Use django fieldsets to group metadata fields in collapsable groups.
-
-        See https://docs.djangoproject.com/en/6.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets
 
         The structure of the fieldsets is based on the grouping of fields into abstract models from
         which self.model inherits, as returned by BaseDluxRecord.get_dlux_fields().
+
+        Returns:
+            A nested data structure conforming to
+            https://docs.djangoproject.com/en/6.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.fieldsets
         """
         dlux_fields = self.model.get_dlux_fields(by_base_class=True)
 
-        fieldsets: "_FieldsetSpec" = [
+        fieldsets: FieldsetSpec = [
             (
                 None,
                 {

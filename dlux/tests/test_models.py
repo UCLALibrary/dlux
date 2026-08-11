@@ -1,9 +1,7 @@
 from django.test import SimpleTestCase
 
 from dlux import dlux_fields
-from dlux.models import (
-    Work,
-)
+from dlux.models import Work
 
 
 class TestBaseDluxRecord(SimpleTestCase):

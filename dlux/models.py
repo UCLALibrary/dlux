@@ -54,13 +54,37 @@ class BaseDluxRecord(Model):
     ) -> DluxFieldsList | DluxFieldsByBaseClass:
         """Return the original DluxField objects for a record's fields.
 
-        If exclude_parents is false (default), returns all fields defined by DluxField objects in
-        dlux.dlux_fields. If exclude_parents is true, returns only those fields created directly on
-        the model, rather than inherited from an abstract model.
+        Differs from the built-in Model._meta.get_fields() in that it returns DluxField objects,
+        where we have included addition information about the field relevant to dlux, rather than
+        Django Field instances.
+
+        Args:
+            by_base_class: A boolean flag determining the output format. If true, fields are
+            grouped according to the underlying abstract classes in which they are defined.
+            (See "Returns".)
+
+        Returns:
+            If by_base_class==False, returns a dict mapping field names to DluxField objects:
+                model_name: {
+                    field_name: dlux_field,
+                    ...,
+                },
+
+            If by_base_class==True, returns a dict mapping the names of abstract models to dicts
+            describing the fields defined in those models. Each inner dict has the same form as the
+            output if by_base_class is False, but contains only the fields inherited from that
+            model:
+                {
+                    model_name: {
+                        field_name: dlux_field,
+                        ...,
+                    },
+                    ...
+                }
         """
         all_fields: DluxFieldsList = {
             field.name: getattr(dlux_fields, field.name)
-            for field in cls._meta.get_fields(include_parents=True)
+            for field in cls._meta.get_fields()
             if isinstance(getattr(dlux_fields, field.name, None), dlux_fields.DluxField)
         }
 

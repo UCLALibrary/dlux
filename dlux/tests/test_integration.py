@@ -23,7 +23,7 @@ class CollectionIntegrationTests(TestCase):
         response = self.client.get("/dlux/collection/add/")
         self.assertEqual(response.status_code, 200)
 
-        parsed = BeautifulSoup(response.text)
+        parsed = BeautifulSoup(response.text, features="html.parser")
 
         fieldsets = parsed.find_all("fieldset")
         named_fieldsets: dict[str, Tag] = {}
