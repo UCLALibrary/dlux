@@ -15,7 +15,12 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["django-stubs>=6.0.7", "pyright>=1.1.411", "ruff>=0.15.20"]
+dev = [
+    "beautifulsoup4>=4.15.0",
+    "django-stubs>=6.0.7",
+    "pyright>=1.1.411",
+    "ruff>=0.15.20",
+]
 
 [tool.pyright]
 typeCheckingMode = "strict" # Options: "off", "basic", "standard", "strict"

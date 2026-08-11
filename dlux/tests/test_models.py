@@ -1,6 +1,7 @@
 from django.test import SimpleTestCase
 
-from dlux.models import BaseDluxRecord, ChildWork, Collection, Work
+from dlux import dlux_fields
+from dlux.models import Work
 
 
 class TestBaseDluxRecord(SimpleTestCase):
@@ -12,14 +13,29 @@ class TestBaseDluxRecord(SimpleTestCase):
 
     def test_get_dlux_fields(self) -> None:
         """BaseDluxModel.get_dlux_fields() returns DluxField objects for a model."""
-        cases: list[tuple[type[BaseDluxRecord], bool, list[str]]] = [
-            (Work, False, ["ark", "collection", "title", "description", "resource_type"]),
-            (Work, True, ["collection"]),
-            (Collection, True, []),
-            (ChildWork, True, ["parent", "order"]),
-        ]
 
-        for model, exclude_parents, expected in cases:
-            with self.subTest(model=model, exclude_parents=exclude_parents):
-                result = model.get_dlux_fields(exclude_parents=exclude_parents)
-                self.assertEqual(list(result.keys()), expected)
+        result = Work.get_dlux_fields(by_base_class=False)
+        expected = {
+            "ark": dlux_fields.ark,
+            "collection": dlux_fields.collection,
+            "title": dlux_fields.title,
+            "description": dlux_fields.description,
+            "resource_type": dlux_fields.resource_type,
+        }
+        self.assertEqual(result, expected)
+
+    maxDiff = 2000
+
+    def test_get_dlux_fields_by_base_class(self) -> None:
+        """BaseDluxModel.get_dlux_fields() returns DluxField objects for a model."""
+        expected = {
+            "Work": {"collection": dlux_fields.collection},
+            "BaseDluxRecord": {
+                "ark": dlux_fields.ark,
+                "title": dlux_fields.title,
+                "resource_type": dlux_fields.resource_type,
+            },
+            "UnsortedFields": {"description": dlux_fields.description},
+        }
+        result = Work.get_dlux_fields(by_base_class=True)
+        self.assertEqual(result, expected)
