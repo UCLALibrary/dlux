@@ -37,7 +37,6 @@ class BaseDluxRecord(Model):
 
     ark = dlux_fields.ark.django
     title = dlux_fields.title.django
-    resource_type = dlux_fields.resource_type.django
 
     @overload
     @classmethod
