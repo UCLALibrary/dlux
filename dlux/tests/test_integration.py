@@ -18,7 +18,7 @@ class CollectionIntegrationTests(TestCase):
             ),
         )
 
-    def test_new_collection_page_contains_unsortedfields_fieldset(self) -> None:
+    def test_new_collection_page_contains_basic_descriptive_fields_fieldset(self) -> None:
         self.client.force_login(self.user)
         response = self.client.get("/dlux/collection/add/")
         self.assertEqual(response.status_code, 200)
@@ -31,7 +31,9 @@ class CollectionIntegrationTests(TestCase):
             if title := fs.find("h2"):
                 named_fieldsets[title.text] = fs
 
-        arrayfield_widget = named_fieldsets["UnsortedFields"].find("textarea", id="id_description")
+        arrayfield_widget = named_fieldsets["BasicDescriptiveFields"].find(
+            "textarea", id="id_description"
+        )
         self.assertIsNotNone(arrayfield_widget)  # for readable error message
         assert arrayfield_widget is not None  # for the type checker
         self.assertIn("data-django-jsonform", arrayfield_widget.attrs)
