@@ -39,6 +39,9 @@ class ArrayField(BaseArrayField):
 
         This is used to set the widget on the ArrayField schema, but not pass it to the base class
         so that it doesn't get serialized into migrations.
+
+        Available values for `widget` are documented
+        @https://django-jsonform.readthedocs.io/en/stable/guide/inputs.html?highlight=textarea#inputs-for-string-type
         """
         self.widget = widget
         super().__init__(*args, **kwargs)  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
