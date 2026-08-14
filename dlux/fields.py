@@ -12,6 +12,7 @@ from django.db.models import (
     CharField,
     Field,
     Model,
+    TextField,
 )
 from django_jsonform.models.fields import (  # pyright: ignore[reportMissingTypeStubs]
     ArrayField as BaseArrayField,
@@ -26,20 +27,33 @@ class ArrayField(BaseArrayField):
     """Extended version of django.contrib.postgres.ArrayField.
 
     django_jsonform extends the base field to support json schemas.
-    Here we extend django_jsonform's ArrayField to use the base_field's `choices` attribute in
-    building that schema.
+    Here we extend django_jsonform's ArrayField to build different schemas
+    depending on the base_field's type and attributes.
     """
 
     base_field: Field[Any, Any]
+    widget: str | None
+
+    def __init__(self, *args: Any, widget: str | None = None, **kwargs: Any) -> None:
+        """Accept a django_jsonform item widget parameter without passing it to the base class.
+
+        This is used to set the widget on the ArrayField schema, but not pass it to the base class
+        so that it doesn't get serialized into migrations.
+        """
+        self.widget = widget
+        super().__init__(*args, **kwargs)  # pyright: ignore[reportUnknownMemberType, reportUnknownVariableType]
 
     def formfield(self, **kwargs: Any) -> Any:  # noqa: ANN401
         """Retreive django FormField class.
 
-        Modifies django_jsonform behavior to use the base_field's 'choices' attribute.
+        Modifies django_jsonform behavior based on the base_field's type and attributes.
         """
+        # If the base_field is a CharField or TextField with choices,
+        # set the choices on the schema from the field's choices
+        # and use a multiselect widget.
         if (
             not kwargs.get("schema")
-            and isinstance(self.base_field, CharField)
+            and (isinstance(self.base_field, CharField) or isinstance(self.base_field, TextField))
             and self.base_field.choices
         ):
             kwargs["schema"] = {
@@ -50,6 +64,15 @@ class ArrayField(BaseArrayField):
                         {"title": label, "value": id} for id, label in self.base_field.choices
                     ],
                     "widget": "multiselect",
+                },
+            }
+        # Otherwise, use the widget set on the ArrayField
+        elif not kwargs.get("schema") and self.widget:
+            kwargs["schema"] = {
+                "type": "list",
+                "items": {
+                    "type": "string",
+                    "widget": self.widget,
                 },
             }
         return super().formfield(**kwargs)  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]

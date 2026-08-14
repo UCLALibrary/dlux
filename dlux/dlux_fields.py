@@ -66,6 +66,7 @@ description = DluxField(
         TextField(),
         blank=True,
         default=list,
+        widget="textarea",
     ),
     csv=["Description.note"],
     solr=["description_tesim"],
@@ -73,11 +74,7 @@ description = DluxField(
 
 resource_type = DluxField(
     django=ArrayField(
-        CharField(
-            blank=False,
-            choices=RESOURCE_TYPE_CHOICES,
-            max_length=250,
-        ),
+        TextField(choices=RESOURCE_TYPE_CHOICES),
         blank=True,
         default=list,
     ),
@@ -96,6 +93,7 @@ caption = DluxField(
         TextField(),
         blank=True,
         default=list,
+        widget="textarea",
     ),
     csv=["Description.caption"],
     solr=["caption_tesim"],
@@ -103,7 +101,7 @@ caption = DluxField(
 
 creator = DluxField(
     django=ArrayField(
-        CharField(blank=False, max_length=250),
+        TextField(),
         blank=True,
         default=list,
     ),
@@ -113,7 +111,7 @@ creator = DluxField(
 
 genre = DluxField(
     django=ArrayField(
-        CharField(blank=False, max_length=250),
+        TextField(),
         blank=True,
         default=list,
     ),
@@ -126,6 +124,7 @@ inscription = DluxField(
         TextField(),
         blank=True,
         default=list,
+        widget="textarea",
     ),
     csv=["Inscription"],
     solr=["inscription_tesim"],
@@ -133,11 +132,7 @@ inscription = DluxField(
 
 language = DluxField(
     django=ArrayField(
-        CharField(
-            blank=False,
-            choices=LANGUAGE_CHOICES,
-            max_length=100,
-        ),
+        TextField(choices=LANGUAGE_CHOICES),
         blank=True,
         default=list,
     ),
@@ -152,10 +147,7 @@ language = DluxField(
 
 photographer = DluxField(
     django=ArrayField(
-        CharField(
-            blank=False,
-            max_length=250,
-        ),
+        TextField(),
         blank=True,
         default=list,
     ),
@@ -168,10 +160,7 @@ photographer = DluxField(
 
 publisher = DluxField(
     django=ArrayField(
-        CharField(
-            blank=False,
-            max_length=250,
-        ),
+        TextField(),
         blank=True,
         default=list,
     ),
@@ -181,10 +170,7 @@ publisher = DluxField(
 
 subject = DluxField(
     django=ArrayField(
-        CharField(
-            blank=False,
-            max_length=250,
-        ),
+        TextField(),
         blank=True,
         default=list,
     ),
@@ -194,10 +180,7 @@ subject = DluxField(
 
 subject_topic = DluxField(
     django=ArrayField(
-        CharField(
-            blank=False,
-            max_length=250,
-        ),
+        TextField(),
         blank=True,
         default=list,
     ),
