@@ -17,6 +17,14 @@ from django.db.models import (
 from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
 
+TEXTAREA_ARRAY_SCHEMA = {
+    "type": "list",
+    "items": {
+        "type": "string",
+        "widget": "textarea",
+    },
+}
+
 ark = DluxField(
     django=CharField(unique=True),
     csv=["Item ARK"],
@@ -66,7 +74,7 @@ description = DluxField(
         TextField(),
         blank=True,
         default=list,
-        widget="textarea",
+        schema=TEXTAREA_ARRAY_SCHEMA,
     ),
     csv=["Description.note"],
     solr=["description_tesim"],
@@ -93,7 +101,7 @@ caption = DluxField(
         TextField(),
         blank=True,
         default=list,
-        widget="textarea",
+        schema=TEXTAREA_ARRAY_SCHEMA,
     ),
     csv=["Description.caption"],
     solr=["caption_tesim"],
@@ -124,7 +132,7 @@ inscription = DluxField(
         TextField(),
         blank=True,
         default=list,
-        widget="textarea",
+        schema=TEXTAREA_ARRAY_SCHEMA,
     ),
     csv=["Inscription"],
     solr=["inscription_tesim"],
