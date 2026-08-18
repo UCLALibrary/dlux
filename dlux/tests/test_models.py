@@ -19,8 +19,17 @@ class TestBaseDluxRecord(SimpleTestCase):
             "ark": dlux_fields.ark,
             "collection": dlux_fields.collection,
             "title": dlux_fields.title,
+            "caption": dlux_fields.caption,
+            "creator": dlux_fields.creator,
             "description": dlux_fields.description,
+            "genre": dlux_fields.genre,
+            "inscription": dlux_fields.inscription,
+            "language": dlux_fields.language,
+            "photographer": dlux_fields.photographer,
+            "publisher": dlux_fields.publisher,
             "resource_type": dlux_fields.resource_type,
+            "subject": dlux_fields.subject,
+            "subject_topic": dlux_fields.subject_topic,
         }
         self.assertEqual(result, expected)
 
@@ -33,9 +42,20 @@ class TestBaseDluxRecord(SimpleTestCase):
             "BaseDluxRecord": {
                 "ark": dlux_fields.ark,
                 "title": dlux_fields.title,
-                "resource_type": dlux_fields.resource_type,
             },
-            "UnsortedFields": {"description": dlux_fields.description},
+            "BasicDescriptiveFields": {
+                "caption": dlux_fields.caption,
+                "creator": dlux_fields.creator,
+                "description": dlux_fields.description,
+                "genre": dlux_fields.genre,
+                "inscription": dlux_fields.inscription,
+                "language": dlux_fields.language,
+                "photographer": dlux_fields.photographer,
+                "publisher": dlux_fields.publisher,
+                "resource_type": dlux_fields.resource_type,
+                "subject": dlux_fields.subject,
+                "subject_topic": dlux_fields.subject_topic,
+            },
         }
         result = Work.get_dlux_fields(by_base_class=True)
         self.assertEqual(result, expected)

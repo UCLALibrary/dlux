@@ -12,6 +12,7 @@ from django.db.models import (
     CharField,
     Field,
     Model,
+    TextField,
 )
 from django_jsonform.models.fields import (  # pyright: ignore[reportMissingTypeStubs]
     ArrayField as BaseArrayField,
@@ -26,8 +27,8 @@ class ArrayField(BaseArrayField):
     """Extended version of django.contrib.postgres.ArrayField.
 
     django_jsonform extends the base field to support json schemas.
-    Here we extend django_jsonform's ArrayField to use the base_field's `choices` attribute in
-    building that schema.
+    Here we extend django_jsonform's ArrayField to build different schemas
+    depending on the base_field's type and attributes.
     """
 
     base_field: Field[Any, Any]
@@ -35,11 +36,14 @@ class ArrayField(BaseArrayField):
     def formfield(self, **kwargs: Any) -> Any:  # noqa: ANN401
         """Retreive django FormField class.
 
-        Modifies django_jsonform behavior to use the base_field's 'choices' attribute.
+        Modifies django_jsonform behavior based on the base_field's type and attributes.
         """
+        # If the base_field is a CharField or TextField with choices,
+        # set the choices on the schema from the field's choices
+        # and use a multiselect widget.
         if (
             not kwargs.get("schema")
-            and isinstance(self.base_field, CharField)
+            and (isinstance(self.base_field, CharField) or isinstance(self.base_field, TextField))
             and self.base_field.choices
         ):
             kwargs["schema"] = {
@@ -52,6 +56,7 @@ class ArrayField(BaseArrayField):
                     "widget": "multiselect",
                 },
             }
+
         return super().formfield(**kwargs)  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
 
 
