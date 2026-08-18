@@ -17,6 +17,8 @@ from django.db.models import (
 from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
 
+# Used to set widget rendered in admin forms to textarea
+# for longer textual fields wrapped in ArrayField
 TEXTAREA_ARRAY_SCHEMA = {
     "type": "list",
     "items": {

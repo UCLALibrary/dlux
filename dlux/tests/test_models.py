@@ -43,7 +43,6 @@ class TestBaseDluxRecord(SimpleTestCase):
                 "ark": dlux_fields.ark,
                 "title": dlux_fields.title,
             },
-            "UnsortedFields": {},  # NOTE: empty for now
             "BasicDescriptiveFields": {
                 "caption": dlux_fields.caption,
                 "creator": dlux_fields.creator,

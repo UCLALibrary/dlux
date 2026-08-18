@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from django.db.models import CharField, IntegerField, TextField
+from django.db.models import CharField, IntegerField
 from django.test import SimpleTestCase
 
 from dlux.fields import ArrayField
@@ -58,14 +58,3 @@ class TestArrayField(SimpleTestCase):
         form_field = array_field.formfield()
 
         self.assertIsNone(form_field.schema)
-
-    def test_formfield_sets_widget_on_schema(self) -> None:
-        array_field = ArrayField(
-            base_field=TextField(),
-            widget="textarea",
-        )
-
-        form_field = array_field.formfield()
-
-        # Our `formfield` override should set the widget on the `ArrayField` schema.
-        self.assertEqual(form_field.schema["items"]["widget"], "textarea")

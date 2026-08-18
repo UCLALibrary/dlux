@@ -32,7 +32,6 @@ class ArrayField(BaseArrayField):
     """
 
     base_field: Field[Any, Any]
-    widget: str | None
 
     def formfield(self, **kwargs: Any) -> Any:  # noqa: ANN401
         """Retreive django FormField class.
@@ -57,15 +56,7 @@ class ArrayField(BaseArrayField):
                     "widget": "multiselect",
                 },
             }
-        # Otherwise, use the widget set on the ArrayField
-        elif not kwargs.get("schema") and self.widget:
-            kwargs["schema"] = {
-                "type": "list",
-                "items": {
-                    "type": "string",
-                    "widget": self.widget,
-                },
-            }
+
         return super().formfield(**kwargs)  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
 
 
