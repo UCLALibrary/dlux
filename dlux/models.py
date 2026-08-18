@@ -128,25 +128,12 @@ class BasicDescriptiveFields(Model):
     subject_topic = dlux_fields.subject_topic.django
 
 
-class UnsortedFields(Model):
-    """All fields that haven't yet been asigned to a different abstract Model."""
-
-    class Meta:
-        """Django model Meta options.
-
-        see:
-        https://docs.djangoproject.com/en/5.2/ref/models/options/
-        """
-
-        abstract = True
-
-
 #
 #   Concerete Models
 #
 
 
-class Collection(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
+class Collection(BaseDluxRecord, BasicDescriptiveFields):
     """A dlux collection.
 
     Record is displayed publicly at https://digital.library.ucla.edu/catalog?f%5Bhas_model_ssim%5D%5B%5D=Collection&view=list
@@ -154,7 +141,7 @@ class Collection(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
     A dlux Collection is parent to a number of member Works.
     """
 
-    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta, UnsortedFields.Meta):
+    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta):
         """Django model Meta options.
 
         see:
@@ -170,7 +157,7 @@ class Collection(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
         return self.title
 
 
-class Work(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
+class Work(BaseDluxRecord, BasicDescriptiveFields):
     """A dlux work.
 
     Record is displayed publicly at https://digital.library.ucla.edu/catalog?utf8=✓&view=list&f%5Bhas_model_ssim%5D%5B%5D=Collection&q=&search_field=all_fields
@@ -178,7 +165,7 @@ class Work(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
     A dlux Work is a member of a collection and can optionally be parent to a number of ChildWorks.
     """
 
-    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta, UnsortedFields.Meta):
+    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta):
         """Django model Meta options.
 
         see:
@@ -196,7 +183,7 @@ class Work(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
         return self.title
 
 
-class ChildWork(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
+class ChildWork(BaseDluxRecord, BasicDescriptiveFields):
     """A dlux child work: for example a page in a Manuscript.
 
     Record is not intended to be displayed publicly via its own item page on https://digital.library.ucla.edu
@@ -209,7 +196,7 @@ class ChildWork(BaseDluxRecord, BasicDescriptiveFields, UnsortedFields):
     A dlux ChildWork must be the child of a Work.
     """
 
-    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta, UnsortedFields.Meta):
+    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta):
         """Django model Meta options.
 
         see:
