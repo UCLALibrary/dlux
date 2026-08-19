@@ -27,9 +27,23 @@ TEXTAREA_ARRAY_SCHEMA = {
 }
 
 #
-#   Top fields: these will appear at the top of their respective formsets and should be defined in
-#    the order we want them to appear.
+#   NOTE
 #
+#   The order in which fields appear in the admin panels is determined by the order in which the
+#   Field objects are first created, which for dlux is the order they are defined in this file, NOT
+#   the order in which they are added in models.py.
+#
+
+
+#
+#   Top fields: in the order we want them to appear.
+#
+
+title = DluxField(
+    django=CharField(),
+    csv=["Title"],
+    solr=["title_tesim", "title_sim", "sort_title_tsort", "sort_title_ssort"],
+)
 
 ark = DluxField(
     django=CharField(unique=True),
@@ -37,8 +51,10 @@ ark = DluxField(
     solr=["ark_ssi"],
 )
 
-# Don't add to the model; django_polymorphic makes it automatically
-# We DO need to account for it in the importer and write from the
+# polymorphic_ctype gets created automatically by django-polymorphic to keep track of which proxy
+# model a record belongs to. We should not add it to the models manually. Not sure the best way to
+# handle it for import and indexing (AW 8/19/26); so leaving this commented out as a marker.
+
 # polymorphic_ctype = DluxField(
 #     django=ForeignKey(ContentType, on_delete=PROTECT),
 #     csv=["Object Type"],
@@ -67,11 +83,6 @@ sequence = DluxField(
     exclude_models=["Collection", "Work"],
 )
 
-title = DluxField(
-    django=CharField(),
-    csv=["Title"],
-    solr=["title_tesim", "title_sim", "sort_title_tsort", "sort_title_ssort"],
-)
 
 #
 #   Other fields: keep these alphabetized

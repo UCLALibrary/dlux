@@ -56,6 +56,19 @@ class Record(BasicDescriptiveFields):
 
     The underlying model that represents all data types in a single database table. Should not be
     used directly; most actual interactions should use the proxy models defined below.
+
+    More on proxy models in the django core:
+    https://docs.djangoproject.com/en/5.2/topics/db/models/#proxy-models
+
+    django-polymorphic, which makes working with proxy models easier:
+    https://django-polymorphic.readthedocs.io/en/stable/
+
+    The django-polymorphic docs are mostly written assuming one is using multi-table inheritance,
+    but it also supports proxy models without significant differences in developer interface.
+
+    In particular, django-polymorphic creates a field in the database to represent the proxy model
+    associated with a given record, so a search for `Record` objects can return individual
+    `Collection`, `Work`, and `ChildWork` objects.
     """
 
     ark = dlux_fields.ark.django
@@ -77,6 +90,7 @@ class Record(BasicDescriptiveFields):
                 nulls_distinct=True,
             )
         ]
+        proxy = False  # The default, just being explicit
 
     def __str__(self) -> str:
         """Return the record title as a user-friendly representation of the object."""
