@@ -6,8 +6,9 @@ from those objects.
 """
 
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, Iterable, cast
 
+from django.apps import apps
 from django.db.models import (
     CharField,
     Field,
@@ -62,8 +63,27 @@ class ArrayField(BaseArrayField):
 
 @dataclass
 class DluxField:
-    """Container for Django classes and other information related to a dlux metadata term."""
+    """Container for Django classes and other information related to a dlux metadata term.
+
+    Args:
+        django: An instance of (a subclass of) django.db.models.Field.
+        csv: A list of csv column aliases to import into the field.
+        solr: A list of solr field names to which the field should be indexed.
+        exclude_models: A tuple of names of models in which the field is not used. At a database
+            level, all models are stored as `Record` and contain all fields, but fields will only
+            be shown in the admin interface of a proxy model if that model or its superclass is not
+            included in `exclude_models`. The default is an empty tuple, which shows the field for
+            all model types.
+    """
 
     django: "Field[Any, Any]"
     csv: list[str] | Callable[[dict[str, Any]], dict[str, Any]]
     solr: list[str] | Callable[[Model], dict[str, Any]]
+    exclude_models: Iterable[str] = tuple()
+
+    def get_exclude_models(self) -> tuple[type[Model], ...]:
+        """Return a tuple of python classes for each model named in self.exclude_models."""
+        # django-stubs's return type of get_model() is `type[Any]`, but we know it's `type[Model]``
+        return tuple(
+            cast(type[Model], apps.get_model("dlux", name)) for name in self.exclude_models
+        )

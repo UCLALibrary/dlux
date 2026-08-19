@@ -6,7 +6,6 @@ from those objects.
 """
 
 from django.db.models import (
-    CASCADE,
     PROTECT,
     CharField,
     ForeignKey,
@@ -27,43 +26,18 @@ TEXTAREA_ARRAY_SCHEMA = {
     },
 }
 
-ark = DluxField(
-    django=CharField(unique=True),
-    csv=["Item ARK"],
-    solr=["ark_ssi"],
-)
+#
+#   NOTE
+#
+#   The order in which fields appear in the admin panels is determined by the order in which the
+#   Field objects are first created, which for dlux is the order they are defined in this file, NOT
+#   the order in which they are added in models.py.
+#
 
-collection = DluxField(
-    django=ForeignKey(
-        "dlux.Collection",
-        on_delete=PROTECT,
-        related_name="works",
-    ),
-    csv=["Parent ARK"],
-    solr=[
-        # TODO add a hook so we can look up titles, create ursus IDs
-        "dlcs_collection_name_tesim",
-        "member_of_collection_ids_ssim",
-        "member_of_collections_ssim",
-    ],
-)
 
-parent = DluxField(
-    django=ForeignKey(
-        "dlux.Work",
-        on_delete=CASCADE,
-        related_name="child_works",
-    ),
-    csv=["Parent ARK"],
-    solr=[],
-)
-
-# there's probably a library out there that we should be using
-order = DluxField(
-    django=IntegerField(),
-    csv=[],
-    solr=[],
-)
+#
+#   Top fields: in the order we want them to appear.
+#
 
 title = DluxField(
     django=CharField(),
@@ -71,32 +45,49 @@ title = DluxField(
     solr=["title_tesim", "title_sim", "sort_title_tsort", "sort_title_ssort"],
 )
 
-description = DluxField(
-    django=ArrayField(
-        TextField(),
-        blank=True,
-        default=list,
-        schema=TEXTAREA_ARRAY_SCHEMA,
-    ),
-    csv=["Description.note"],
-    solr=["description_tesim"],
+ark = DluxField(
+    django=CharField(unique=True),
+    csv=["Item ARK"],
+    solr=["ark_ssi"],
 )
 
-resource_type = DluxField(
-    django=ArrayField(
-        TextField(choices=RESOURCE_TYPE_CHOICES),
+# polymorphic_ctype gets created automatically by django-polymorphic to keep track of which proxy
+# model a record belongs to. We should not add it to the models manually. Not sure the best way to
+# handle it for import and indexing (AW 8/19/26); so leaving this commented out as a marker.
+
+# polymorphic_ctype = DluxField(
+#     django=ForeignKey(ContentType, on_delete=PROTECT),
+#     csv=["Object Type"],
+#     solr=["has_model_ssim"],
+# )
+
+
+parent = DluxField(
+    django=ForeignKey(
+        "dlux.Record",
         blank=True,
-        default=list,
+        null=True,
+        on_delete=PROTECT,
+        related_name="children",
     ),
-    csv=["Type.typeOfResource"],
-    solr=[
-        "human_readable_resource_type_tesim",
-        "human_readable_resource_type_sim",
-        "resource_type_sim",
-        "resource_type_ssim",
-        "resource_type_tesim",
-    ],
+    csv=["Parent ARK"],
+    solr=[],
+    exclude_models=["Collection"],
 )
+
+# there's probably a library out there that we should be using
+sequence = DluxField(
+    django=IntegerField(blank=True, null=True),
+    csv=["Item Sequence"],
+    solr=[],
+    exclude_models=["Collection", "Work"],
+)
+
+
+#
+#   Other fields: keep these alphabetized
+#
+
 
 caption = DluxField(
     django=ArrayField(
@@ -117,6 +108,17 @@ creator = DluxField(
     ),
     csv=["Creator", "Name.creator"],
     solr=["creator_tesim", "creator_sim"],
+)
+
+description = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=["Description.note"],
+    solr=["description_tesim"],
 )
 
 genre = DluxField(
@@ -176,6 +178,22 @@ publisher = DluxField(
     ),
     csv=["Publisher.publisherName"],
     solr=["publisher_tesim", "publisher_sim"],
+)
+
+resource_type = DluxField(
+    django=ArrayField(
+        TextField(choices=RESOURCE_TYPE_CHOICES),
+        blank=True,
+        default=list,
+    ),
+    csv=["Type.typeOfResource"],
+    solr=[
+        "human_readable_resource_type_tesim",
+        "human_readable_resource_type_sim",
+        "resource_type_sim",
+        "resource_type_ssim",
+        "resource_type_tesim",
+    ],
 )
 
 subject = DluxField(

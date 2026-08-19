@@ -8,6 +8,7 @@ dependencies = [
     "django>=5.2.15,<6",
     "django-bootstrap5>=26.2",
     "django-jsonform>=2.23.2",
+    "django-polymorphic>=4.11.7",
     "django-stubs-ext>=6.0.7",
     "gunicorn>=26.0.0",
     "psycopg[binary]>=3.3.4",
