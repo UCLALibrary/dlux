@@ -6,7 +6,6 @@ from those objects.
 """
 
 from django.db.models import (
-    CASCADE,
     PROTECT,
     CharField,
     ForeignKey,
@@ -27,42 +26,45 @@ TEXTAREA_ARRAY_SCHEMA = {
     },
 }
 
+#
+#   Top fields: these will appear at the top of their respective formsets and should be defined in
+#    the order we want them to appear.
+#
+
 ark = DluxField(
     django=CharField(unique=True),
     csv=["Item ARK"],
     solr=["ark_ssi"],
 )
 
-collection = DluxField(
-    django=ForeignKey(
-        "dlux.Collection",
-        on_delete=PROTECT,
-        related_name="works",
-    ),
-    csv=["Parent ARK"],
-    solr=[
-        # TODO add a hook so we can look up titles, create ursus IDs
-        "dlcs_collection_name_tesim",
-        "member_of_collection_ids_ssim",
-        "member_of_collections_ssim",
-    ],
-)
+# Don't add to the model; django_polymorphic makes it automatically
+# We DO need to account for it in the importer and write from the
+# polymorphic_ctype = DluxField(
+#     django=ForeignKey(ContentType, on_delete=PROTECT),
+#     csv=["Object Type"],
+#     solr=["has_model_ssim"],
+# )
+
 
 parent = DluxField(
     django=ForeignKey(
-        "dlux.Work",
-        on_delete=CASCADE,
-        related_name="child_works",
+        "dlux.Record",
+        blank=True,
+        null=True,
+        on_delete=PROTECT,
+        related_name="children",
     ),
     csv=["Parent ARK"],
     solr=[],
+    exclude_models=["Collection"],
 )
 
 # there's probably a library out there that we should be using
-order = DluxField(
-    django=IntegerField(),
-    csv=[],
+sequence = DluxField(
+    django=IntegerField(blank=True, null=True),
+    csv=["Item Sequence"],
     solr=[],
+    exclude_models=["Collection", "Work"],
 )
 
 title = DluxField(
@@ -71,32 +73,10 @@ title = DluxField(
     solr=["title_tesim", "title_sim", "sort_title_tsort", "sort_title_ssort"],
 )
 
-description = DluxField(
-    django=ArrayField(
-        TextField(),
-        blank=True,
-        default=list,
-        schema=TEXTAREA_ARRAY_SCHEMA,
-    ),
-    csv=["Description.note"],
-    solr=["description_tesim"],
-)
+#
+#   Other fields: keep these alphabetized
+#
 
-resource_type = DluxField(
-    django=ArrayField(
-        TextField(choices=RESOURCE_TYPE_CHOICES),
-        blank=True,
-        default=list,
-    ),
-    csv=["Type.typeOfResource"],
-    solr=[
-        "human_readable_resource_type_tesim",
-        "human_readable_resource_type_sim",
-        "resource_type_sim",
-        "resource_type_ssim",
-        "resource_type_tesim",
-    ],
-)
 
 caption = DluxField(
     django=ArrayField(
@@ -117,6 +97,17 @@ creator = DluxField(
     ),
     csv=["Creator", "Name.creator"],
     solr=["creator_tesim", "creator_sim"],
+)
+
+description = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=["Description.note"],
+    solr=["description_tesim"],
 )
 
 genre = DluxField(
@@ -176,6 +167,22 @@ publisher = DluxField(
     ),
     csv=["Publisher.publisherName"],
     solr=["publisher_tesim", "publisher_sim"],
+)
+
+resource_type = DluxField(
+    django=ArrayField(
+        TextField(choices=RESOURCE_TYPE_CHOICES),
+        blank=True,
+        default=list,
+    ),
+    csv=["Type.typeOfResource"],
+    solr=[
+        "human_readable_resource_type_tesim",
+        "human_readable_resource_type_sim",
+        "resource_type_sim",
+        "resource_type_ssim",
+        "resource_type_tesim",
+    ],
 )
 
 subject = DluxField(

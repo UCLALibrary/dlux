@@ -48,6 +48,7 @@ CSRF_TRUSTED_ORIGINS = list(os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split("
 INSTALLED_APPS = [
     # Enable whitenoise in development per
     # https://whitenoise.readthedocs.io/en/stable/django.html#using-whitenoise-in-development
+    "polymorphic",
     "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",

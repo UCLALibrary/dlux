@@ -8,6 +8,7 @@ from those objects.
 from typing import Literal, overload
 
 from django.db.models import Model, UniqueConstraint
+from polymorphic.models import PolymorphicModel
 
 from dlux import dlux_fields
 from dlux.fields import DluxField
@@ -20,13 +21,10 @@ DluxFieldsList = dict[str, DluxField]
 DluxFieldsByBaseClass = dict[str, DluxFieldsList]
 
 
-class BaseDluxRecord(Model):
-    """Base model for all dlux record types.
+class BasicDescriptiveFields(PolymorphicModel):
+    """Basic descriptive fields for all dlux record types."""
 
-    Contains universally-required fields and utilities for dlux record models
-    """
-
-    class Meta:
+    class Meta(PolymorphicModel.Meta):
         """Django model Meta options.
 
         see:
@@ -35,8 +33,54 @@ class BaseDluxRecord(Model):
 
         abstract = True
 
+    caption = dlux_fields.caption.django
+    creator = dlux_fields.creator.django
+    description = dlux_fields.description.django
+    genre = dlux_fields.genre.django
+    inscription = dlux_fields.inscription.django
+    language = dlux_fields.language.django
+    photographer = dlux_fields.photographer.django
+    publisher = dlux_fields.publisher.django
+    resource_type = dlux_fields.resource_type.django
+    subject = dlux_fields.subject.django
+    subject_topic = dlux_fields.subject_topic.django
+
+
+#
+#   A single concrete model to represent all our data in the db.
+#
+
+
+class Record(BasicDescriptiveFields):
+    """A dlux record.
+
+    The underlying model that represents all data types in a single database table. Should not be
+    used directly; most actual interactions should use the proxy models defined below.
+    """
+
     ark = dlux_fields.ark.django
     title = dlux_fields.title.django
+    parent = dlux_fields.parent.django
+    sequence = dlux_fields.sequence.django
+
+    class Meta(BasicDescriptiveFields.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        constraints = [
+            UniqueConstraint(
+                fields=["parent", "sequence"],
+                name="childwork_unique_sequence_per_parent",
+                nulls_distinct=True,
+            )
+        ]
+
+    def __str__(self) -> str:
+        """Return the record title as a user-friendly representation of the object."""
+        return self.title
 
     @overload
     @classmethod
@@ -81,20 +125,23 @@ class BaseDluxRecord(Model):
                     ...
                 }
         """
-        all_fields: DluxFieldsList = {
-            field.name: getattr(dlux_fields, field.name)
-            for field in cls._meta.get_fields()
-            if isinstance(getattr(dlux_fields, field.name, None), dlux_fields.DluxField)
-        }
+        all_fields: DluxFieldsList = {}
+        for field in cls._meta.get_fields():
+            dlux_field = getattr(dlux_fields, field.name, None)
+            if isinstance(dlux_field, dlux_fields.DluxField) and not issubclass(
+                cls, dlux_field.get_exclude_models()
+            ):
+                all_fields[field.name] = dlux_field
 
         if by_base_class:
-            result: DluxFieldsByBaseClass = {cls.__name__: all_fields}
+            result: DluxFieldsByBaseClass = {"Record": all_fields}
 
-            for subcls in cls.__bases__:
-                if issubclass(subcls, Model):
+            for subcls in Record.__bases__:
+                if issubclass(subcls, Model) and subcls.__name__:
                     result[subcls.__name__] = {
-                        field.name: result[cls.__name__].pop(field.name)
+                        field.name: result["Record"].pop(field.name)
                         for field in subcls._meta.get_fields()
+                        if field.name in result["Record"]
                     }
 
             return result
@@ -103,37 +150,12 @@ class BaseDluxRecord(Model):
             return all_fields
 
 
-class BasicDescriptiveFields(Model):
-    """Basic descriptive fields for all dlux record types."""
-
-    class Meta:
-        """Django model Meta options.
-
-        see:
-        https://docs.djangoproject.com/en/5.2/ref/models/options/
-        """
-
-        abstract = True
-
-    caption = dlux_fields.caption.django
-    creator = dlux_fields.creator.django
-    description = dlux_fields.description.django
-    genre = dlux_fields.genre.django
-    inscription = dlux_fields.inscription.django
-    language = dlux_fields.language.django
-    photographer = dlux_fields.photographer.django
-    publisher = dlux_fields.publisher.django
-    resource_type = dlux_fields.resource_type.django
-    subject = dlux_fields.subject.django
-    subject_topic = dlux_fields.subject_topic.django
-
-
 #
-#   Concerete Models
+#   Type-specific proxy models to interact with the data.
 #
 
 
-class Collection(BaseDluxRecord, BasicDescriptiveFields):
+class Collection(Record):
     """A dlux collection.
 
     Record is displayed publicly at https://digital.library.ucla.edu/catalog?f%5Bhas_model_ssim%5D%5B%5D=Collection&view=list
@@ -141,23 +163,17 @@ class Collection(BaseDluxRecord, BasicDescriptiveFields):
     A dlux Collection is parent to a number of member Works.
     """
 
-    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta):
+    class Meta(Record.Meta):
         """Django model Meta options.
 
         see:
         https://docs.djangoproject.com/en/5.2/ref/models/options/
-
-        Included here because including the parent Meta classes silences a type error.
         """
 
-        pass
-
-    def __str__(self) -> str:
-        """Return the record title as a user-friendly representation of the object."""
-        return self.title
+        proxy = True
 
 
-class Work(BaseDluxRecord, BasicDescriptiveFields):
+class Work(Record):
     """A dlux work.
 
     Record is displayed publicly at https://digital.library.ucla.edu/catalog?utf8=✓&view=list&f%5Bhas_model_ssim%5D%5B%5D=Collection&q=&search_field=all_fields
@@ -165,25 +181,17 @@ class Work(BaseDluxRecord, BasicDescriptiveFields):
     A dlux Work is a member of a collection and can optionally be parent to a number of ChildWorks.
     """
 
-    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta):
+    class Meta(Record.Meta):
         """Django model Meta options.
 
         see:
         https://docs.djangoproject.com/en/5.2/ref/models/options/
-
-        Included here to silence a type error.
         """
 
-        pass
-
-    collection = dlux_fields.collection.django
-
-    def __str__(self) -> str:
-        """Return the record title as a user-friendly representation of the object."""
-        return self.title
+        proxy = True
 
 
-class ChildWork(BaseDluxRecord, BasicDescriptiveFields):
+class ChildWork(Record):
     """A dlux child work: for example a page in a Manuscript.
 
     Record is not intended to be displayed publicly via its own item page on https://digital.library.ucla.edu
@@ -196,28 +204,11 @@ class ChildWork(BaseDluxRecord, BasicDescriptiveFields):
     A dlux ChildWork must be the child of a Work.
     """
 
-    class Meta(BaseDluxRecord.Meta, BasicDescriptiveFields.Meta):
+    class Meta(Record.Meta):
         """Django model Meta options.
 
         see:
         https://docs.djangoproject.com/en/5.2/ref/models/options/
         """
 
-        constraints = [
-            UniqueConstraint(
-                fields=["parent", "order"],
-                name="childwork_unique_order_per_parent",
-            )
-        ]
-
-    parent = dlux_fields.parent.django
-    order = dlux_fields.order.django
-
-    def __str__(self) -> str:
-        """Return a user-friendly representation of the object.
-
-        Representation includes parent record's title, the order within parent record, and the
-        record's own title.
-        """
-        # type annotations get tricky here, even with the manual annotations
-        return f"{self.parent.title} ({self.order}): {self.title}"  # pyright: ignore[reportAttributeAccessIssue, reportUnknownMemberType]
+        proxy = True

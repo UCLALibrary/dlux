@@ -63,6 +63,19 @@ wheels = [
 ]
 
 [[package]]
+name = "django-polymorphic"
+version = "4.11.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/13/d2/2760062d571e534153e5e842ee56660b0ea87c0da93c2dd87a4c44becbf0/django_polymorphic-4.11.7.tar.gz", hash = "sha256:9d616e9e2870efd62a5ee387294830c80935a31786e50da137bd76668dd5437d", size = 62105, upload-time = "2026-08-01T06:40:26.796Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9e/db/544272a8852d47fe5a6e7b29b4dd8050e89fb674dec447c93c5284c5a427/django_polymorphic-4.11.7-py3-none-any.whl", hash = "sha256:23ee903f79b9c4ebd36fee952f955d80c3d51f3eee9fa23639c4bafe3be616a2", size = 79239, upload-time = "2026-08-01T06:40:25.431Z" },
+]
+
+[[package]]
 name = "django-stubs"
 version = "6.0.7"
 source = { registry = "https://pypi.org/simple" }
@@ -98,6 +111,7 @@ dependencies = [
     { name = "django" },
     { name = "django-bootstrap5" },
     { name = "django-jsonform" },
+    { name = "django-polymorphic" },
     { name = "django-stubs-ext" },
     { name = "gunicorn" },
     { name = "psycopg", extra = ["binary"] },
@@ -117,6 +131,7 @@ requires-dist = [
     { name = "django", specifier = ">=5.2.15,<6" },
     { name = "django-bootstrap5", specifier = ">=26.2" },
     { name = "django-jsonform", specifier = ">=2.23.2" },
+    { name = "django-polymorphic", specifier = ">=4.11.7" },
     { name = "django-stubs-ext", specifier = ">=6.0.7" },
     { name = "gunicorn", specifier = ">=26.0.0" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3.4" },

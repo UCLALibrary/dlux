@@ -17,7 +17,7 @@ class TestBaseDluxRecord(SimpleTestCase):
         result = Work.get_dlux_fields(by_base_class=False)
         expected = {
             "ark": dlux_fields.ark,
-            "collection": dlux_fields.collection,
+            "parent": dlux_fields.parent,
             "title": dlux_fields.title,
             "caption": dlux_fields.caption,
             "creator": dlux_fields.creator,
@@ -33,13 +33,13 @@ class TestBaseDluxRecord(SimpleTestCase):
         }
         self.assertEqual(result, expected)
 
-    maxDiff = 2000
+    maxDiff = None
 
     def test_get_dlux_fields_by_base_class(self) -> None:
         """BaseDluxModel.get_dlux_fields() returns DluxField objects for a model."""
         expected = {
-            "Work": {"collection": dlux_fields.collection},
-            "BaseDluxRecord": {
+            "Record": {
+                "parent": dlux_fields.parent,
                 "ark": dlux_fields.ark,
                 "title": dlux_fields.title,
             },
