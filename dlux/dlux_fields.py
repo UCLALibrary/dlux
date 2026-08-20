@@ -17,6 +17,7 @@ from django.db.models import (
 
 from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
+from dlux.validators import normalized_date_validator
 
 if TYPE_CHECKING:
     from django_jsonform.models.fields import ArraySchema
@@ -28,6 +29,17 @@ TEXTAREA_ARRAY_SCHEMA: "ArraySchema" = {
     "items": {
         "type": "string",
         "widget": "textarea",
+    },
+}
+
+# Provides a date picker in the admin UI via the `format` property.
+# See @https://django-jsonform.readthedocs.io/en/stable/guide/inputs.html?highlight=textarea#inputs-for-string-type
+# for valid format values.
+DATE_ARRAY_SCHEMA = {
+    "type": "list",
+    "items": {
+        "type": "string",
+        "format": "date",
     },
 }
 
@@ -223,4 +235,25 @@ subject_topic = DluxField(
         "Subject.descriptiveTopic",
     ],
     solr=["subject_topic_tesim", "subject_topic_sim"],
+)
+
+# DATE_ARRAY_SCHEMA provides a date picker widget in the admin UI--see comment above.
+# Used here to improve UX for entering single dates,
+# while `normalized_date` below is a text input with validation.
+date_created = DluxField(
+    django=ArrayField(TextField(), blank=True, default=list, schema=DATE_ARRAY_SCHEMA),
+    csv=["Date.created", "Date.creation"],
+    solr=["date_created_tesim"],
+)
+
+normalized_date = DluxField(
+    django=ArrayField(
+        TextField(
+            validators=[normalized_date_validator],
+        ),
+        blank=True,
+        default=list,
+    ),
+    csv=["Date.normalized"],
+    solr=["normalized_date_tesim", "normalized_date_sim"],
 )
