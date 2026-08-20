@@ -21,10 +21,12 @@ class TestBaseDluxRecord(SimpleTestCase):
             "title": dlux_fields.title,
             "caption": dlux_fields.caption,
             "creator": dlux_fields.creator,
+            "date_created": dlux_fields.date_created,
             "description": dlux_fields.description,
             "genre": dlux_fields.genre,
             "inscription": dlux_fields.inscription,
             "language": dlux_fields.language,
+            "normalized_date": dlux_fields.normalized_date,
             "photographer": dlux_fields.photographer,
             "publisher": dlux_fields.publisher,
             "resource_type": dlux_fields.resource_type,
@@ -55,6 +57,10 @@ class TestBaseDluxRecord(SimpleTestCase):
                 "resource_type": dlux_fields.resource_type,
                 "subject": dlux_fields.subject,
                 "subject_topic": dlux_fields.subject_topic,
+            },
+            "DateInfoFields": {
+                "date_created": dlux_fields.date_created,
+                "normalized_date": dlux_fields.normalized_date,
             },
         }
         result = Work.get_dlux_fields(by_base_class=True)

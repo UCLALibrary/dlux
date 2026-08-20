@@ -127,6 +127,15 @@ creator = DluxField(
     solr=["creator_tesim", "creator_sim"],
 )
 
+# DATE_ARRAY_SCHEMA provides a date picker widget in the admin UI--see comment above.
+# Used here to improve UX for entering single dates,
+# while `normalized_date` below is a text input with validation.
+date_created = DluxField(
+    django=ArrayField(TextField(), blank=True, default=list, schema=DATE_ARRAY_SCHEMA),
+    csv=["Date.created", "Date.creation"],
+    solr=["date_created_tesim"],
+)
+
 description = DluxField(
     django=ArrayField(
         TextField(),
@@ -172,6 +181,18 @@ language = DluxField(
         "human_readable_language_tesim",  # NOTE: is filtered in `feed_ursus`
         "human_readable_language_sim",
     ],
+)
+
+normalized_date = DluxField(
+    django=ArrayField(
+        TextField(
+            validators=[normalized_date_validator],
+        ),
+        blank=True,
+        default=list,
+    ),
+    csv=["Date.normalized"],
+    solr=["normalized_date_tesim", "normalized_date_sim"],
 )
 
 photographer = DluxField(
@@ -235,25 +256,4 @@ subject_topic = DluxField(
         "Subject.descriptiveTopic",
     ],
     solr=["subject_topic_tesim", "subject_topic_sim"],
-)
-
-# DATE_ARRAY_SCHEMA provides a date picker widget in the admin UI--see comment above.
-# Used here to improve UX for entering single dates,
-# while `normalized_date` below is a text input with validation.
-date_created = DluxField(
-    django=ArrayField(TextField(), blank=True, default=list, schema=DATE_ARRAY_SCHEMA),
-    csv=["Date.created", "Date.creation"],
-    solr=["date_created_tesim"],
-)
-
-normalized_date = DluxField(
-    django=ArrayField(
-        TextField(
-            validators=[normalized_date_validator],
-        ),
-        blank=True,
-        default=list,
-    ),
-    csv=["Date.normalized"],
-    solr=["normalized_date_tesim", "normalized_date_sim"],
 )
