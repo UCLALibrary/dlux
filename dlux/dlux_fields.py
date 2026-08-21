@@ -5,8 +5,13 @@ be moved outside the standard django file structure. Django models are then crea
 from those objects.
 """
 
+from datetime import datetime
 from typing import TYPE_CHECKING
 
+from dateutil import parser
+from dateutil.parser import ParserError
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db.models import (
     PROTECT,
     CharField,
@@ -17,7 +22,6 @@ from django.db.models import (
 
 from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
-from dlux.validators import normalized_date_validator
 
 if TYPE_CHECKING:
     from django_jsonform.models.fields import ArraySchema
@@ -42,6 +46,10 @@ DATE_ARRAY_SCHEMA = {
         "format": "date",
     },
 }
+
+# Used to validate `normalized_date`.
+NORMALIZED_DATE_REGEX = r"-?\d?\d\d\d(-\d\d){0,2}"
+
 
 #
 #   NOTE
@@ -183,10 +191,86 @@ language = DluxField(
     ],
 )
 
+
+# TODO: Flesh out logic for validating normalized_date.
+#
+# For now, we are just using a RegexValidator to validate the format of `normalized_date`.
+# In the future, we may need to validate that dates can actually be parsed,
+# but we're deferring that, pending better understanding of variability in existing production data
+# that will need to be migrated into `dlux`. (HR 8/21/26)
+def normalized_date_validator(date_str: str) -> None:
+    """Validate that the input string is a valid normalized date format.
+
+    This validator checks if the input string is in one of the following formats:
+    - YYYY
+    - YYYY-MM
+    - YYYY-MM-DD
+    - START_DATE/END_DATE (where both dates are in one of the above formats)
+
+    It also supports 3-digit years (but not fewer) and negative years, e.g., 0750 or -0750.
+
+    Args:
+        date_str (str): The date string to validate.
+
+    Raises:
+        ValidationError: If the input string is not a valid normalized date format.
+    """
+    parts = date_str.split("/")
+    if len(parts) > 2:
+        raise ValidationError(
+            "Date ranges must be in the format START_DATE/END_DATE. "
+            "They cannot have more than two parts."
+        )
+    parsed_dates: list[datetime] = []
+    for part in parts:
+        # Strip negative sign while validating year length.
+        stripped_part = part[1:] if part.startswith("-") else part
+        # Get year part if YYYY-MM or YYYY-MM-DD.
+        year_part = stripped_part.split("-")[0]
+        if not year_part.isdigit() or len(year_part) < 3:
+            raise ValidationError("Years must have a minimum of 3 digits, e.g. 750 or -1750.")
+
+        try:
+            parsed_date: datetime = parser.parse(part)  # type: ignore
+            parsed_dates.append(parsed_date)
+        # If either part cannot be parsed, raise ValidationError.
+        except ParserError:
+            raise ValidationError("The provided date string(s) could not be parsed to valid dates.")
+    # If there are two dates, ensure the first is not after the second,
+    # accounting for negative dates and the fact that dateutil doesn't see them as negative.
+    if len(parsed_dates) == 2:  # if it's a date range, check order
+        start_neg = parts[0].startswith("-")
+        end_neg = parts[1].startswith("-")
+        out_of_order = (
+            (not start_neg and end_neg)  # start cannot be positive if end is negative
+            or (
+                start_neg and end_neg and parsed_dates[0] < parsed_dates[1]
+            )  # if both neg, date repr of start cannot be less than date repr of end
+            or (
+                not start_neg and not end_neg and parsed_dates[0] > parsed_dates[1]
+            )  # if both pos, date repr of start cannot be greater than date repr of end
+        )
+        if out_of_order:
+            raise ValidationError("In a date range, the start date must not be after the end date.")
+
+
 normalized_date = DluxField(
     django=ArrayField(
         TextField(
-            validators=[normalized_date_validator],
+            help_text=(
+                "Single date (e.g. 1980, 2020-05, 2020-05-15)or range (e.g 1980-01-04/1981-01-04). "
+                "Supports 3-digit (but not fewer) and negative years (e.g. 750 or -2000)."
+            ),
+            validators=[
+                RegexValidator(
+                    regex=NORMALIZED_DATE_REGEX,
+                    message=(
+                        "Date must be in format YYYY, YYYY-MM, YYYY-MM-DD, or START_DATE/END_DATE. "
+                        "Supports 3-digit (but not fewer) and negative years, e.g. 750 or -2000."
+                    ),
+                ),
+                # normalized_date_validator,  # NOTE: not used currently. See TODO above.
+            ],
         ),
         blank=True,
         default=list,
