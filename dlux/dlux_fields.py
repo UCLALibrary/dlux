@@ -12,13 +12,14 @@ from django.db.models import (
     IntegerField,
     TextField,
 )
+from django_jsonform.models.fields import ArraySchema
 
 from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
 
 # Used to set widget rendered in admin forms to textarea
 # for longer textual fields wrapped in ArrayField
-TEXTAREA_ARRAY_SCHEMA = {
+TEXTAREA_ARRAY_SCHEMA: ArraySchema = {
     "type": "list",
     "items": {
         "type": "string",

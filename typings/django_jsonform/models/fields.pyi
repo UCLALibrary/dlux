@@ -203,10 +203,11 @@ class ArrayField(CheckPostgresInstalledMixin, CheckFieldDefaultMixin, Field[_ST,
     empty_strings_allowed: bool
     default_error_messages: ClassVar[_ErrorMessagesDict]
     base_field: Field[Any, Any]
+    name: str
     size: int | None
     default_validators: list[_ValidatorCallable]
     from_db_value: Any
-    def __init__(
+    def __init__(  # pyright: ignore[reportArgumentType]
         self,
         base_field: Field,  # pyright: ignore[reportMissingTypeArgument, reportUnknownParameterType]
         size: int | None = None,

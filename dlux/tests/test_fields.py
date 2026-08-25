@@ -8,7 +8,7 @@ from dlux.fields import ArrayField
 
 class TestArrayField(SimpleTestCase):
     def test_formfield_builds_schema_from_charfield_choices(self) -> None:
-        array_field = ArrayField(
+        array_field = ArrayField[str, str](
             base_field=CharField[str, str](
                 max_length=5,
                 choices=[
@@ -37,7 +37,7 @@ class TestArrayField(SimpleTestCase):
 
     def test_formfield_keeps_existing_schema(self) -> None:
 
-        array_field = ArrayField(
+        array_field = ArrayField[str, str](
             base_field=CharField(
                 max_length=5,
                 choices=[
@@ -53,7 +53,7 @@ class TestArrayField(SimpleTestCase):
         self.assertEqual(form_field.schema, custom_schema)
 
     def test_formfield_does_not_build_schema_for_non_charfield(self) -> None:
-        array_field = ArrayField(base_field=IntegerField(), size=None)
+        array_field = ArrayField[str, str](base_field=IntegerField(), size=None)
 
         form_field = array_field.formfield()
 
