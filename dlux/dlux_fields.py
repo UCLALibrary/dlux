@@ -5,6 +5,8 @@ be moved outside the standard django file structure. Django models are then crea
 from those objects.
 """
 
+from typing import TYPE_CHECKING
+
 from django.db.models import (
     PROTECT,
     CharField,
@@ -12,14 +14,16 @@ from django.db.models import (
     IntegerField,
     TextField,
 )
-from django_jsonform.models.fields import ArraySchema
 
 from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
 
+if TYPE_CHECKING:
+    from django_jsonform.models.fields import ArraySchema
+
 # Used to set widget rendered in admin forms to textarea
 # for longer textual fields wrapped in ArrayField
-TEXTAREA_ARRAY_SCHEMA: ArraySchema = {
+TEXTAREA_ARRAY_SCHEMA: "ArraySchema" = {
     "type": "list",
     "items": {
         "type": "string",
