@@ -48,7 +48,8 @@ DATE_ARRAY_SCHEMA = {
 }
 
 # Used to validate `normalized_date`.
-NORMALIZED_DATE_REGEX = r"-?\d?\d\d\d(-\d\d){0,2}"
+DATE_PATTERN = r"-?\d?\d\d\d(-\d\d){0,2}"
+NORMALIZED_DATE_REGEX = rf"^{DATE_PATTERN}(/{DATE_PATTERN})?$"
 
 
 #
