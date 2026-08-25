@@ -14,6 +14,7 @@ from django.db.models import (
     IntegerField,
     TextField,
 )
+from django_jsonform.models.fields import ArraySchema
 
 from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
