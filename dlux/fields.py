@@ -6,7 +6,7 @@ from those objects.
 """
 
 from dataclasses import dataclass
-from typing import Any, Callable, Iterable, cast
+from typing import Any, Callable, Iterable, TypeVar, cast
 
 from django.apps import apps
 from django.db.models import (
@@ -23,8 +23,11 @@ from django_jsonform.models.fields import (  # pyright: ignore[reportMissingType
 #   Base dataclass for schema fields
 #
 
+SetType = TypeVar("SetType")
+GetType = TypeVar("GetType")
 
-class ArrayField(BaseArrayField):
+
+class ArrayField(BaseArrayField[SetType, GetType]):
     """Extended version of django.contrib.postgres.ArrayField.
 
     django_jsonform extends the base field to support json schemas.
