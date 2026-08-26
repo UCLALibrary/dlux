@@ -35,7 +35,7 @@ TEXTAREA_ARRAY_SCHEMA: "ArraySchema" = {
 # Provides a date picker in the admin UI via the `format` property.
 # See @https://django-jsonform.readthedocs.io/en/stable/guide/inputs.html?highlight=textarea#inputs-for-string-type
 # for valid format values.
-DATE_ARRAY_SCHEMA = {
+DATE_ARRAY_SCHEMA: "ArraySchema" = {
     "type": "list",
     "items": {
         "type": "string",
