@@ -32,17 +32,6 @@ TEXTAREA_ARRAY_SCHEMA: "ArraySchema" = {
     },
 }
 
-# Provides a date picker in the admin UI via the `format` property.
-# See @https://django-jsonform.readthedocs.io/en/stable/guide/inputs.html?highlight=textarea#inputs-for-string-type
-# for valid format values.
-DATE_ARRAY_SCHEMA: "ArraySchema" = {
-    "type": "list",
-    "items": {
-        "type": "string",
-        "format": "date",
-    },
-}
-
 # Used to validate `normalized_date`.
 # DATE_PATTERN matches YYYY, YYYY-MM, or YYYY-MM-DD,
 # with optional negative sign and 3+ digits for year.
@@ -136,11 +125,8 @@ creator = DluxField(
     solr=["creator_tesim", "creator_sim"],
 )
 
-# DATE_ARRAY_SCHEMA provides a date picker widget in the admin UI--see comment above.
-# Used here to improve UX for entering single dates,
-# while `normalized_date` below is a text input with validation.
 date_created = DluxField(
-    django=ArrayField(TextField(), blank=True, default=list, schema=DATE_ARRAY_SCHEMA),
+    django=ArrayField(TextField(), blank=True, default=list),
     csv=["Date.created", "Date.creation"],
     solr=["date_created_tesim"],
 )
