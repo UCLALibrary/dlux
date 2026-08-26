@@ -14,9 +14,10 @@ from django.db.models import (
     ForeignKey,
     IntegerField,
     TextField,
+    URLField,
 )
 
-from dlux.choices import LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
+from dlux.choices import IIIF_VIEWING_HINT_CHOICES, LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
 from dlux.fields import ArrayField, DluxField
 
 if TYPE_CHECKING:
@@ -39,6 +40,10 @@ TEXTAREA_ARRAY_SCHEMA: "ArraySchema" = {
 # optionally followed by a slash and another DATE_PATTERN for ranges.
 DATE_PATTERN = r"-?\d?\d\d\d(-\d\d){0,2}"
 NORMALIZED_DATE_REGEX = rf"^{DATE_PATTERN}(/{DATE_PATTERN})?$"
+
+# Used to validate `preservation_copy`.
+# Matches path-like strings with particular folder structure.
+PRESERVATION_COPY_REGEX = r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.*"
 
 
 #
@@ -102,7 +107,14 @@ sequence = DluxField(
 #
 #   Other fields: keep these alphabetized
 #
-
+access_copy = DluxField(
+    django=URLField(blank=True, null=True),
+    csv=[
+        "access_copy",
+        "IIIF Access URL",
+    ],
+    solr=["access_copy_ssi"],
+)
 
 caption = DluxField(
     django=ArrayField(
@@ -150,6 +162,18 @@ genre = DluxField(
     ),
     csv=["Type.genre", "Genre"],
     solr=["genre_tesim", "genre_sim"],
+)
+
+iiif_manifest_url = DluxField(
+    django=CharField(blank=True, null=True),
+    csv=["IIIF Manifest URL"],
+    solr=["iiif_manifest_url_ssi"],
+)
+
+iiif_viewing_hint = DluxField(
+    django=CharField(blank=True, null=True, choices=IIIF_VIEWING_HINT_CHOICES),
+    csv=["viewingHint"],
+    solr=["human_readable_iiif_viewing_hint_ssi"],
 )
 
 inscription = DluxField(
@@ -283,6 +307,25 @@ photographer = DluxField(
     solr=["photographer_tesim", "photographer_sim"],
 )
 
+preservation_copy = DluxField(
+    django=CharField(
+        blank=True,
+        null=True,
+        validators=[
+            RegexValidator(
+                regex=PRESERVATION_COPY_REGEX,
+                message=(
+                    "Preservation copy must be a path starting with 'Masters/' "
+                    "followed by one of the following subfolders: "
+                    "dlmasters, CDLI Masters, Livingstone, Maps, MEAP, or othermasters."
+                ),
+            )
+        ],
+    ),
+    csv=["File Name"],
+    solr=["preservation_copy_ssi"],
+)
+
 publisher = DluxField(
     django=ArrayField(
         TextField(),
@@ -331,4 +374,10 @@ subject_topic = DluxField(
         "Subject.descriptiveTopic",
     ],
     solr=["subject_topic_tesim", "subject_topic_sim"],
+)
+
+thumbnail_url = DluxField(
+    django=CharField(blank=True, null=True),
+    csv=["Thumbnail URL", "Thumbnail"],
+    solr=["thumbnail_url_ss"],
 )

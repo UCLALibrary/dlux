@@ -62,6 +62,25 @@ class DateInfoFields(PolymorphicModel):
     normalized_date = dlux_fields.normalized_date.django
 
 
+class DigitalAssets(PolymorphicModel):
+    """Digital asset fields for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    access_copy = dlux_fields.access_copy.django
+    iiif_manifest_url = dlux_fields.iiif_manifest_url.django
+    iiif_viewing_hint = dlux_fields.iiif_viewing_hint.django
+    preservation_copy = dlux_fields.preservation_copy.django
+    thumbnail_url = dlux_fields.thumbnail_url.django
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
