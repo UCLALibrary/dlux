@@ -63,7 +63,9 @@ class TestArrayField(SimpleTestCase):
         def test_validator(value: str) -> None:
             pass  # mock validator function
 
-        array_field = ArrayField(base_field=TextField(validators=[test_validator]))
+        array_field: ArrayField[str, str] = ArrayField(
+            base_field=TextField(validators=[test_validator])
+        )
 
         form_field = array_field.formfield()
 
