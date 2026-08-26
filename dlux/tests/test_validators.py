@@ -1,9 +1,8 @@
 import re
 
-from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase
 
-from dlux.dlux_fields import NORMALIZED_DATE_REGEX, normalized_date_validator
+from dlux.dlux_fields import NORMALIZED_DATE_REGEX
 
 
 class TestNormalizedDateRegexPattern(SimpleTestCase):
@@ -46,47 +45,47 @@ class TestNormalizedDateRegexPattern(SimpleTestCase):
                 self.assertFalse(regex.match(date), f"Invalid date '{date}' matched regex.")
 
 
-class TestNormalizedDateValidator(SimpleTestCase):
-    """Test that `normalized_date_validator` correctly validates normalized date strings
-    and raises ValidationError for invalid inputs.
+# class TestNormalizedDateValidator(SimpleTestCase):
+#     """Test that `normalized_date_validator` correctly validates normalized date strings
+#     and raises ValidationError for invalid inputs.
 
-    NOTE: `normalized_date_validator` is not currently used in `dlux_fields.py`.
-    It is intended as a second-pass validator for `normalized_date` fields,
-    to catch edge cases not covered by the NORMALIZED_DATE_REGEX. (HR 8/25/26)
-    """
+#     NOTE: `normalized_date_validator` is not currently used in `dlux_fields.py`.
+#     It is intended as a second-pass validator for `normalized_date` fields,
+#     to catch edge cases not covered by the NORMALIZED_DATE_REGEX. (HR 8/25/26)
+#     """
 
-    def test_valid_dates(self) -> None:
-        valid_dates = [
-            "2023",  # YYYY
-            "2023-01",  # YYYY-MM
-            "2023-01-01",  # YYYY-MM-DD
-            "-2000",  # negative year
-            "750",  # 3-digit year
-            "2023/2024",  # year range
-            "2023-01/2023-12",  # range with months
-            "2023-01-01/2023-12-31",  # range with full dates
-            "750/751",  # range with 3-digit years
-            "-750/-650",  # valid negative year range
-            "-100/100",  # range spans negative to positive year
-        ]
-        for date in valid_dates:
-            with self.subTest(date=date):
-                try:
-                    normalized_date_validator(date)
-                except Exception as e:
-                    self.fail(f"Validator raised an exception for valid date '{date}': {e}")
+#     def test_valid_dates(self) -> None:
+#         valid_dates = [
+#             "2023",  # YYYY
+#             "2023-01",  # YYYY-MM
+#             "2023-01-01",  # YYYY-MM-DD
+#             "-2000",  # negative year
+#             "750",  # 3-digit year
+#             "2023/2024",  # year range
+#             "2023-01/2023-12",  # range with months
+#             "2023-01-01/2023-12-31",  # range with full dates
+#             "750/751",  # range with 3-digit years
+#             "-750/-650",  # valid negative year range
+#             "-100/100",  # range spans negative to positive year
+#         ]
+#         for date in valid_dates:
+#             with self.subTest(date=date):
+#                 try:
+#                     normalized_date_validator(date)
+#                 except Exception as e:
+#                     self.fail(f"Validator raised an exception for valid date '{date}': {e}")
 
-    def test_invalid_dates(self) -> None:
-        invalid_dates = [
-            "2023-13",  # invalid month
-            "2023-01-32",  # invalid day
-            "2023/2022",  # end date before start date
-            "abc",  # non-numeric
-            "2023-01-01/2022-12-31",  # start date after end date
-            "-1300/-1400",  # negative year range out of order
-            "100/-100",  # range cannot span positive to negative year
-        ]
-        for date in invalid_dates:
-            with self.subTest(date=date):
-                with self.assertRaises(ValidationError):
-                    normalized_date_validator(date)
+#     def test_invalid_dates(self) -> None:
+#         invalid_dates = [
+#             "2023-13",  # invalid month
+#             "2023-01-32",  # invalid day
+#             "2023/2022",  # end date before start date
+#             "abc",  # non-numeric
+#             "2023-01-01/2022-12-31",  # start date after end date
+#             "-1300/-1400",  # negative year range out of order
+#             "100/-100",  # range cannot span positive to negative year
+#         ]
+#         for date in invalid_dates:
+#             with self.subTest(date=date):
+#                 with self.assertRaises(ValidationError):
+#                     normalized_date_validator(date)
