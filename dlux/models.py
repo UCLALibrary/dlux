@@ -46,12 +46,28 @@ class BasicDescriptiveFields(PolymorphicModel):
     subject_topic = dlux_fields.subject_topic.django
 
 
+class DateInfoFields(PolymorphicModel):
+    """Date-related fields for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    date_created = dlux_fields.date_created.django
+    normalized_date = dlux_fields.normalized_date.django
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
 
 
-class Record(BasicDescriptiveFields):
+class Record(BasicDescriptiveFields, DateInfoFields):
     """A dlux record.
 
     The underlying model that represents all data types in a single database table. Should not be
@@ -76,7 +92,7 @@ class Record(BasicDescriptiveFields):
     parent = dlux_fields.parent.django
     sequence = dlux_fields.sequence.django
 
-    class Meta(BasicDescriptiveFields.Meta):
+    class Meta(BasicDescriptiveFields.Meta, DateInfoFields.Meta):
         """Django model Meta options.
 
         see:

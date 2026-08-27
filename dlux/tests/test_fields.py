@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from django.db.models import CharField, IntegerField
+from django.db.models import CharField, IntegerField, TextField
 from django.test import SimpleTestCase
 
 from dlux.fields import ArrayField
@@ -58,3 +58,15 @@ class TestArrayField(SimpleTestCase):
         form_field = array_field.formfield()
 
         self.assertIsNone(form_field.schema)
+
+    def test_validators_are_forwarded_to_formfield(self) -> None:
+        def test_validator(value: str) -> None:
+            pass  # mock validator function
+
+        array_field: ArrayField[str, str] = ArrayField(
+            base_field=TextField(validators=[test_validator])
+        )
+
+        form_field = array_field.formfield()
+
+        self.assertIn(test_validator, form_field.base_field.validators)

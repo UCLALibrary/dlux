@@ -75,3 +75,18 @@ class CollectionIntegrationTests(TestCase):
         self.assertIsNotNone(arrayfield_widget)  # for readable error message
         assert arrayfield_widget is not None  # for the type checker
         self.assertIn("data-django-jsonform", arrayfield_widget.attrs)
+
+    def test_invalid_normalized_date_shows_validation_message(self) -> None:
+        self.client.force_login(self.user)
+        response = self.client.post(
+            "/dlux/collection/add/",
+            data={
+                "title": "Test Collection",
+                "ark": "ark:/21198/z1234567",
+                "normalized_date": '["foobar"]',  # invalid date
+            },
+        )
+        self.assertContains(
+            response,
+            "Date must be in format YYYY, YYYY-MM, YYYY-MM-DD, or START_DATE/END_DATE.",
+        )

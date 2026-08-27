@@ -61,6 +61,11 @@ class ArrayField(BaseArrayField[SetType, GetType]):
                 },
             }
 
+        # Pass through the base_field's validators to the ArrayField's formfield,
+        # so that they display in the admin UI if any item with the array fails validation.
+        if not kwargs.get("base_field"):
+            kwargs["base_field"] = self.base_field.formfield(validators=self.base_field.validators)
+
         return super().formfield(**kwargs)  # pyright: ignore[reportUnknownVariableType, reportUnknownMemberType]
 
 
