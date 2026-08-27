@@ -165,13 +165,18 @@ genre = DluxField(
 )
 
 iiif_manifest_url = DluxField(
-    django=CharField(blank=True, null=True),
+    django=CharField(blank=True, null=True, verbose_name="IIIF manifest URL"),
     csv=["IIIF Manifest URL"],
     solr=["iiif_manifest_url_ssi"],
 )
 
 iiif_viewing_hint = DluxField(
-    django=CharField(blank=True, null=True, choices=IIIF_VIEWING_HINT_CHOICES),
+    django=CharField(
+        blank=True,
+        null=True,
+        choices=IIIF_VIEWING_HINT_CHOICES,
+        verbose_name="IIIF viewing hint",
+    ),
     csv=["viewingHint"],
     solr=["human_readable_iiif_viewing_hint_ssi"],
 )
@@ -377,7 +382,7 @@ subject_topic = DluxField(
 )
 
 thumbnail_url = DluxField(
-    django=CharField(blank=True, null=True),
+    django=CharField(blank=True, null=True, verbose_name="Thumbnail URL"),
     csv=["Thumbnail URL", "Thumbnail"],
     solr=["thumbnail_url_ss"],
 )

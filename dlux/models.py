@@ -62,7 +62,7 @@ class DateInfoFields(PolymorphicModel):
     normalized_date = dlux_fields.normalized_date.django
 
 
-class DigitalAssets(PolymorphicModel):
+class DigitalAssetFields(PolymorphicModel):
     """Digital asset fields for all dlux record types."""
 
     class Meta(PolymorphicModel.Meta):
@@ -86,7 +86,7 @@ class DigitalAssets(PolymorphicModel):
 #
 
 
-class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssets):
+class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssetFields):
     """A dlux record.
 
     The underlying model that represents all data types in a single database table. Should not be
@@ -111,7 +111,7 @@ class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssets):
     parent = dlux_fields.parent.django
     sequence = dlux_fields.sequence.django
 
-    class Meta(BasicDescriptiveFields.Meta, DateInfoFields.Meta, DigitalAssets.Meta):
+    class Meta(BasicDescriptiveFields.Meta, DateInfoFields.Meta, DigitalAssetFields.Meta):
         """Django model Meta options.
 
         see:
