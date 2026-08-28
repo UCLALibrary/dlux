@@ -81,12 +81,40 @@ class DigitalAssetFields(PolymorphicModel):
     thumbnail_url = dlux_fields.thumbnail_url.django
 
 
+class LibraryInfoFields(PolymorphicModel):
+    """Library-related fields for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    archival_collection_box = dlux_fields.archival_collection_box.django
+    archival_collection_folder = dlux_fields.archival_collection_folder.django
+    archival_collection_number = dlux_fields.archival_collection_number.django
+    archival_collection_title = dlux_fields.archival_collection_title.django
+    finding_aid_url = dlux_fields.finding_aid_url.django
+    funding_note = dlux_fields.funding_note.django
+    local_identifier = dlux_fields.local_identifier.django
+    local_rights_statement = dlux_fields.local_rights_statement.django
+    opac_url = dlux_fields.opac_url.django
+    program = dlux_fields.program.django
+    repository = dlux_fields.repository.django
+    rights_country = dlux_fields.rights_country.django
+    rights_statement = dlux_fields.rights_statement.django
+    services_contact = dlux_fields.services_contact.django
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
 
 
-class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssetFields):
+class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssetFields, LibraryInfoFields):
     """A dlux record.
 
     The underlying model that represents all data types in a single database table. Should not be
@@ -111,7 +139,12 @@ class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssetFields):
     parent = dlux_fields.parent.django
     sequence = dlux_fields.sequence.django
 
-    class Meta(BasicDescriptiveFields.Meta, DateInfoFields.Meta, DigitalAssetFields.Meta):
+    class Meta(
+        BasicDescriptiveFields.Meta,
+        DateInfoFields.Meta,
+        DigitalAssetFields.Meta,
+        LibraryInfoFields.Meta,
+    ):
         """Django model Meta options.
 
         see:

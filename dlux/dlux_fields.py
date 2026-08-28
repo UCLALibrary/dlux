@@ -16,7 +16,12 @@ from django.db.models import (
     TextField,
 )
 
-from dlux.choices import IIIF_VIEWING_HINT_CHOICES, LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
+from dlux.choices import (
+    IIIF_VIEWING_HINT_CHOICES,
+    LANGUAGE_CHOICES,
+    RESOURCE_TYPE_CHOICES,
+    RIGHTS_STATEMENT_CHOICES,
+)
 from dlux.fields import ArrayField, DluxField
 
 if TYPE_CHECKING:
@@ -116,6 +121,30 @@ access_copy = DluxField(
     solr=["access_copy_ssi"],
 )
 
+archival_collection_box = DluxField(
+    django=CharField(blank=True),
+    csv=["Box"],
+    solr=["archival_collection_box_ssi"],
+)
+
+archival_collection_folder = DluxField(
+    django=CharField(blank=True),
+    csv=["Folder"],
+    solr=["archival_collection_folder_ssi"],
+)
+
+archival_collection_number = DluxField(
+    django=CharField(blank=True),
+    csv=["Archival Collection Number"],
+    solr=["archival_collection_number_ssi"],
+)
+
+archival_collection_title = DluxField(
+    django=CharField(blank=True),
+    csv=["Archival Collection Title"],
+    solr=["archival_collection_title_ssi"],
+)
+
 caption = DluxField(
     django=ArrayField(
         TextField(),
@@ -152,6 +181,27 @@ description = DluxField(
     ),
     csv=["Description.note"],
     solr=["description_tesim"],
+)
+
+finding_aid_url = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        verbose_name="Finding aid URL",
+    ),
+    csv=["Finding Aid URL", "Alt ID.url"],
+    solr=["finding_aid_url_ssm"],
+)
+
+funding_note = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Description.fundingNote"],
+    solr=["funding_note_tesim"],
 )
 
 genre = DluxField(
@@ -206,6 +256,30 @@ language = DluxField(
     ],
 )
 
+local_identifier = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "Alt ID.local",
+        "Alternate Identifier.local",
+        "AltIdentifier.callNo",
+        "AltIdentifier.local",
+    ],
+    solr=["local_identifier_ssim"],
+)
+
+local_rights_statement = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Rights.statementLocal"],
+    solr=["local_rights_statement_ssm"],
+)
 
 # TODO: Flesh out logic for validating normalized_date.
 #
@@ -298,6 +372,12 @@ normalized_date = DluxField(
     solr=["normalized_date_tesim", "normalized_date_sim"],
 )
 
+opac_url = DluxField(
+    django=CharField(blank=True, verbose_name="OPAC URL"),
+    csv=["Opac url", "Description.opac"],
+    solr=["opac_url_ssi"],
+)
+
 photographer = DluxField(
     django=ArrayField(
         TextField(),
@@ -330,6 +410,16 @@ preservation_copy = DluxField(
     solr=["preservation_copy_ssi"],
 )
 
+program = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Program"],
+    solr=["program_tesim", "program_sim"],
+)
+
 publisher = DluxField(
     django=ArrayField(
         TextField(),
@@ -338,6 +428,21 @@ publisher = DluxField(
     ),
     csv=["Publisher.publisherName"],
     solr=["publisher_tesim", "publisher_sim"],
+)
+
+repository = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "repository",
+        "Repository",
+        "Name.repository",
+        "Personal or Corporate Name.repository",
+    ],
+    solr=["repository_tesim", "repository_sim"],
 )
 
 resource_type = DluxField(
@@ -354,6 +459,44 @@ resource_type = DluxField(
         "resource_type_ssim",
         "resource_type_tesim",
     ],
+)
+
+rights_country = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Rights.countryCreation"],
+    solr=["rights_country_tesim"],
+)
+
+rights_statement = DluxField(
+    django=ArrayField(
+        TextField(choices=RIGHTS_STATEMENT_CHOICES),
+        blank=True,
+        default=list,
+    ),
+    csv=["Rights.copyrightStatus"],
+    solr=[
+        "human_readable_rights_statement_tesim",
+        # TODO: has serializer in `feed_ursus`.
+        # See @https://github.com/UCLALibrary/feed_ursus/blob/087cce8e3e6ef00bfdf1b84652d3883e2d43da14/feed_ursus/ursus_solr_record.py#L258
+        "rights_statement_tesim",
+    ],
+)
+
+services_contact = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "Rights.servicesContact",
+        "Rights.rightsHolderContact",
+    ],
+    solr=["services_contact_ssm"],
 )
 
 subject = DluxField(
