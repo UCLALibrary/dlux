@@ -85,7 +85,7 @@ class DluxField:
     """
 
     django: "Field[Any, Any]"
-    csv: list[str] | Callable[[dict[str, Any]], dict[str, Any]]
+    csv: list[str]
     solr: list[str] | Callable[[Model], dict[str, Any]]
     exclude_models: Iterable[str] = tuple()
 

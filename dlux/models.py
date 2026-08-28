@@ -133,7 +133,7 @@ class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssetFields):
 
     @overload
     @classmethod
-    def get_dlux_fields(cls, by_base_class: Literal[False]) -> DluxFieldsList: ...
+    def get_dlux_fields(cls, by_base_class: Literal[False] = False) -> DluxFieldsList: ...
 
     @overload
     @classmethod
