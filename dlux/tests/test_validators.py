@@ -2,7 +2,7 @@ import re
 
 from django.test import SimpleTestCase
 
-from dlux.dlux_fields import NORMALIZED_DATE_REGEX
+from dlux.dlux_fields import NORMALIZED_DATE_REGEX, PRESERVATION_COPY_REGEX
 
 
 class TestNormalizedDateRegexPattern(SimpleTestCase):
@@ -43,6 +43,39 @@ class TestNormalizedDateRegexPattern(SimpleTestCase):
         for date in invalid_dates:
             with self.subTest(date=date):
                 self.assertFalse(regex.match(date), f"Invalid date '{date}' matched regex.")
+
+
+class TestPreservationCopyRegexPattern(SimpleTestCase):
+    def test_regex_pattern(self) -> None:
+        """Test that PRESERVATION_COPY_REGEX matches valid paths and does not match invalid ones."""
+
+        regex = re.compile(PRESERVATION_COPY_REGEX)
+
+        valid_paths = [
+            "Masters/dlmasters/filename.tif",
+            "Masters/CDLIMasters/filename.jpg",
+            "Masters/Livingstone/filename.png",
+            "Masters/Maps/filename.tif",
+            "Masters/MEAP/filename.jpg",
+            "Masters/othermasters/filename.png",
+            "Masters/othermasters/subfolder/filename with space no ext",  # whitespace and no ext OK
+        ]
+
+        invalid_paths = [
+            "Masters/dlmasters",  # missing filename
+            "Masters/dlmasters/",  # missing filename, trailing slash
+            "Masters/invalidfolder/filename.tif",  # invalid subfolder
+            "Masters//filename.tif",  # missing subfolder
+            "OtherFolder/dlmasters/filename.tif",  # invalid top-level folder
+        ]
+
+        for path in valid_paths:
+            with self.subTest(path=path):
+                self.assertTrue(regex.match(path), f"Valid path '{path}' did not match regex.")
+
+        for path in invalid_paths:
+            with self.subTest(path=path):
+                self.assertFalse(regex.match(path), f"Invalid path '{path}' matched regex.")
 
 
 # class TestNormalizedDateValidator(SimpleTestCase):

@@ -16,22 +16,27 @@ class TestBaseDluxRecord(SimpleTestCase):
 
         result = Work.get_dlux_fields(by_base_class=False)
         expected = {
+            "access_copy": dlux_fields.access_copy,
             "ark": dlux_fields.ark,
-            "parent": dlux_fields.parent,
-            "title": dlux_fields.title,
             "caption": dlux_fields.caption,
             "creator": dlux_fields.creator,
             "date_created": dlux_fields.date_created,
             "description": dlux_fields.description,
             "genre": dlux_fields.genre,
+            "iiif_manifest_url": dlux_fields.iiif_manifest_url,
+            "iiif_viewing_hint": dlux_fields.iiif_viewing_hint,
             "inscription": dlux_fields.inscription,
             "language": dlux_fields.language,
             "normalized_date": dlux_fields.normalized_date,
+            "parent": dlux_fields.parent,
             "photographer": dlux_fields.photographer,
+            "preservation_copy": dlux_fields.preservation_copy,
             "publisher": dlux_fields.publisher,
             "resource_type": dlux_fields.resource_type,
             "subject": dlux_fields.subject,
             "subject_topic": dlux_fields.subject_topic,
+            "thumbnail_url": dlux_fields.thumbnail_url,
+            "title": dlux_fields.title,
         }
         self.assertEqual(result, expected)
 
@@ -61,6 +66,13 @@ class TestBaseDluxRecord(SimpleTestCase):
             "DateInfoFields": {
                 "date_created": dlux_fields.date_created,
                 "normalized_date": dlux_fields.normalized_date,
+            },
+            "DigitalAssetFields": {
+                "access_copy": dlux_fields.access_copy,
+                "iiif_manifest_url": dlux_fields.iiif_manifest_url,
+                "iiif_viewing_hint": dlux_fields.iiif_viewing_hint,
+                "preservation_copy": dlux_fields.preservation_copy,
+                "thumbnail_url": dlux_fields.thumbnail_url,
             },
         }
         result = Work.get_dlux_fields(by_base_class=True)

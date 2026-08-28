@@ -625,3 +625,12 @@ RESOURCE_TYPE_CHOICES = {
     "http://id.loc.gov/vocabulary/resourceTypes/txt": "text",
     "http://id.loc.gov/vocabulary/resourceTypes/art": "three dimensional object",
 }
+
+IIIF_VIEWING_HINT_CHOICES = {
+    "http://iiif.io/api/presentation/2#pagedHint": "paged",
+    "http://iiif.io/api/presentation/2#individualsHint": "individuals",
+    "http://iiif.io/api/presentation/2#continuousHint": "continuous",
+    "http://iiif.io/api/presentation/2#nonPagedHint": "non-paged",
+    "http://iiif.io/api/presentation/2#facingPagesHint": "facing-pages",
+    "http://iiif.io/api/presentation/2#multiPartHint": "multi-part",
+}
