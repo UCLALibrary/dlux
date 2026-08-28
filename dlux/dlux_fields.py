@@ -14,7 +14,6 @@ from django.db.models import (
     ForeignKey,
     IntegerField,
     TextField,
-    URLField,
 )
 
 from dlux.choices import IIIF_VIEWING_HINT_CHOICES, LANGUAGE_CHOICES, RESOURCE_TYPE_CHOICES
@@ -44,7 +43,7 @@ NORMALIZED_DATE_REGEX = rf"^{DATE_PATTERN}(/{DATE_PATTERN})?$"
 # Used to validate `preservation_copy`.
 # Matches path-like strings with particular folder structure,
 # e.g. "Masters/dlmasters/filename.tif" or "Masters/othermasters/filename.jpg".
-PRESERVATION_COPY_REGEX = r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.*"
+PRESERVATION_COPY_REGEX = r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.+"
 
 
 #
@@ -109,7 +108,7 @@ sequence = DluxField(
 #   Other fields: keep these alphabetized
 #
 access_copy = DluxField(
-    django=URLField(blank=True, null=True),
+    django=CharField(blank=True),
     csv=[
         "access_copy",
         "IIIF Access URL",
@@ -166,7 +165,7 @@ genre = DluxField(
 )
 
 iiif_manifest_url = DluxField(
-    django=CharField(blank=True, null=True, verbose_name="IIIF manifest URL"),
+    django=CharField(blank=True, verbose_name="IIIF manifest URL"),
     csv=["IIIF Manifest URL"],
     solr=["iiif_manifest_url_ssi"],
 )
@@ -174,7 +173,6 @@ iiif_manifest_url = DluxField(
 iiif_viewing_hint = DluxField(
     django=CharField(
         blank=True,
-        null=True,
         choices=IIIF_VIEWING_HINT_CHOICES,
         verbose_name="IIIF viewing hint",
     ),
@@ -316,13 +314,13 @@ photographer = DluxField(
 preservation_copy = DluxField(
     django=CharField(
         blank=True,
-        null=True,
         validators=[
             RegexValidator(
                 regex=PRESERVATION_COPY_REGEX,
                 message=(
-                    "Preservation copy must be a path starting with 'Masters/' "
-                    "followed by one of the following subfolders: "
+                    "Preservation copy must be a path starting with 'Masters/' followed by "
+                    "a subfolder and a file name, e.g. 'Masters/dlmasters/filename.tif'. "
+                    "Valid subfolders are: "
                     "dlmasters, CDLI Masters, Livingstone, Maps, MEAP, or othermasters."
                 ),
             )
@@ -383,7 +381,7 @@ subject_topic = DluxField(
 )
 
 thumbnail_url = DluxField(
-    django=CharField(blank=True, null=True, verbose_name="Thumbnail URL"),
+    django=CharField(blank=True, verbose_name="Thumbnail URL"),
     csv=["Thumbnail URL", "Thumbnail"],
     solr=["thumbnail_url_ss"],
 )

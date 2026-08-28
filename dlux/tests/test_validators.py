@@ -58,10 +58,12 @@ class TestPreservationCopyRegexPattern(SimpleTestCase):
             "Masters/Maps/filename.tif",
             "Masters/MEAP/filename.jpg",
             "Masters/othermasters/filename.png",
+            "Masters/othermasters/subfolder/filename with space no ext",  # whitespace and no ext OK
         ]
 
         invalid_paths = [
             "Masters/dlmasters",  # missing filename
+            "Masters/dlmasters/",  # missing filename, trailing slash
             "Masters/invalidfolder/filename.tif",  # invalid subfolder
             "Masters//filename.tif",  # missing subfolder
             "OtherFolder/dlmasters/filename.tif",  # invalid top-level folder
