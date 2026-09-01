@@ -3,12 +3,6 @@
 # Write python output in real time without buffering
 export PYTHONUNBUFFERED=1
 
-# Pick up any local changes to requirements.txt, which do *not* automatically get re-installed when starting the container.
-# Do this only in dev environment!
-if [ "$DJANGO_RUN_ENV" = "dev" ]; then
-  pip install --no-cache-dir -r requirements.txt --user --no-warn-script-location
-fi
-
 # Check when database is ready for connections
 echo "Checking database connectivity..."
 until python -c 'import os, psycopg ; conn = psycopg.connect(host=os.environ.get("DJANGO_DB_HOST"),port=os.environ.get("DJANGO_DB_PORT"),user=os.environ.get("DJANGO_DB_USER"),password=os.environ.get("DJANGO_DB_PASSWORD"),dbname=os.environ.get("DJANGO_DB_NAME"))' ; do
@@ -35,7 +29,7 @@ if [ "$DJANGO_RUN_ENV" = "dev" ]; then
 
   ##### FIXTURES: Enable and add as needed. #####
   # Load fixtures, only in dev environment.
-  # python manage.py loaddata groups_and_permissions.json item_statuses.json
+  python manage.py loaddata sample_data.json
   ##### END FIXTURES #####
 fi
 
