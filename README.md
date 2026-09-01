@@ -80,6 +80,37 @@ From the django shell you could then run:
 <django.db.models.fields.IntegerField: n_eyes>)
 ```
 
+## Conventions
+
+### Django Field types in `dlux_fields.py`
+All fields are defined in `dlux_fields.py` as `DluxField` objects.  Each `DluxField` object has a `django` attribute, which is a standard Django field type (e.g., `CharField`, `TextField`, `IntegerField`, etc.). The other attributes of the `DluxField` object are used to define mappings for different data sources (e.g. CSVs and Solr).
+
+Regarding the `django` attribute, the convention for usage of `CharField` and `TextField` is as follows:
+- Use `CharField` for singular (i.e. non-multivalue) textual fields where an HTML text input box is most appropriate for data entry in the admin UI. Django renders a text input by default for `CharField`.
+- Use `TextField` for singular (i.e. non-multivalue) textual fields where an HTML textarea is most appropriate for data entry in the admin UI. Django renders a textarea by default for `TextField`.
+- For multivalue textual fields that make use of our custom extension of `ArrayField` from the `django-jsonform` library, use `TextField` as the base field within `ArrayField`, for consistency's sake. The `ArrayField` accepts a `schema` attribute, which can be used to specify the widget to render for the `TextField` base field, defaulting to a basic text input. To instead render a textarea, for example:
+
+```python
+description = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema={
+            "type": "list",
+            "items": {
+                "type": "string",
+                "widget": "textarea",  # This is where the textarea widget is specified
+            },
+        },
+    ),
+    csv=["Description.note"],
+    solr=["description_tesim"],
+)
+```
+
+See [the django-jsonform docs](https://django-jsonform.readthedocs.io/en/stable/guide/inputs.html) for more information on the `schema` attribute and available widgets.
+
 ## Developer Information
 
 ### Overview of environment
