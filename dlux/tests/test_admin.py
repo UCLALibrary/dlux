@@ -7,7 +7,13 @@ from dlux.models import ChildWork, Collection, Work
 class TestFieldsetsForModel(SimpleTestCase):
     def test_includes_all_abstract_models(self) -> None:
         result = [fs[0] for fs in fieldsets_for_model(Collection)]
-        expected = [None, "Basic Descriptive Fields", "Date Info Fields", "Digital Asset Fields"]
+        expected = [
+            None,
+            "Basic Descriptive Fields",
+            "Date Info Fields",
+            "Digital Asset Fields",
+            "Library Info Fields",
+        ]
 
         self.assertEqual(result, expected)
 
