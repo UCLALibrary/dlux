@@ -634,3 +634,9 @@ IIIF_VIEWING_HINT_CHOICES = {
     "http://iiif.io/api/presentation/2#facingPagesHint": "facing-pages",
     "http://iiif.io/api/presentation/2#multiPartHint": "multi-part",
 }
+
+RIGHTS_STATEMENT_CHOICES = {
+    "http://vocabs.library.ucla.edu/rights/copyrighted": "copyrighted",
+    "http://vocabs.library.ucla.edu/rights/unknown": "unknown",
+    "http://vocabs.library.ucla.edu/rights/publicDomain": "public domain",
+}
