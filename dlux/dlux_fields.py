@@ -48,9 +48,7 @@ NORMALIZED_DATE_REGEX = rf"^{DATE_PATTERN}(/{DATE_PATTERN})?$"
 # Used to validate `preservation_copy`.
 # Matches path-like strings with particular folder structure,
 # e.g. "Masters/dlmasters/filename.tif" or "Masters/othermasters/filename.jpg".
-PRESERVATION_COPY_REGEX = (
-    r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.+"
-)
+PRESERVATION_COPY_REGEX = r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.+"
 
 
 #
