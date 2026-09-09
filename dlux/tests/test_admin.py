@@ -13,6 +13,7 @@ class TestFieldsetsForModel(SimpleTestCase):
             "Date Info Fields",
             "Digital Asset Fields",
             "Library Info Fields",
+            "Physical Media Fields",
         ]
 
         self.assertEqual(result, expected)

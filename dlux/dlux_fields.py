@@ -48,7 +48,9 @@ NORMALIZED_DATE_REGEX = rf"^{DATE_PATTERN}(/{DATE_PATTERN})?$"
 # Used to validate `preservation_copy`.
 # Matches path-like strings with particular folder structure,
 # e.g. "Masters/dlmasters/filename.tif" or "Masters/othermasters/filename.jpg".
-PRESERVATION_COPY_REGEX = r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.+"
+PRESERVATION_COPY_REGEX = (
+    r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.+"
+)
 
 
 #
@@ -181,6 +183,26 @@ description = DluxField(
     ),
     csv=["Description.note"],
     solr=["description_tesim"],
+)
+
+dimensions = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Format.dimensions"],
+    solr=["dimensions_tesim", "dimensions_sim"],
+)
+
+extent = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Format.extent"],
+    solr=["extent_tesim", "extent_sim"],
 )
 
 finding_aid_url = DluxField(

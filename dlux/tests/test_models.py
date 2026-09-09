@@ -26,6 +26,8 @@ class TestBaseDluxRecord(SimpleTestCase):
             "creator": dlux_fields.creator,
             "date_created": dlux_fields.date_created,
             "description": dlux_fields.description,
+            "dimensions": dlux_fields.dimensions,
+            "extent": dlux_fields.extent,
             "finding_aid_url": dlux_fields.finding_aid_url,
             "funding_note": dlux_fields.funding_note,
             "genre": dlux_fields.genre,
@@ -103,6 +105,10 @@ class TestBaseDluxRecord(SimpleTestCase):
                 "rights_country": dlux_fields.rights_country,
                 "rights_statement": dlux_fields.rights_statement,
                 "services_contact": dlux_fields.services_contact,
+            },
+            "PhysicalMediaFields": {
+                "dimensions": dlux_fields.dimensions,
+                "extent": dlux_fields.extent,
             },
         }
         result = Work.get_dlux_fields(by_base_class=True)
