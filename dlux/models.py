@@ -109,12 +109,34 @@ class LibraryInfoFields(PolymorphicModel):
     services_contact = dlux_fields.services_contact.django
 
 
+class PhysicalMediaFields(PolymorphicModel):
+    """Physical media fields for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    dimensions = dlux_fields.dimensions.django
+    extent = dlux_fields.extent.django
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
 
 
-class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssetFields, LibraryInfoFields):
+class Record(
+    BasicDescriptiveFields,
+    DateInfoFields,
+    DigitalAssetFields,
+    LibraryInfoFields,
+    PhysicalMediaFields,
+):
     """A dlux record.
 
     The underlying model that represents all data types in a single database table. Should not be
@@ -144,6 +166,7 @@ class Record(BasicDescriptiveFields, DateInfoFields, DigitalAssetFields, Library
         DateInfoFields.Meta,
         DigitalAssetFields.Meta,
         LibraryInfoFields.Meta,
+        PhysicalMediaFields.Meta,
     ):
         """Django model Meta options.
 

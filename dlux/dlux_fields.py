@@ -183,6 +183,26 @@ description = DluxField(
     solr=["description_tesim"],
 )
 
+dimensions = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Format.dimensions"],
+    solr=["dimensions_tesim", "dimensions_sim"],
+)
+
+extent = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Format.extent"],
+    solr=["extent_tesim", "extent_sim"],
+)
+
 finding_aid_url = DluxField(
     django=ArrayField(
         TextField(),
