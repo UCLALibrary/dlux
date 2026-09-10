@@ -548,3 +548,9 @@ thumbnail_url = DluxField(
     csv=["Thumbnail URL", "Thumbnail"],
     solr=["thumbnail_url_ss"],
 )
+
+location = DluxField(
+    django=CharField(blank=False),
+    csv=["Coverage.geographic"],
+    solr=["location_tesim", "location_sim"],
+)
