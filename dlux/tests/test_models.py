@@ -35,8 +35,11 @@ class TestBaseDluxRecord(SimpleTestCase):
             "iiif_viewing_hint": dlux_fields.iiif_viewing_hint,
             "inscription": dlux_fields.inscription,
             "language": dlux_fields.language,
+            "latitude": dlux_fields.latitude,
             "local_identifier": dlux_fields.local_identifier,
             "local_rights_statement": dlux_fields.local_rights_statement,
+            "location": dlux_fields.location,
+            "longitude": dlux_fields.longitude,
             "normalized_date": dlux_fields.normalized_date,
             "opac_url": dlux_fields.opac_url,
             "parent": dlux_fields.parent,
@@ -51,6 +54,7 @@ class TestBaseDluxRecord(SimpleTestCase):
             "services_contact": dlux_fields.services_contact,
             "subject_topic": dlux_fields.subject_topic,
             "subject": dlux_fields.subject,
+            "subject_geographic": dlux_fields.subject_geographic,
             "thumbnail_url": dlux_fields.thumbnail_url,
             "title": dlux_fields.title,
         }
@@ -109,6 +113,12 @@ class TestBaseDluxRecord(SimpleTestCase):
             "PhysicalMediaFields": {
                 "dimensions": dlux_fields.dimensions,
                 "extent": dlux_fields.extent,
+            },
+            "GeographicFields": {
+                "latitude": dlux_fields.latitude,
+                "location": dlux_fields.location,
+                "longitude": dlux_fields.longitude,
+                "subject_geographic": dlux_fields.subject_geographic,
             },
         }
         result = Work.get_dlux_fields(by_base_class=True)
