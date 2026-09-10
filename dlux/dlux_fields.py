@@ -554,3 +554,21 @@ location = DluxField(
     csv=["Coverage.geographic"],
     solr=["location_tesim", "location_sim"],
 )
+
+longitude = DluxField(
+    django=CharField(blank=False),
+    csv=["Description.longitude"],
+    solr=["geographic_coordinates_ssim", "longitudes_match_latitudes"],
+)
+
+latitude = DluxField(
+    django=CharField(blank=False),
+    csv=["Description.latitude"],
+    solr=["geographic_coordinates_ssim", "longitudes_match_latitudes"],
+)
+
+subject_geographic = DluxField(
+    django=CharField(blank=False),
+    csv=["Subject geographic", "Subject place"],
+    solr=["subject_geographic_sim", "combined_subject_ssim"],
+)

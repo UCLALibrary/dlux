@@ -125,6 +125,24 @@ class PhysicalMediaFields(PolymorphicModel):
     extent = dlux_fields.extent.django
 
 
+class GeographicFields(PolymorphicModel):
+    """Geographic data fields for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    location = dlux_fields.location.django
+    longitude = dlux_fields.longitude.django
+    latitude = dlux_fields.latitude.django
+    subject_geographic = dlux_fields.subject_geographic.django
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
@@ -136,6 +154,7 @@ class Record(
     DigitalAssetFields,
     LibraryInfoFields,
     PhysicalMediaFields,
+    GeographicFields,
 ):
     """A dlux record.
 
@@ -167,6 +186,7 @@ class Record(
         DigitalAssetFields.Meta,
         LibraryInfoFields.Meta,
         PhysicalMediaFields.Meta,
+        GeographicFields.Meta,
     ):
         """Django model Meta options.
 
