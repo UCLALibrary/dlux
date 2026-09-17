@@ -94,6 +94,12 @@ class TestBaseDluxRecord(SimpleTestCase):
                 "preservation_copy": dlux_fields.preservation_copy,
                 "thumbnail_url": dlux_fields.thumbnail_url,
             },
+            "GeographicFields": {
+                "latitude": dlux_fields.latitude,
+                "location": dlux_fields.location,
+                "longitude": dlux_fields.longitude,
+                "subject_geographic": dlux_fields.subject_geographic,
+            },
             "LibraryInfoFields": {
                 "archival_collection_box": dlux_fields.archival_collection_box,
                 "archival_collection_folder": dlux_fields.archival_collection_folder,
@@ -113,12 +119,6 @@ class TestBaseDluxRecord(SimpleTestCase):
             "PhysicalMediaFields": {
                 "dimensions": dlux_fields.dimensions,
                 "extent": dlux_fields.extent,
-            },
-            "GeographicFields": {
-                "latitude": dlux_fields.latitude,
-                "location": dlux_fields.location,
-                "longitude": dlux_fields.longitude,
-                "subject_geographic": dlux_fields.subject_geographic,
             },
         }
         result = Work.get_dlux_fields(by_base_class=True)

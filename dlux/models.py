@@ -137,10 +137,34 @@ class GeographicFields(PolymorphicModel):
 
         abstract = True
 
+    latitude = dlux_fields.latitude.django
     location = dlux_fields.location.django
     longitude = dlux_fields.longitude.django
-    latitude = dlux_fields.latitude.django
     subject_geographic = dlux_fields.subject_geographic.django
+
+    @property
+    def geographic_coordinates_ssim(self) -> list[str] | None:
+        """Return latitude and longitude pairs formatted for SSIM indexing."""
+        return [
+            ", ".join([lat, long])
+            for lat, long in zip(
+                self.latitude or [],
+                self.longitude or [],
+            )
+        ] or None
+
+    def longitudes_match_latitudes(self) -> None:
+        """Verify that latitude and longitude pairs are properly matched."""
+        if len(self.latitude or []) != len(self.longitude or []):
+            raise ValueError(
+                "\n".join(
+                    [
+                        "Mismatched lengths:",
+                        f"Latitude {self.latitude}",
+                        f"Longitude {self.longitude}",
+                    ]
+                )
+            )
 
 
 #
@@ -152,9 +176,9 @@ class Record(
     BasicDescriptiveFields,
     DateInfoFields,
     DigitalAssetFields,
+    GeographicFields,
     LibraryInfoFields,
     PhysicalMediaFields,
-    GeographicFields,
 ):
     """A dlux record.
 
@@ -184,9 +208,9 @@ class Record(
         BasicDescriptiveFields.Meta,
         DateInfoFields.Meta,
         DigitalAssetFields.Meta,
+        GeographicFields.Meta,
         LibraryInfoFields.Meta,
         PhysicalMediaFields.Meta,
-        GeographicFields.Meta,
     ):
         """Django model Meta options.
 

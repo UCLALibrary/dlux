@@ -276,6 +276,16 @@ language = DluxField(
     ],
 )
 
+latitude = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Description.latitude"],
+    solr=["latitude_tesim"],
+)
+
 local_identifier = DluxField(
     django=ArrayField(
         TextField(),
@@ -299,6 +309,26 @@ local_rights_statement = DluxField(
     ),
     csv=["Rights.statementLocal"],
     solr=["local_rights_statement_ssm"],
+)
+
+location = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Coverage.geographic"],
+    solr=["location_tesim", "location_sim"],
+)
+
+longitude = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Description.longitude"],
+    solr=["longitude_tesim"],
 )
 
 # TODO: Flesh out logic for validating normalized_date.
@@ -529,6 +559,16 @@ subject = DluxField(
     solr=["subject_tesim", "subject_sim"],
 )
 
+subject_geographic = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Subject geographic", "Subject place"],
+    solr=["subject_geographic_sim", "combined_subject_ssim"],
+)
+
 subject_topic = DluxField(
     django=ArrayField(
         TextField(),
@@ -547,28 +587,4 @@ thumbnail_url = DluxField(
     django=CharField(blank=True, verbose_name="Thumbnail URL"),
     csv=["Thumbnail URL", "Thumbnail"],
     solr=["thumbnail_url_ss"],
-)
-
-location = DluxField(
-    django=CharField(blank=False),
-    csv=["Coverage.geographic"],
-    solr=["location_tesim", "location_sim"],
-)
-
-longitude = DluxField(
-    django=CharField(blank=False),
-    csv=["Description.longitude"],
-    solr=["geographic_coordinates_ssim", "longitudes_match_latitudes"],
-)
-
-latitude = DluxField(
-    django=CharField(blank=False),
-    csv=["Description.latitude"],
-    solr=["geographic_coordinates_ssim", "longitudes_match_latitudes"],
-)
-
-subject_geographic = DluxField(
-    django=CharField(blank=False),
-    csv=["Subject geographic", "Subject place"],
-    solr=["subject_geographic_sim", "combined_subject_ssim"],
 )
