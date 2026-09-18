@@ -125,6 +125,49 @@ class PhysicalMediaFields(PolymorphicModel):
     extent = dlux_fields.extent.django
 
 
+class GeographicFields(PolymorphicModel):
+    """Geographic data fields for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    latitude = dlux_fields.latitude.django
+    location = dlux_fields.location.django
+    longitude = dlux_fields.longitude.django
+    subject_geographic = dlux_fields.subject_geographic.django
+
+    # TODO: Properties like this do not currently display in admin UI. Should they?
+    @property
+    def geographic_coordinates_ssim(self) -> list[str] | None:
+        """Return latitude and longitude pairs formatted for SSIM indexing."""
+        return [
+            ", ".join([lat, long])
+            for lat, long in zip(
+                self.latitude or [],
+                self.longitude or [],
+            )
+        ] or None
+
+    def longitudes_match_latitudes(self) -> None:
+        """Verify that latitude and longitude pairs are properly matched."""
+        if len(self.latitude or []) != len(self.longitude or []):
+            raise ValueError(
+                "\n".join(
+                    [
+                        "Mismatched lengths:",
+                        f"Latitude {self.latitude}",
+                        f"Longitude {self.longitude}",
+                    ]
+                )
+            )
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
@@ -134,6 +177,7 @@ class Record(
     BasicDescriptiveFields,
     DateInfoFields,
     DigitalAssetFields,
+    GeographicFields,
     LibraryInfoFields,
     PhysicalMediaFields,
 ):
@@ -165,6 +209,7 @@ class Record(
         BasicDescriptiveFields.Meta,
         DateInfoFields.Meta,
         DigitalAssetFields.Meta,
+        GeographicFields.Meta,
         LibraryInfoFields.Meta,
         PhysicalMediaFields.Meta,
     ):

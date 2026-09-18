@@ -276,6 +276,16 @@ language = DluxField(
     ],
 )
 
+latitude = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Description.latitude"],
+    solr=["latitude_tesim"],
+)
+
 local_identifier = DluxField(
     django=ArrayField(
         TextField(),
@@ -300,6 +310,43 @@ local_rights_statement = DluxField(
     csv=["Rights.statementLocal"],
     solr=["local_rights_statement_ssm"],
 )
+
+location = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Coverage.geographic"],
+    solr=["location_tesim", "location_sim"],
+)
+
+longitude = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Description.longitude"],
+    solr=["longitude_tesim"],
+)
+
+
+# TODO: This validation is currently not being used, because it is not clear how to implement it in
+# a way that works with the django admin interface. It is left here for future reference.
+# def longitudes_match_latitudes(longitude: list[str], latitude: list[str]) -> None:
+#    """Validates that latitude and longitude pairs are properly matched."""
+#    if len(latitude or []) != len(longitude or []):
+#        raise ValueError(
+#            "\n".join(
+#                [
+#                    "Mismatched lengths:",
+#                    f"Latitude {latitude}",
+#                    f"Longitude {longitude}",
+#                ]
+#            )
+#        )
+
 
 # TODO: Flesh out logic for validating normalized_date.
 #
@@ -527,6 +574,16 @@ subject = DluxField(
     ),
     csv=["Subject"],
     solr=["subject_tesim", "subject_sim"],
+)
+
+subject_geographic = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Subject geographic", "Subject place"],
+    solr=["subject_geographic_sim", "combined_subject_ssim"],
 )
 
 subject_topic = DluxField(
