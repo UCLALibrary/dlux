@@ -331,6 +331,23 @@ longitude = DluxField(
     solr=["longitude_tesim"],
 )
 
+
+# TODO: This validation is currently not being used, because it is not clear how to implement it in
+# a way that works with the django admin interface. It is left here for future reference.
+# def longitudes_match_latitudes(longitude: list[str], latitude: list[str]) -> None:
+#    """Validates that latitude and longitude pairs are properly matched."""
+#    if len(latitude or []) != len(longitude or []):
+#        raise ValueError(
+#            "\n".join(
+#                [
+#                    "Mismatched lengths:",
+#                    f"Latitude {latitude}",
+#                    f"Longitude {longitude}",
+#                ]
+#            )
+#        )
+
+
 # TODO: Flesh out logic for validating normalized_date.
 #
 # For now, we are just using a RegexValidator to validate the format of `normalized_date`.
