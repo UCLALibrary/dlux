@@ -142,6 +142,7 @@ class GeographicFields(PolymorphicModel):
     longitude = dlux_fields.longitude.django
     subject_geographic = dlux_fields.subject_geographic.django
 
+    # TODO: Properties like this do not currently display in admin UI. Should they?
     @property
     def geographic_coordinates_ssim(self) -> list[str] | None:
         """Return latitude and longitude pairs formatted for SSIM indexing."""
