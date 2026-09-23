@@ -168,6 +168,67 @@ class GeographicFields(PolymorphicModel):
             )
 
 
+class ExtraDescriptiveFields(PolymorphicModel):
+    """Extra descriptive fields for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    alternative_title = dlux_fields.alternative_title.django
+    architect = dlux_fields.architect.django
+    arranger = dlux_fields.arranger.django
+    artist = dlux_fields.artist.django
+    associated_name = dlux_fields.associated_name.django
+    author = dlux_fields.author.django
+    calligrapher = dlux_fields.calligrapher.django
+    cartographer = dlux_fields.cartographer.django
+    collector = dlux_fields.collector.django
+    colophon = dlux_fields.colophon.django
+    commentator = dlux_fields.commentator.django
+    composer = dlux_fields.composer.django
+    contributor = dlux_fields.contributor.django
+    descriptive_title = dlux_fields.descriptive_title.django
+    director = dlux_fields.director.django
+    edition = dlux_fields.edition.django
+    editor = dlux_fields.editor.django
+    engraver = dlux_fields.engraver.django
+    illuminator = dlux_fields.illuminator.django
+    illustrator = dlux_fields.illustrator.django
+    interviewee = dlux_fields.interviewee.django
+    interviewer = dlux_fields.interviewer.django
+    librettist = dlux_fields.librettist.django
+    lyricist = dlux_fields.lyricist.django
+    musician = dlux_fields.musician.django
+    named_subject = dlux_fields.named_subject.django
+    place_of_origin = dlux_fields.place_of_origin.django
+    printer = dlux_fields.printer.django
+    printmaker = dlux_fields.printmaker.django
+    producer = dlux_fields.producer.django
+    provenance = dlux_fields.provenance.django
+    recipient = dlux_fields.recipient.django
+    researcher = dlux_fields.researcher.django
+    rights_holder = dlux_fields.rights_holder.django
+    rubricator = dlux_fields.rubricator.django
+    scribe = dlux_fields.scribe.django
+    script = dlux_fields.script.django
+    script_note = dlux_fields.script_note.django
+    series = dlux_fields.series.django
+    subject_cultural_object = dlux_fields.subject_cultural_object.django
+    subject_domain_topic = dlux_fields.subject_domain_topic.django
+    subject_temporal = dlux_fields.subject_temporal.django
+    summary = dlux_fields.summary.django
+    table_of_contents = dlux_fields.table_of_contents.django
+    translator = dlux_fields.translator.django
+    uniform_title = dlux_fields.uniform_title.django
+    writing_system = dlux_fields.writing_system.django
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
@@ -180,6 +241,7 @@ class Record(
     GeographicFields,
     LibraryInfoFields,
     PhysicalMediaFields,
+    ExtraDescriptiveFields,
 ):
     """A dlux record.
 
@@ -212,6 +274,7 @@ class Record(
         GeographicFields.Meta,
         LibraryInfoFields.Meta,
         PhysicalMediaFields.Meta,
+        ExtraDescriptiveFields.Meta,
     ):
         """Django model Meta options.
 

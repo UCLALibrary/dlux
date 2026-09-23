@@ -121,6 +121,35 @@ access_copy = DluxField(
     solr=["access_copy_ssi"],
 )
 
+alternative_title = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "AltTitle.other",
+        "AltTitle.parallel",
+        "AltTitle.translated",
+        "Alternate Title.creator",
+        "Alternate Title.descriptive",
+        "Alternate Title.inscribed",
+        "AltTitle.descriptive",
+        "Alternate Title.other",
+    ],
+    solr=["alternative_title_tesim"],
+)
+
+architect = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Name.architect"],
+    solr=["architect_tesim", "architect_sim"],
+)
+
 archival_collection_box = DluxField(
     django=CharField(blank=True),
     csv=["Box"],
@@ -145,6 +174,56 @@ archival_collection_title = DluxField(
     solr=["archival_collection_title_ssi"],
 )
 
+arranger = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Arranger", "Name.arranger"],
+    solr=["arranger_tesim", "arranger_sim"],
+)
+
+artist = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Artist", "Name.artist"],
+    solr=["artist_tesim", "artist_sim"],
+)
+
+associated_name = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Associated Name"],
+    solr=["associated_name_tesim", "associated_name_sim"],
+)
+
+author = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Author"],
+    solr=["author_tesim", "author_sim"],
+)
+
+calligrapher = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Calligrapher", "Name.calligrapher"],
+    solr=["calligrapher_tesim", "calligrapher_sim"],
+)
+
 caption = DluxField(
     django=ArrayField(
         TextField(),
@@ -155,6 +234,68 @@ caption = DluxField(
     csv=["Description.caption"],
     solr=["caption_tesim"],
 )
+
+cartographer = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Cartographer", "Name.cartographer"],
+    solr=["cartographer_tesim", "cartographer_sim"],
+)
+
+collector = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Collector"],
+    solr=["collector_tesim", "collector_sim"],
+)
+
+colophon = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=["Colophon", "Description.colophon"],
+    solr=["colophon_tesim"],
+)
+
+commentator = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Commentator", "Name.commentator"],
+    solr=["commentator_tesim", "commentator_sim"],
+)
+
+composer = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Name.composer"],
+    solr=["composer_tesim", "composer_sim"],
+)
+
+contributor = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Contributors"],
+    solr=["contributor_tesim"],
+)
+
 
 creator = DluxField(
     django=ArrayField(
@@ -183,6 +324,17 @@ description = DluxField(
     solr=["description_tesim"],
 )
 
+descriptive_title = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=["Descriptive title"],
+    solr=["descriptive_title_tesim"],
+)
+
 dimensions = DluxField(
     django=ArrayField(
         TextField(),
@@ -191,6 +343,46 @@ dimensions = DluxField(
     ),
     csv=["Format.dimensions"],
     solr=["dimensions_tesim", "dimensions_sim"],
+)
+
+director = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Director", "Name.director"],
+    solr=["director_tesim", "director_sim"],
+)
+
+edition = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Edition"],
+    solr=["edition_ssm"],
+)
+
+editor = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Editor", "Name.editor"],
+    solr=["editor_tesim", "editor_sim"],
+)
+
+engraver = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Engraver", "Name.engraver"],
+    solr=["engraver_tesim", "engraver_sim"],
 )
 
 extent = DluxField(
@@ -250,6 +442,26 @@ iiif_viewing_hint = DluxField(
     solr=["human_readable_iiif_viewing_hint_ssi"],
 )
 
+illuminator = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Illuminator", "Name.illuminator"],
+    solr=["illuminator_tesim", "illuminator_sim"],
+)
+
+illustrator = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Illustrator", "Name.illustrator"],
+    solr=["illustrator_tesim", "illustrator_sim"],
+)
+
 inscription = DluxField(
     django=ArrayField(
         TextField(),
@@ -259,6 +471,26 @@ inscription = DluxField(
     ),
     csv=["Inscription"],
     solr=["inscription_tesim"],
+)
+
+interviewee = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Interviewee", "Name.interviewee"],
+    solr=["interviewee_tesim", "interviewee_sim"],
+)
+
+interviewer = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Interviewer", "Name.interviewer"],
+    solr=["interviewer_tesim", "interviewer_sim"],
 )
 
 language = DluxField(
@@ -284,6 +516,16 @@ latitude = DluxField(
     ),
     csv=["Description.latitude"],
     solr=["latitude_tesim"],
+)
+
+librettist = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Librettist"],
+    solr=["librettist_tesim", "librettist_sim"],
 )
 
 local_identifier = DluxField(
@@ -331,6 +573,40 @@ longitude = DluxField(
     solr=["longitude_tesim"],
 )
 
+lyricist = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Name.lyricist"],
+    solr=["lyricist_tesim", "lyricist_sim"],
+)
+
+musician = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Musician", "Name.musician"],
+    solr=["musician_tesim", "musician_sim"],
+)
+
+named_subject = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "Name.subject",
+        "Personal or Corporate Name.subject",
+        "Subject.corporateName",
+        "Subject.personalName",
+    ],
+    solr=["named_subject_tesim", "named_subject_sim"],
+)
 
 # TODO: This validation is currently not being used, because it is not clear how to implement it in
 # a way that works with the django admin interface. It is left here for future reference.
@@ -458,6 +734,16 @@ photographer = DluxField(
     solr=["photographer_tesim", "photographer_sim"],
 )
 
+place_of_origin = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Place of origin", "Publisher.placeOfOrigin"],
+    solr=["place_of_origin_tesim", "place_of_origin_sim"],
+)
+
 preservation_copy = DluxField(
     django=CharField(
         blank=True,
@@ -477,6 +763,36 @@ preservation_copy = DluxField(
     solr=["preservation_copy_ssi"],
 )
 
+printer = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Printer", "Name.printer"],
+    solr=["printer_tesim", "printer_sim"],
+)
+
+printmaker = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Printmaker", "Name.printmaker"],
+    solr=["printmaker_tesim", "printmaker_sim"],
+)
+
+producer = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Producer", "Name.producer"],
+    solr=["producer_tesim", "producer_sim"],
+)
+
 program = DluxField(
     django=ArrayField(
         TextField(),
@@ -487,6 +803,17 @@ program = DluxField(
     solr=["program_tesim", "program_sim"],
 )
 
+provenance = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=["Provenance", "Description.history"],
+    solr=["provenance_tesim"],
+)
+
 publisher = DluxField(
     django=ArrayField(
         TextField(),
@@ -495,6 +822,16 @@ publisher = DluxField(
     ),
     csv=["Publisher.publisherName"],
     solr=["publisher_tesim", "publisher_sim"],
+)
+
+recipient = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Recipient", "Name.recipient"],
+    solr=["recipient_tesim", "recipient_sim"],
 )
 
 repository = DluxField(
@@ -510,6 +847,16 @@ repository = DluxField(
         "Personal or Corporate Name.repository",
     ],
     solr=["repository_tesim", "repository_sim"],
+)
+
+researcher = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Researcher", "Name.researcher"],
+    solr=["researcher_tesim", "researcher_sim"],
 )
 
 resource_type = DluxField(
@@ -538,6 +885,19 @@ rights_country = DluxField(
     solr=["rights_country_tesim"],
 )
 
+rights_holder = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=[
+        "Personal or Corporate Name.copyrightHolder",
+        "Rights.rightsHolderName",
+    ],
+    solr=["rights_holder_tesim"],
+)
+
 rights_statement = DluxField(
     django=ArrayField(
         TextField(choices=RIGHTS_STATEMENT_CHOICES),
@@ -551,6 +911,57 @@ rights_statement = DluxField(
         # See @https://github.com/UCLALibrary/feed_ursus/blob/087cce8e3e6ef00bfdf1b84652d3883e2d43da14/feed_ursus/ursus_solr_record.py#L258
         "rights_statement_tesim",
     ],
+)
+
+rubricator = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Rubricator", "Name.rubricator"],
+    solr=["rubricator_tesim", "rubricator_sim"],
+)
+
+scribe = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Scribe"],
+    solr=["scribe_tesim", "scribe_sim"],
+)
+
+script = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Script"],
+    solr=["script_tesim", "script_sim"],
+)
+
+script_note = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=["Script note", "Script Note"],
+    solr=["script_note_tesim"],
+)
+
+series = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Series"],
+    solr=["series_tesim", "series_sim"],
 )
 
 services_contact = DluxField(
@@ -576,6 +987,26 @@ subject = DluxField(
     solr=["subject_tesim", "subject_sim"],
 )
 
+subject_cultural_object = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Subject.culturalObject"],
+    solr=["subject_cultural_object_tesim", "subject_cultural_object_sim"],
+)
+
+subject_domain_topic = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Subject.domainTopic"],
+    solr=["subject_domain_topic_tesim", "subject_domain_topic_sim"],
+)
+
 subject_geographic = DluxField(
     django=ArrayField(
         TextField(),
@@ -584,6 +1015,16 @@ subject_geographic = DluxField(
     ),
     csv=["Subject geographic", "Subject place"],
     solr=["subject_geographic_sim", "combined_subject_ssim"],
+)
+
+subject_temporal = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Subject temporal"],
+    solr=["subject_temporal_tesim", "subject_temporal_sim"],
 )
 
 subject_topic = DluxField(
@@ -600,8 +1041,63 @@ subject_topic = DluxField(
     solr=["subject_topic_tesim", "subject_topic_sim"],
 )
 
+summary = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=["Summary", "Description.abstract"],
+    solr=["summary_tesim"],
+)
+
+table_of_contents = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+        schema=TEXTAREA_ARRAY_SCHEMA,
+    ),
+    csv=[
+        "Table of Contents",
+        "Description.tableOfContents",
+    ],
+    solr=["toc_tesim"],
+)
+
 thumbnail_url = DluxField(
     django=CharField(blank=True, verbose_name="Thumbnail URL"),
     csv=["Thumbnail URL", "Thumbnail"],
     solr=["thumbnail_url_ss"],
+)
+
+translator = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Translator"],
+    solr=["translator_tesim", "translator_sim"],
+)
+
+uniform_title = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["AltTitle.uniform"],
+    solr=["uniform_title_tesim", "uniform_title_sim"],
+)
+
+writing_system = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Writing system"],
+    solr=["writing_system_tesim", "writing_system_sim"],
 )
