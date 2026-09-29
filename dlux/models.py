@@ -121,8 +121,37 @@ class PhysicalMediaFields(PolymorphicModel):
 
         abstract = True
 
+    binding_condition = dlux_fields.binding_condition.django
+    binding_note = dlux_fields.binding_note.django
+    collation = dlux_fields.collation.django
+    condition_note = dlux_fields.condition_note.django
     dimensions = dlux_fields.dimensions.django
     extent = dlux_fields.extent.django
+    folio_dimensions = dlux_fields.folio_dimensions.django
+    form = dlux_fields.form.django
+    format_book = dlux_fields.format_book.django
+    medium = dlux_fields.medium.django
+    page_layout = dlux_fields.page_layout.django
+    shelfmark = dlux_fields.shelfmark.django
+
+    @property
+    def condition_note_ssi(self) -> str | None:
+        """Return the first condition note value for SSI indexing."""
+        return (
+            self.condition_note[0]
+            if (self.condition_note and len(self.condition_note) >= 1)
+            else None
+        )
+
+    @property
+    def form_sim(self) -> list[str] | None:
+        """Return form values for Solr similarity indexing."""
+        return self.form or None
+
+    @property
+    def binding_note_tesim(self) -> list[str] | None:
+        """Return the binding note as a list for TESIM indexing."""
+        return [self.binding_note] if self.binding_note else None
 
 
 class GeographicFields(PolymorphicModel):
