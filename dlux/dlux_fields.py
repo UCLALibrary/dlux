@@ -225,7 +225,7 @@ binding_condition = DluxField(
 )
 
 binding_note = DluxField(
-    django=TextField(),
+    django=TextField(blank=True, default=""),
     csv=["Binding note", "Description.binding"],
     solr=["binding_note_tesim", "binding_note_ssi"],
 )
@@ -1064,7 +1064,7 @@ services_contact = DluxField(
 )
 
 shelfmark = DluxField(
-    django=TextField(),
+    django=TextField(blank=True, default=""),
     csv=["Shelfmark"],
     solr=["shelfmark_ssi_ssi"],
 )
