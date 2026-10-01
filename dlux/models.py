@@ -143,11 +143,7 @@ class PhysicalMediaFields(PolymorphicModel):
             else None
         )
 
-    @property
-    def form_sim(self) -> list[str] | None:
-        """Return form values for Solr similarity indexing."""
-        return self.form or None
-
+    # TODO is this property necessary?
     @property
     def binding_note_tesim(self) -> list[str] | None:
         """Return the binding note as a list for TESIM indexing."""

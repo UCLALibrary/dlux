@@ -1064,9 +1064,9 @@ services_contact = DluxField(
 )
 
 shelfmark = DluxField(
-    django=TextField(blank=True, default=""),
+    django=CharField(blank=True, default=""),
     csv=["Shelfmark"],
-    solr=["shelfmark_ssi_ssi"],
+    solr=["shelfmark_ssi"],
 )
 
 subject = DluxField(
