@@ -214,6 +214,22 @@ author = DluxField(
     solr=["author_tesim", "author_sim"],
 )
 
+binding_condition = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Binding condition"],
+    solr=["binding_condition_tesim"],
+)
+
+binding_note = DluxField(
+    django=TextField(blank=True, default=""),
+    csv=["Binding note", "Description.binding"],
+    solr=["binding_note_tesim", "binding_note_ssi"],
+)
+
 calligrapher = DluxField(
     django=ArrayField(
         TextField(),
@@ -243,6 +259,16 @@ cartographer = DluxField(
     ),
     csv=["Cartographer", "Name.cartographer"],
     solr=["cartographer_tesim", "cartographer_sim"],
+)
+
+collation = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Collation"],
+    solr=["collation_tesim"],
 )
 
 collector = DluxField(
@@ -284,6 +310,16 @@ composer = DluxField(
     ),
     csv=["Name.composer"],
     solr=["composer_tesim", "composer_sim"],
+)
+
+condition_note = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Condition note", "Description.condition"],
+    solr=["condition_note_tesim"],
 )
 
 contributor = DluxField(
@@ -404,6 +440,36 @@ finding_aid_url = DluxField(
     ),
     csv=["Finding Aid URL", "Alt ID.url"],
     solr=["finding_aid_url_ssm"],
+)
+
+folio_dimensions = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Folio dimensions", "Folio Dimensions"],
+    solr=["folio_dimensions_ss"],
+)
+
+form = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Form"],
+    solr=["form_tesim", "form_sim"],
+)
+
+format_book = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Format"],
+    solr=["format_book_tesim"],
 )
 
 funding_note = DluxField(
@@ -583,6 +649,16 @@ lyricist = DluxField(
     solr=["lyricist_tesim", "lyricist_sim"],
 )
 
+medium = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Format.medium"],
+    solr=["medium_tesim", "medium_sim"],
+)
+
 musician = DluxField(
     django=ArrayField(
         TextField(),
@@ -719,6 +795,16 @@ opac_url = DluxField(
     django=CharField(blank=True, verbose_name="OPAC URL"),
     csv=["Opac url", "Description.opac"],
     solr=["opac_url_ssi"],
+)
+
+page_layout = DluxField(
+    django=ArrayField(
+        TextField(),
+        blank=True,
+        default=list,
+    ),
+    csv=["Page layout"],
+    solr=["page_layout_ssim"],
 )
 
 photographer = DluxField(
@@ -975,6 +1061,12 @@ services_contact = DluxField(
         "Rights.rightsHolderContact",
     ],
     solr=["services_contact_ssm"],
+)
+
+shelfmark = DluxField(
+    django=CharField(blank=True, default=""),
+    csv=["Shelfmark"],
+    solr=["shelfmark_ssi"],
 )
 
 subject = DluxField(
