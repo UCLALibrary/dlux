@@ -254,6 +254,52 @@ class ExtraDescriptiveFields(PolymorphicModel):
     writing_system = dlux_fields.writing_system.django
 
 
+class UnsortedFields(PolymorphicModel):
+    """Remaining fields to be categorized later, for all dlux record types."""
+
+    class Meta(PolymorphicModel.Meta):
+        """Django model Meta options.
+
+        see:
+        https://docs.djangoproject.com/en/5.2/ref/models/options/
+        """
+
+        abstract = True
+
+    citation_source = dlux_fields.citation_source.django
+    content_disclaimer = dlux_fields.content_disclaimer.django
+    contents_note = dlux_fields.contents_note.django
+    contents = dlux_fields.contents.django
+    delivery = dlux_fields.delivery.django
+    electronic_locator = dlux_fields.electronic_locator.django
+    explicit = dlux_fields.explicit.django
+    featured_image = dlux_fields.featured_image.django
+    features = dlux_fields.features.django
+    foliation = dlux_fields.foliation.django
+    hand_note = dlux_fields.hand_note.django
+    history = dlux_fields.history.django
+    host = dlux_fields.host.django
+    identifier = dlux_fields.identifier.django
+    iiif_range = dlux_fields.iiif_range.django
+    iiif_text_direction = dlux_fields.iiif_text_direction.django
+    illustrations_note = dlux_fields.illustrations_note.django
+    image_count = dlux_fields.image_count.django
+    incipit = dlux_fields.incipit.django
+    license = dlux_fields.license.django
+    masthead_parameters = dlux_fields.masthead_parameters.django
+    note_admin = dlux_fields.note_admin.django
+    note = dlux_fields.note.django
+    oai_set = dlux_fields.oai_set.django
+    other_versions = dlux_fields.other_versions.django
+    related_record = dlux_fields.related_record.django
+    related_to = dlux_fields.related_to.django
+    representative_image = dlux_fields.representative_image.django
+    resp_statement = dlux_fields.resp_statement.django
+    support = dlux_fields.support.django
+    tagline = dlux_fields.tagline.django
+    visibility = dlux_fields.visibility.django
+
+
 #
 #   A single concrete model to represent all our data in the db.
 #
