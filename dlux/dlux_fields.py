@@ -632,7 +632,7 @@ iiif_manifest_url = DluxField(
 )
 
 iiif_range = DluxField(
-    django=CharField(blank=True),
+    django=CharField(blank=True, verbose_name="IIIF range"),
     csv=["IIIF Range"],
     solr=["iiif_range_ssi"],
 )
@@ -1005,6 +1005,7 @@ oai_set = DluxField(
         TextField(),
         blank=True,
         default=list,
+        verbose_name="OAI set",
     ),
     csv=["oai_set"],
     solr=["oai_set_ssim"],
