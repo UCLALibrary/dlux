@@ -16,6 +16,7 @@ class TestFieldsetsForModel(SimpleTestCase):
             "Library Info Fields",
             "Physical Media Fields",
             "Extra Descriptive Fields",
+            "Unsorted Fields",
         ]
 
         self.assertEqual(result, expected)
