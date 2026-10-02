@@ -3,6 +3,22 @@
 See @https://docs.djangoproject.com/en/5.2/ref/models/fields/#choices.
 """
 
+IIIF_TEXT_DIRECTION_CHOICES = {
+    "http://iiif.io/api/presentation/2#leftToRightDirection": "left-to-right",
+    "http://iiif.io/api/presentation/2#rightToLeftDirection": "right-to-left",
+    "http://iiif.io/api/presentation/2#topToBottomDirection": "top-to-bottom",
+    "http://iiif.io/api/presentation/2#bottomToTopDirection": "bottom-to-top",
+}
+
+IIIF_VIEWING_HINT_CHOICES = {
+    "http://iiif.io/api/presentation/2#pagedHint": "paged",
+    "http://iiif.io/api/presentation/2#individualsHint": "individuals",
+    "http://iiif.io/api/presentation/2#continuousHint": "continuous",
+    "http://iiif.io/api/presentation/2#nonPagedHint": "non-paged",
+    "http://iiif.io/api/presentation/2#facingPagesHint": "facing-pages",
+    "http://iiif.io/api/presentation/2#multiPartHint": "multi-part",
+}
+
 LANGUAGE_CHOICES = {
     "aar": "Afar",
     "abk": "Abkhaz",
@@ -626,17 +642,14 @@ RESOURCE_TYPE_CHOICES = {
     "http://id.loc.gov/vocabulary/resourceTypes/art": "three dimensional object",
 }
 
-IIIF_VIEWING_HINT_CHOICES = {
-    "http://iiif.io/api/presentation/2#pagedHint": "paged",
-    "http://iiif.io/api/presentation/2#individualsHint": "individuals",
-    "http://iiif.io/api/presentation/2#continuousHint": "continuous",
-    "http://iiif.io/api/presentation/2#nonPagedHint": "non-paged",
-    "http://iiif.io/api/presentation/2#facingPagesHint": "facing-pages",
-    "http://iiif.io/api/presentation/2#multiPartHint": "multi-part",
-}
-
 RIGHTS_STATEMENT_CHOICES = {
     "http://vocabs.library.ucla.edu/rights/copyrighted": "copyrighted",
     "http://vocabs.library.ucla.edu/rights/unknown": "unknown",
     "http://vocabs.library.ucla.edu/rights/publicDomain": "public domain",
+}
+
+VISIBILITY_CHOICES = {
+    "authenticated": "authenticated",
+    "open": "open",
+    "ucla": "ucla",
 }
