@@ -313,6 +313,7 @@ class Record(
     LibraryInfoFields,
     PhysicalMediaFields,
     ExtraDescriptiveFields,
+    UnsortedFields,
 ):
     """A dlux record.
 
@@ -346,6 +347,7 @@ class Record(
         LibraryInfoFields.Meta,
         PhysicalMediaFields.Meta,
         ExtraDescriptiveFields.Meta,
+        UnsortedFields.Meta,
     ):
         """Django model Meta options.
 
