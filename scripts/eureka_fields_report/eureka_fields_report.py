@@ -1,8 +1,17 @@
+"""A basic Python script that scans the CSV files in your local Eureka repo and builds a report.
+
+For each column name found across all files, it shows how many files use that column,
+how many non-empty values it contains, how many distinct values exist,
+the length of the longest value,
+and whether it uses the multi-value delimiter.
+"""
+
 import csv
 import json
 import sys
-from pathlib import Path
 from collections import defaultdict
+from io import TextIOWrapper
+from pathlib import Path
 
 # Constants - change as needed
 SCAN_DIRS = {"checked_out", "in_progress", "done", "metadata_reload"}
@@ -15,8 +24,15 @@ script_dir = Path(__file__).resolve().parent
 reports_dir = script_dir / "reports"
 reports_dir.mkdir(exist_ok=True)
 
-# Checks for non utf-8 files and lists them 
-def open_text(path):
+
+def open_text(path: Path) -> TextIOWrapper:
+    """Detects encoding of a file.
+
+    If the encoding is not UTF-8, lists the encoding and filename.
+
+    Returns a file object for reading the file,
+    with correct encoding set.
+    """
     with open(path, "rb") as f:
         head = f.read(4096)
     if head.startswith(b"\xff\xfe") or head.startswith(b"\xfe\xff"):
@@ -27,17 +43,16 @@ def open_text(path):
         return open(path, "r", encoding="utf-16-le", errors="replace", newline="")
     return open(path, "r", encoding="utf-8-sig", errors="replace", newline="")
 
-file_count = defaultdict(int)
-nonempty = defaultdict(int)
-uniq_vals = defaultdict(set)
-max_len = defaultdict(int)
-has_delim = defaultdict(bool)
-files_by_field = defaultdict(list)
 
-csv_files = [
-    path for path in root.rglob("*.csv")
-    if path.relative_to(root).parts[0] in SCAN_DIRS
-]
+# Data read from CSVs will be collected into these.
+file_count: defaultdict[str, int] = defaultdict(int)
+nonempty: defaultdict[str, int] = defaultdict(int)
+uniq_vals: defaultdict[str, set[str]] = defaultdict(set)
+max_len: defaultdict[str, int] = defaultdict(int)
+has_delim: defaultdict[str, bool] = defaultdict(bool)
+files_by_field: defaultdict[str, list[str]] = defaultdict(list)
+
+csv_files = [path for path in root.rglob("*.csv") if path.relative_to(root).parts[0] in SCAN_DIRS]
 
 print(f"\nScanning {len(csv_files)} csv files in {root}", file=sys.stderr)
 for path in csv_files:
@@ -63,19 +78,27 @@ sorted_fields = sorted(file_count.keys())
 csv_out = reports_dir / "eureka_fields.csv"
 with open(csv_out, "w", newline="", encoding="utf-8") as report:
     writer = csv.writer(report)
-    writer.writerow([
-        "field_name", "files_with_field", "non_empty_values",
-        "distinct_values", "max_value_length", "uses_delimiter"
-    ])
+    writer.writerow(
+        [
+            "field_name",
+            "files_with_field",
+            "non_empty_values",
+            "distinct_values",
+            "max_value_length",
+            "uses_delimiter",
+        ]
+    )
     for field in sorted_fields:
-        writer.writerow([
-            field,
-            file_count[field],
-            nonempty[field],
-            len(uniq_vals[field]),
-            max_len[field],
-            "yes" if has_delim[field] else "no",
-        ])
+        writer.writerow(
+            [
+                field,
+                file_count[field],
+                nonempty[field],
+                len(uniq_vals[field]),
+                max_len[field],
+                "yes" if has_delim[field] else "no",
+            ]
+        )
 
 json_out = reports_dir / "eureka_files.json"
 with open(json_out, "w", encoding="utf-8") as json_file:
