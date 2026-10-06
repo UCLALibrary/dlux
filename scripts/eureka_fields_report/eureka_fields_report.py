@@ -18,11 +18,6 @@ SCAN_DIRS = {"checked_out", "in_progress", "done", "metadata_reload"}
 DELIM = "|~|"
 
 
-script_dir = Path(__file__).resolve().parent
-reports_dir = script_dir / "reports"
-reports_dir.mkdir(exist_ok=True)
-
-
 def open_text(path: Path) -> TextIOWrapper:
     """Detects encoding of a file.
 
@@ -42,15 +37,9 @@ def open_text(path: Path) -> TextIOWrapper:
     return open(path, "r", encoding="utf-8-sig", errors="replace", newline="")
 
 
-# Data read from CSVs will be collected into these.
-file_count: defaultdict[str, int] = defaultdict(int)
-nonempty: defaultdict[str, int] = defaultdict(int)
-uniq_vals: defaultdict[str, set[str]] = defaultdict(set)
-max_len: defaultdict[str, int] = defaultdict(int)
-has_delim: defaultdict[str, bool] = defaultdict(bool)
-files_by_field: defaultdict[str, list[str]] = defaultdict(list)
-
-csv_files = [path for path in root.rglob("*.csv") if path.relative_to(root).parts[0] in SCAN_DIRS]
+def main(argv: list[str] | None = None) -> None:
+    """Scans CSVs in the repo and writes the field report and file index."""
+    argv = sys.argv[1:] if argv is None else argv
 
     if argv:
         folder = argv[0].strip()
@@ -62,30 +51,65 @@ csv_files = [path for path in root.rglob("*.csv") if path.relative_to(root).part
     reports_dir = script_dir / "reports"
     reports_dir.mkdir(exist_ok=True)
 
-csv_out = reports_dir / "eureka_fields.csv"
-with open(csv_out, "w", newline="", encoding="utf-8") as report:
-    writer = csv.writer(report)
-    writer.writerow(
-        [
-            "field_name",
-            "files_with_field",
-            "non_empty_values",
-            "distinct_values",
-            "max_value_length",
-            "uses_delimiter",
-        ]
-    )
-    for field in sorted_fields:
+    # Data read from CSVs will be collected into these.
+    file_count: defaultdict[str, int] = defaultdict(int)
+    nonempty: defaultdict[str, int] = defaultdict(int)
+    uniq_vals: defaultdict[str, set[str]] = defaultdict(set)
+    max_len: defaultdict[str, int] = defaultdict(int)
+    has_delim: defaultdict[str, bool] = defaultdict(bool)
+    files_by_field: defaultdict[str, list[str]] = defaultdict(list)
+
+    csv_files = [
+        path
+        for path in root.rglob("*.csv")
+        if path.relative_to(root).parts[0] in SCAN_DIRS
+    ]
+
+    print(f"\nScanning {len(csv_files)} csv files in {root}", file=sys.stderr)
+    for path in csv_files:
+        with open_text(path) as f:
+            reader = csv.reader(f)
+            header = next(reader)
+            for field in set(header):
+                files_by_field[field].append(str(path))
+                file_count[field] += 1
+            for row in reader:
+                for field, value in zip(header, row):
+                    value = value.strip()
+                    if not value:
+                        continue
+                    nonempty[field] += 1
+                    uniq_vals[field].add(value)
+                    max_len[field] = max(max_len[field], len(value))
+                    if DELIM in value:
+                        has_delim[field] = True
+
+    sorted_fields = sorted(file_count.keys())
+
+    csv_out = reports_dir / "eureka_fields.csv"
+    with open(csv_out, "w", newline="", encoding="utf-8") as report:
+        writer = csv.writer(report)
         writer.writerow(
             [
-                field,
-                file_count[field],
-                nonempty[field],
-                len(uniq_vals[field]),
-                max_len[field],
-                "yes" if has_delim[field] else "no",
+                "field_name",
+                "files_with_field",
+                "non_empty_values",
+                "distinct_values",
+                "max_value_length",
+                "uses_delimiter",
             ]
         )
+        for field in sorted_fields:
+            writer.writerow(
+                [
+                    field,
+                    file_count[field],
+                    nonempty[field],
+                    len(uniq_vals[field]),
+                    max_len[field],
+                    "yes" if has_delim[field] else "no",
+                ]
+            )
 
     json_out = reports_dir / "eureka_files.json"
     with open(json_out, "w", encoding="utf-8") as json_file:
@@ -95,4 +119,11 @@ with open(csv_out, "w", newline="", encoding="utf-8") as report:
             indent=2,
         )
 
-print(f"\nDone! {csv_out.name} & {json_out.name} were saved to {reports_dir}", file=sys.stderr)
+    print(
+        f"\nDone! {csv_out.name} & {json_out.name} were saved to {reports_dir}",
+        file=sys.stderr,
+    )
+
+
+if __name__ == "__main__":
+    main()
