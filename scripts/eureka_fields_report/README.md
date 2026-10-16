@@ -3,9 +3,17 @@
 A basic Python script that scans the CSV files in your local Eureka repo and builds a report. For each column name found across all files, it shows how many files use that column, how many non-empty values it contains, how many distinct values exist, the length of the longest value, and whether it uses the multi-value delimiter.
 
 
-## Requirements
+# Requirements
 
 - Python 3.7 or newer
+
+## Installation
+
+Clone the Eureka repository:
+
+```bash
+git clone https://github.com/UCLALibrary/eureka.git
+```
 
 ## How to run it
 
