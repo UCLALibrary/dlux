@@ -213,3 +213,6 @@ __marimo__/
 # Local secrets
 *password*
 *secret*
+
+# Script outputs
+**/eureka_fields_report/
