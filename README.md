@@ -262,3 +262,19 @@ Our deployment system is triggered by changes to the Helm chart.  Typically, thi
 * Breaking changes: update major level (e.g., `v1.0.1` to `v2.0.0`)
 
 In addition to updating version in the Helm chart, update the Release Notes in `release_notes.html`.  Put the latest changes first, following the established format.
+
+## Management Commands
+
+### Eureka-dlux field comparison command
+The `compare_fields_with_eureka` management command compares local fields with those in Eureka, using a CSV report of all Eureka fields. The command categorizes fields into known mappings, likely mappings, those requiring human review, and empty Eureka fields.
+
+To run the command, use:
+
+`$ docker compose exec django python manage.py compare_fields_with_eureka`
+
+By default, this outputs a JSON report to `stdout`. Other options are available:
+
+```
+`-f, --format {json|markdown}`: Specify the output format of the report. Supported formats are JSON and Markdown. The default is `json`.
+`-o, --output PATH`: Specify the file path to write the report. If not provided, the report is printed to `stdout`.
+```
