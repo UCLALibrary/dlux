@@ -1,0 +1,74 @@
+# Values for dlux prod.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: uclalibrary/dlux
+  tag: v0.0.1
+  pullPolicy: Always
+
+nameOverride: ""
+
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: "true"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    cert-manager.io/cluster-issuer: sectigo-acme-clusterissuer
+    kubernetes.io/tls-acme: "true"
+
+  hosts:
+    - host: "dlux.library.ucla.edu"
+      paths:
+        - "/"
+  tls:
+    - secretName: dlux-tls
+      hosts:
+        - dlux.library.ucla.edu
+
+django:
+  env:
+    run_env: "prod"
+    debug: "false"
+    allowed_hosts:
+      - dlux.library.ucla.edu
+    csrf_trusted_origins:
+      - https://dlux.library.ucla.edu
+    log_level: "INFO"
+    db_backend: "django.db.backends.postgresql"
+    db_name: "dlux"
+    db_user: "dlux"
+    db_host: "p-d-postgres.library.ucla.edu"
+    db_port: 5432
+
+  externalSecrets:
+    enabled: "true"
+    annotations:
+      argocd.argoproj.io/sync-wave: "-1"
+    env:
+      # Application database used by django
+      db_password: "/systems/prodrke01/dlux/db_password"
+      django_secret_key: "/systems/prodrke01/dlux/django_secret_key"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 500Mi
+  requests:
+    cpu: 250m
+    memory: 100Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
