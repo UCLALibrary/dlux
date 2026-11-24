@@ -2,6 +2,7 @@
 
 import csv
 import json
+import string
 from csv import DictReader
 from pathlib import Path
 
@@ -11,6 +12,13 @@ from dlux.fields import DluxField
 from dlux.models import Record
 
 ComparisonReport = dict[str, dict[str, str] | list[str]]
+
+
+def escape_markdown(text: str) -> str:
+    """Escape punctuation so fields display correctly in Markdown."""
+    return "".join(
+        f"\\{character}" if character in string.punctuation else character for character in text
+    )
 
 
 def normalize_field_name(field_name: str) -> str:
@@ -124,12 +132,15 @@ def format_comparison_report(report: ComparisonReport, output_format: str) -> st
 
         if isinstance(group, dict):
             for eureka_field_name, dlux_field_name in group.items():
+                escaped_eureka_field_name = escape_markdown(eureka_field_name)
                 if dlux_field_name:
-                    output_lines.append(f"- {eureka_field_name}: {dlux_field_name}")
+                    output_lines.append(
+                        f"- {escaped_eureka_field_name}: {escape_markdown(dlux_field_name)}"
+                    )
                 else:
-                    output_lines.append(f"- {eureka_field_name}")
+                    output_lines.append(f"- {escaped_eureka_field_name}")
         else:
-            output_lines.extend(f"- {field_name}" for field_name in group)
+            output_lines.extend(f"- {escape_markdown(field_name)}" for field_name in group)
 
         if not group:
             output_lines.append("_None._")
