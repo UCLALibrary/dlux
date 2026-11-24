@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: "0.1"
+description: Chart for CLICC Devices application
+name: clicc-devices
+version: 1.0.1
