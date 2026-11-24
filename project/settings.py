@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "dlux",
+    "imports",
     "django_jsonform",
 ]
 
