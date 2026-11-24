@@ -23,5 +23,5 @@
 .vscode/
 
 # Environment-specific Values files
-/test-cliccdevices-values.yaml
-/prod-cliccdevices-values.yaml
+/test-dlux-values.yaml
+/prod-dlux-values.yaml

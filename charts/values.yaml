@@ -1,11 +1,11 @@
-# Default values for clicc-devices.
+# Default values for dlux.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: uclalibrary/clicc-devices
+  repository: uclalibrary/dlux
   tag: latest
   pullPolicy: Always
 
@@ -54,7 +54,6 @@ django:
       # argocd waves and hooks - https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/
     env: {}
     # Include below if enabled: "true"
-    #  alma_api_key: ""
     #  db_password: ""
     #  django_secret_key: ""
 
@@ -75,4 +74,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-

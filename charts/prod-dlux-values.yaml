@@ -1,12 +1,12 @@
-# Values for clicc-devices prod.
+# Values for dlux prod.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: uclalibrary/clicc-devices
-  tag: v1.0.7
+  repository: uclalibrary/dlux
+  tag: v0.0.1
   pullPolicy: Always
 
 nameOverride: ""
@@ -16,7 +16,7 @@ fullnameOverride: ""
 service:
   type: ClusterIP
   port: 80
-  
+
 ingress:
   enabled: "true"
   annotations:
@@ -27,38 +27,37 @@ ingress:
     kubernetes.io/tls-acme: "true"
 
   hosts:
-    - host: 'clicc-devices.library.ucla.edu'
+    - host: "dlux.library.ucla.edu"
       paths:
         - "/"
   tls:
-  - secretName: clicc-devices-tls
-    hosts:
-      - clicc-devices.library.ucla.edu
+    - secretName: dlux-tls
+      hosts:
+        - dlux.library.ucla.edu
 
 django:
   env:
     run_env: "prod"
     debug: "false"
     allowed_hosts:
-      - clicc-devices.library.ucla.edu
+      - dlux.library.ucla.edu
     csrf_trusted_origins:
-      - https://clicc-devices.library.ucla.edu
+      - https://dlux.library.ucla.edu
     log_level: "INFO"
     db_backend: "django.db.backends.postgresql"
-    db_name: "clicc_devices"
-    db_user: "clicc_devices"
+    db_name: "dlux"
+    db_user: "dlux"
     db_host: "p-d-postgres.library.ucla.edu"
     db_port: 5432
 
   externalSecrets:
     enabled: "true"
-    annotations: 
+    annotations:
       argocd.argoproj.io/sync-wave: "-1"
     env:
       # Application database used by django
-      alma_api_key: "/systems/prodrke01/clicc-devices/alma_api_key"
-      db_password: "/systems/prodrke01/clicc-devices/db_password"
-      django_secret_key: "/systems/prodrke01/clicc-devices/django_secret_key"
+      db_password: "/systems/prodrke01/dlux/db_password"
+      django_secret_key: "/systems/prodrke01/dlux/django_secret_key"
 
 resources:
   limits:

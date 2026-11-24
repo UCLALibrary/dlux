@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "clicc-devices.fullname" . }}
-  namespace: clicc-devices{{ .Values.django.env.run_env }}
+  name: {{ include "dlux.fullname" . }}
+  namespace: dlux{{ .Values.django.env.run_env }}
   labels:
-    {{- include "clicc-devices.labels" . | nindent 4 }}
+    {{- include "dlux.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "clicc-devices.selectorLabels" . | nindent 6 }}
+      {{- include "dlux.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "clicc-devices.selectorLabels" . | nindent 8 }}
+        {{- include "dlux.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -21,9 +21,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: {{ include "clicc-devices.fullname" . }}-configmap
+                name: {{ include "dlux.fullname" . }}-configmap
             - secretRef:
-                name: {{ include "clicc-devices.fullname" . }}-secrets
+                name: {{ include "dlux.fullname" . }}-secrets
           ports:
             - name: http
               containerPort: 8000
