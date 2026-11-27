@@ -1,0 +1,810 @@
+field_name,files_with_field,non_empty_values,distinct_values,max_value_length,uses_delimiter
+,38,124,119,168,yes
+ Opac url,1,0,0,0,no
+(Old) Parent ARK,3,29,4,21,no
+(multi-part) Parent ARK,2,30,5,21,no
+==> 21198zz0009gxbj_pages.csv <==,1,422,142,36,no
+==> 21198zz002d3hgw_pages.csv <==,1,38,15,33,no
+ARK,1,147,143,21,no
+ASpace Identifier,8,36,10,11,no
+AVPT,2,150,1,19,no
+Abstract,3,3,3,610,yes
+Acquisition method,256,52605,5,14,no
+Additional details,1,1,1,158,no
+Admin note,2,0,0,0,no
+AdminNote,7,1086,2,596,yes
+Africa Collections,1,9,9,58,no
+Alt ID.OPAC,2,0,0,0,no
+Alt ID.callNo,27,1023,818,75,yes
+Alt ID.catalogRecordNumber,4,5,5,24,no
+Alt ID.collection,340,209,66,77,yes
+Alt ID.issueNo,3,11,11,13,no
+Alt ID.lccn,56,181,160,104,yes
+Alt ID.local,1639,107867,89932,869,yes
+"Alt ID.local 
+Rename: Local Identifier ? ",1,1,1,52,yes
+Alt ID.mp4,14,7,6,32,no
+Alt ID.oclc,49,1456,1149,36,yes
+Alt ID.other,1,0,0,0,no
+Alt ID.uee,2,1176,996,45,yes
+Alt ID.ueePlaceID,2,728,264,36,yes
+Alt ID.url,49,473,10,141,yes
+Alt Identifier,1,0,0,0,no
+Alt Identifier.local,1,1,1,19,no
+Alt Title,256,221,65,405,no
+Alt title (not displayed),1,64,64,214,no
+Alt. ID.lccn,2,1,1,8,no
+Alt.ID.oclc,1,12,4,8,no
+AltIdentifier.OPAC,3,0,0,0,no
+AltIdentifier.callNo,8,733,701,248,no
+AltIdentifier.collection,3,2,2,14,no
+AltIdentifier.local,734,206256,176340,327,yes
+AltIdentifier.oclc,3,24,24,11,no
+AltTitle,2,1,1,19,no
+AltTitle.Other,2,6788,6242,408,yes
+AltTitle.Uniform,1,920,227,122,no
+AltTitle.caption,1,0,0,0,no
+AltTitle.creator,8,9,6,31,yes
+AltTitle.descriptive,639,10680,1137,178,yes
+AltTitle.firstLine,47,523,500,107,no
+AltTitle.inscribed,45,0,0,0,no
+AltTitle.other,2114,211377,75508,910,yes
+AltTitle.parallel,8,119,61,131,yes
+AltTitle.translated,769,124951,38319,635,yes
+AltTitle.uniform,1480,68982,3582,247,yes
+Alternate Identifier.local,412,126029,105552,89,yes
+Alternate Identifier.oclc,1,1,1,8,no
+Alternate Title.Arabic,2,339,168,60,yes
+Alternate Title.French,2,341,169,75,yes
+Alternate Title.German,2,341,169,72,no
+Alternate Title.descriptive,6,104,46,103,yes
+Alternate Title.former,475,1,1,25,no
+Alternate Title.inscribed,3,229,193,684,yes
+Alternate Title.other,307,366,193,377,yes
+Alternate Title.scriptArab,316,451,289,80,yes
+Alternate Title.scriptArm,1,0,0,0,no
+Alternate Title.spine,331,0,0,0,no
+Alternate Title.translated,3,962,903,235,yes
+Alternate Title.transliterated,2,2,1,4,no
+Alternative Title,2,99,99,191,no
+Alternative title,1,0,0,0,no
+Annotator,2,272,107,55,no
+Archival Collection,3,7079,1,70,no
+Archival Collection Number,223,100939,1969,46,yes
+Archival Collection Number ,2,1,1,13,no
+Archival Collection Title,366,171106,567,147,yes
+Archival Collection Title (orig.),6,1085,7,109,yes
+Archival collection name,3,608,2,60,no
+Archival collection number or identifier,15,2207,315,32,no
+Arranger,2,7,7,32,no
+Artist,40,1306,379,410,yes
+Associated Name,2,4,2,84,yes
+Associated name,2,2,1,63,yes
+Attributed name,1,3,3,60,yes
+Author,679,16604,5084,4367,yes
+Author in quotations or text abstracts [aqt],1,75,70,408,yes
+Batch,2,438,30,9,no
+Batch #,2,4106,2,3,no
+Batch 00,1,291,10,8,no
+Bib ID,7,86,86,10,no
+Bib id,1,26,26,40,no
+Binder,4,22,11,27,no
+Binding note,37,688,309,1252,yes
+Bookseller,2,4,2,66,yes
+Box,199,86608,11306,92,no
+Box Number,1,0,0,0,no
+Bucketeer State,11087,3344832,48,66,no
+Bucketeer status,1,0,0,0,no
+CSV filename,1,146,28,27,no
+Calligrapher,11,1,1,39,yes
+Campus/Unit,1,291,1,38,no
+Cartographer,6,222,76,408,yes
+Catalog Summary,1,56,56,589,no
+Ceator,1,0,0,0,no
+Citation,34,1247,17,193,no
+Clob Text,1,6705,6705,1892,no
+Collation,14,3,3,431,yes
+Collection,260,95398,261,101,no
+Collection.physical,3,544,3,81,yes
+Collector,2,201,25,296,yes
+Colophon,40,71,67,566,no
+Column 33,1,14,14,66,no
+Column 34,1,3,3,66,no
+Column 35,1,1,1,10,no
+Column 36,1,2,2,66,no
+Column 37,1,1,1,66,no
+Column 38,1,0,0,0,no
+Column 39,1,0,0,0,no
+Commentator,14,497,372,190,yes
+Compiler,2,6,3,44,no
+Composer,3,27,13,101,yes
+Conceptual Page,4,0,0,0,no
+Conceptual Work,300,91243,1,2,no
+Condition,2,622,260,182,no
+Condition note,49,3186,1596,706,no
+Content disclaimer,8,401,1,698,no
+Content.notes,1,1,1,202,no
+Contents note,691,227491,46765,18397,yes
+Contributer,1,24,7,640,yes
+Contributer.ChiefEditor,1,55,1,17,no
+Contributer.administrator,1,29,1,13,no
+Contributor,42,1531,331,619,yes
+Contributor.administrator,8,109,9,26,no
+Contributor.circulation,1,1,1,13,no
+Contributor.correspondent,1,26,3,15,no
+Contributor.director,1,0,0,0,no
+Contributor.headofcirculation,1,8,1,25,no
+Contributor.headofinformation,1,1,1,23,no
+Contributor.proprietor,1,34,1,24,no
+Contributor.subdirector,2,101,101,36,no
+Contributor.videographer,2,23,4,15,no
+Copyist,2,2,1,39,no
+Copyright,1,1,1,54,no
+Copyright Contact,1,16,16,41,no
+Copyright Holder 1 Name,1,16,1,22,no
+Copyright Holder 1 Source,6,12,5,34,no
+Copyright Statement,8,324,13,399,no
+Copyright Status,5,420,4,13,no
+Corporate,8,1136,139,178,yes
+Correct to,1,1,1,56,no
+Correspondant,2,2,1,27,no
+Correspondent,2,4,2,172,no
+Coverage.creationLocation,2,126,43,20,no
+Coverage.currentRepository,2,12,4,39,no
+Coverage.discoveryLocation,2,172,57,43,yes
+Coverage.geographic,1341,95269,3610,235,yes
+Coverage.geographiccoordinates,2,39,38,185,yes
+Coverage.geoscale,5,587,277,82,yes
+Coverage.spatialLatitude,3,483,270,33,yes
+Coverage.spatialLongitude,3,488,272,23,yes
+Coverage.temporal,312,1390,16,23,no
+Creation date/time,256,95093,13701,29,no
+Creator,215,17972,3348,759,yes
+Creator 1 Name,1,110,1,22,no
+Creator 1 Source|~|Creator 2 Source,6,332,7,25,yes
+Creator 2 Name,1,110,1,33,no
+Creator.administrator,3,2,2,14,no
+Creator.headofinformation,3,1,1,23,no
+Creator.proprietor,3,0,0,0,no
+DC Coverage,1,0,0,0,no
+DC Date,1,5661,90,10,no
+DC Description,1,6058,3843,437,no
+DC Identifier,1,6705,6705,13,no
+DC Language,1,6701,18,24,no
+DC Publisher,1,5694,1189,75,no
+DC Relation,1,0,0,0,no
+DC Rights,1,6705,1,12,no
+DC Source,1,5773,4449,50,no
+DC Title,1,6705,5259,94,no
+Date,6,28135,877,69,yes
+Date Ingested Prod,1,102,16,8,no
+Date Ingested Stage,1,107,16,8,no
+Date Stamp,1,6705,721,9,no
+Date Updated,7,558,66,16,no
+Date originally ingested,1,67,15,8,no
+Date removed from production,1,1,1,10,no
+Date.captured,2,22,16,15,no
+Date.creatd,15,7226,6382,10,no
+Date.created,1327,519558,67853,225,yes
+Date.created (single),18,7237,6389,21,no
+Date.creation,3041,131223,18347,191,yes
+Date.digitized,11,1201,27,10,no
+Date.interview,5,4,2,10,no
+Date.issued,81,51610,237,6,no
+Date.normalized,4057,638877,52733,45,yes
+Date.normalizedBCE,2,351,144,12,no
+Date.publication,149,1106,471,76,yes
+Date.published,1,1,1,21,no
+Dedicatee,2,10,5,71,no
+Defendant,2,2,1,47,no
+Delete in Title,2891,25,3,15,no
+Delete/new?,2,10,1,3,no
+Delete?,1,0,0,0,no
+DescMD ID,1,6705,1,8,no
+Description,55,8954,2520,1797,yes
+Description (Ara),256,85778,34998,2148,no
+Description (Eng),256,84592,33717,3401,no
+Description.abstract,1986,2703,1851,3406,yes
+Description.adminnote,109,446,73,707,yes
+Description.angle,2,406,16,22,no
+Description.binding,64,136,79,1253,yes
+Description.biographicalNote,50,4,4,824,no
+Description.caption,760,72074,41394,3809,yes
+Description.citation,338,842,226,421,yes
+Description.collation,55,2,1,30,no
+Description.colophon,346,130,86,873,yes
+Description.condition,268,263,186,701,yes
+Description.contents,526,837,250,6003,yes
+Description.creation,3,0,0,0,no
+Description.direction,2,138,79,60,no
+Description.extent,1,327,277,77,no
+Description.fundingNote,585,318710,203,1491,yes
+Description.history,68,212,130,3267,yes
+Description.holdings,3,0,0,0,no
+Description.illustrations,1,31,31,2181,no
+Description.inscription,50,1341,1204,3809,yes
+Description.latitude,365,60213,7556,160,yes
+Description.latitude-ignore,1,226,150,28,yes
+Description.lattitude,1,0,0,0,no
+Description.longitude,364,60251,7652,384,yes
+Description.longitude-ignore,1,225,149,9,no
+Description.marks,338,33,2,6,no
+Description.microfilm,338,80,19,44,no
+Description.note,3800,511275,209168,18244,yes
+Description.note.FromLisa,1,4,4,696,yes
+Description.opac,2,65,65,77,no
+Description.physical,332,47,36,253,yes
+Description.physicalDescription,10,0,0,0,no
+Description.stamp,338,10,7,314,no
+Description.summary,1,1,1,1450,no
+Description.tableOfContents,507,694,448,8807,yes
+Description.view,5,794,15,50,yes
+Digital Collection Title,2,1,1,25,no
+Digital Collections URL,7,184,176,62,no
+Dimensions,1,55,2,7,no
+Director,15,170,43,221,yes
+DivID,1,6705,6705,13,no
+Donor,4,6,2,25,no
+Duplicate,2884,128,6,57,no
+Edition,35,226,212,92,no
+Editor,104,6189,193,259,yes
+Engraver,14,12,7,60,yes
+Explicit,1,1,1,96,no
+Extent,4,314,289,89,no
+Extent ,1,56,44,7,no
+External item record,347,213451,213262,94,no
+External item record OLD,1,1,1,75,no
+Featured image,5,0,0,0,no
+Features,2,66,5,26,yes
+File,5,620,23,29,no
+File Name,12818,3829584,2569966,225,no
+"File Name
+\\srlf\SRLF\LA Times Glass Negatives",2,2,2,31,no
+File Name Key,2,290,290,28,no
+File Names,2,470,470,25,no
+File name,8,5265,5259,45,no
+File path,1,109,109,66,no
+FileLocations,1,6705,6705,3807,yes
+FileName.Ignore,6,174,58,16,no
+File_Name,37,16683,118,34,no
+File_name,15,7226,7226,32,no
+Finding Aid URL,1089,19763,174,79,no
+Finding aid URL,1,15,1,52,no
+Folder,206,63955,8028,152,no
+Folder Number,1,0,0,0,no
+Folder dates,2,344,64,8,no
+Folder name,2,153,153,24,no
+Folder title,1,5,1,7,no
+Folder/Bib ID,8,275,182,165,no
+Folder/Bib id,4,216,166,262,no
+Foliation,10,2,1,33,no
+Form/Genre,2,23,2,14,yes
+Format,73,1821,5,81,no
+Format.dimensions,2152,257112,16456,418,yes
+Format.duration,1,81,75,16,no
+Format.extent,3351,457244,19172,2016,yes
+Format.extent (heb),6,377,11,27,no
+Format.extent (original),19,1061,999,151,no
+Format.material,6,385,25,62,yes
+Format.medium,962,228346,4562,370,yes
+Format.medium ,20,1033,3,17,no
+Format.medium.OLD,1,2,2,35,yes
+Format.technique,11,58,10,44,yes
+Format/Physical Description,2,11,2,33,no
+Former Owner,2,234,104,143,yes
+Former System Number,1,64,64,15,no
+Former owner,1,158,112,118,yes
+From,1,1,1,23,no
+Fromat.dimensions,2,0,0,0,no
+Funding Note,1,56,1,77,no
+Genre,1216,524286,1944,216,yes
+Genre (Farsi),11,18098,11,47,yes
+Genre (old),256,49085,36,47,no
+Genre Source,6,1599,6,20,yes
+Genre_XX,1,570,3,28,no
+Geographic-coverage,1,108,105,177,yes
+Hand note,2,2,2,388,yes
+History,3,1,1,560,no
+Host,17,902,23,57,yes
+How was DLP alerted?,1,1,1,115,no
+IGNORE FILES,1,2981,2981,92,no
+IIIF Access URL,11630,3484022,2357217,190,no
+IIIF Access URL.1,1,1448,1448,64,no
+IIIF Image URL,1,0,0,0,no
+IIIF Manifest,1,0,0,0,no
+IIIF Manifest URL,6524,715007,555898,88,no
+IIIF Object Type,29,456,1,10,no
+IIIF Parent ARK,13,246,6,21,no
+IIIF Range,2097,0,0,0,no
+IIIF Range ,1,1,1,4,no
+Identifier,61,2444,1879,74,yes
+Identifier (not displayed),1,64,64,77,yes
+Illuminator,9,0,0,0,no
+Illustration note,1,0,0,0,no
+Illustration.note,1,0,0,0,no
+Illustrations note,31,51,38,2168,no
+Illustrator,102,164,71,112,yes
+Import Status,4,10,1,8,no
+Incipit,1,1,1,106,no
+Inscribed Name,2,14,7,111,yes
+Inscribed name,2,12,6,31,no
+Inscriber,2,6,3,52,yes
+Inscription,2,4,4,100,no
+Inscription (old),254,12087,10098,5203,yes
+Inscription 2 (old),254,11004,8523,7375,no
+Inscription-NO,256,12946,10793,19184,yes
+Insitution/Repository,1,1,1,29,no
+Institution/Repository,16,7228,2,50,no
+Interviewee,35,3775,535,576,yes
+Interviewer,15,975,32,36,yes
+Interviewer (not displayed),1,39,6,17,no
+Issue,55,23671,3775,117,yes
+Item,16,1788,1786,8,no
+Item ARK,12858,4095407,2698706,34,no
+Item ARK_nux,1,291,291,17,no
+Item Sequence,12128,3323142,7553,73,no
+Item Sequence ,1,1,1,1,no
+Item Status,3200,531897,16,37,no
+Item Status ID,3190,529400,20,14,no
+Item Type,1,6705,2,10,no
+JSON,304,91128,72951,3366,yes
+Jazmin's Notes,2,1,1,30,no
+Key,3,41,41,18,no
+Language,3747,537267,862,81,yes
+Language | code,18,7231,3,9,yes
+Language.language,299,2622,5,26,yes
+Language.script,324,1326,48,93,yes
+Language.text,2,110,1,6,no
+Last modification date/time,256,95093,15921,29,no
+"Latitude, Longitude ",1,0,0,0,no
+Librettist,5,7,7,60,yes
+License,132,37115,19,88,no
+Local ID,2,107,107,27,no
+Local Identifier,15,1053,285,31,no
+Local Identifier  ,1,56,56,17,yes
+Local identifer,1,0,0,0,no
+Local identifier,807,367980,259372,298,yes
+Local identifier_XX,2,544,272,19,no
+Lyricist,1,1,1,85,yes
+MMS ID,6,82,81,24,no
+Manuscript Number,1,147,143,4,no
+Masthead,154,113,107,127,no
+Medium,1,56,2,8,no
+Metadata Only,303,770,1,2,no
+Middle East & North Africa Collections,1,18,18,58,no
+Modified,1,291,3,12,no
+Mss Number,7,110,110,4,no
+Musician,20,1485,236,95,yes
+NOTES,1,29,4,14,no
+"NOTES: Image file locations for missing images, Dups, Underexposed images (delete column when issues are resolved)",1,24,21,160,no
+Name subject,1,16,5,55,no
+Name.Subject,1,0,0,0,no
+Name.actor,11,10717,5222,560,yes
+Name.actress,5,2,1,13,no
+Name.annotator,479,4,2,34,no
+Name.architect,78,4173,400,191,yes
+Name.artDirector,15,279,25,44,no
+Name.artist,597,39336,2270,313,yes
+Name.attributedTo,300,0,0,0,no
+Name.author,294,1762,417,129,yes
+Name.calligrapher,318,61,6,81,yes
+Name.cartographer,19,46,40,69,yes
+Name.choreographer,1,3,2,28,no
+Name.cinematographer,11,6,5,27,no
+Name.collector,217,248,6,46,no
+Name.commentator,349,398,309,226,yes
+Name.compiler,377,66,27,62,yes
+Name.composer,32,1424,386,478,yes
+Name.conceptor,4,84,22,108,yes
+Name.contributor,189,1530,361,738,yes
+Name.copyrightHolder,178,3332,8,43,yes
+Name.correspondent,97,81,34,93,yes
+Name.costumeDesigner,11,132,6,22,no
+Name.creator,2226,111234,5857,1023,yes
+Name.designer,509,900,225,82,yes
+Name.director,48,11299,853,114,yes
+Name.distributor,11,9226,126,91,yes
+Name.donor,199,7678,29,69,yes
+Name.editor,66,14458,205,259,yes
+Name.engineer,5,38,13,64,yes
+Name.engraver,74,22,4,27,no
+Name.fashionDesigner,33,4863,39,59,yes
+Name.funder,4,54,12,189,yes
+Name.host,4,112,56,203,yes
+Name.illuminator,12,162,9,100,yes
+Name.illustrator,30,70,20,50,yes
+Name.interviewee,42,5718,1067,325,yes
+Name.interviewer,49,3150,199,110,yes
+Name.landscapeArchitect,6,529,27,135,yes
+Name.lithographer,5,20,10,43,no
+Name.lyricist,1,16,2,26,no
+Name.manufacturer,487,5395,79,59,yes
+Name.musicalDirector,1,5,2,47,no
+Name.musician,34,2138,336,509,yes
+Name.other,9,153,57,188,yes
+Name.performer,10,495,69,96,yes
+Name.photogapher,1,46,1,13,no
+Name.photographer,783,123157,1598,316,yes
+Name.printer,538,179,52,53,yes
+Name.printmaker,4,8,4,26,no
+Name.producer,57,21520,972,158,yes
+Name.publisher,27,138,85,57,no
+Name.publishingDirector,5,4,2,37,yes
+Name.recipient,35,2034,230,96,yes
+Name.repository,2951,124102,108,175,yes
+Name.researcher,14,6493,393,134,yes
+Name.retailer,480,204,38,129,yes
+Name.screenwriter,1,133,43,54,yes
+Name.scribe,529,156,63,90,yes
+Name.sculptor,3,38,13,75,yes
+Name.setDesigner,10,1,1,30,no
+Name.singer,1,40,8,35,no
+Name.soundDesigner,1,17,4,47,no
+Name.sponsor,511,1530,417,1263,yes
+Name.subject,1967,68317,25002,914,yes
+Name.subject_original,1,298,227,203,yes
+Name.surveyor,5,8,8,51,yes
+Name.translator,358,218,167,104,yes
+Name.writer,4,28,4,36,yes
+Names (English),11,3923,491,162,yes
+Note,603,19976,8732,11693,yes
+Note (not displayed),1,64,64,246,no
+Note.License,1,8,1,49,no
+Note.admin,19,11,9,101,no
+Note.conservation,1,2,2,164,no
+Note.content,17,7226,594,261,yes
+Note.creation_production_credits,4,11,4,32,no
+Note.description,1,16,16,576,no
+Note.funding,1,1,1,66,no
+Note.inscription (old),2,611,427,7379,no
+Note.inscription 2 (old),2,607,425,11813,no
+Note.keywords,1,0,0,0,no
+Note.keywordsEnglish,11,18356,636,299,no
+Note.keywordsPersian,11,19664,628,224,no
+Note.originalLocation,11,19590,486,85,no
+Note.references,1,5,2,289,no
+Note.related,1,0,0,0,no
+Note.rights,1,8,1,322,no
+Note.statementofresponsibility,1,8,1,638,no
+Note.summary,1,0,0,0,no
+Note_Preserve,1,151,149,494,no
+Notes,3,23,19,191,yes
+Notes from DLP,1,1,1,69,no
+Nuxeo ARK,1,327,327,17,no
+OLD File Name,2,2,1,34,no
+OLD IIIF Manifest URL,1,1,1,69,no
+OLD-Item Status ID-OLD,2,222,3,1,no
+OLD-Item Status-OLD,2,222,3,11,no
+OLDOpac url,1,4,4,65,no
+Object Type,12854,4095895,9,11,no
+Opac URL,148,2513,16,79,no
+Opac url,1988,18841,3857,261,yes
+Original Batch File,2,100,7,31,no
+Original Filename,6,36,10,49,no
+Original.Durations.Preserve,5,9909,2133,25,no
+Original.title.reference,5,9909,3231,221,no
+PID,114,142544,131836,59,no
+PID (Islandora),5,60,60,59,no
+PRESERVE_temporalidad.normalized,4,536,208,21,no
+PREVIEW LINK,1,1,1,66,no
+PREVIEW URL,12,12,12,66,no
+PROD URL,4,21116,10597,70,no
+Page Layout,2,15,15,26,no
+Page layout,16,111,54,227,no
+Page layout - columns,2,78,21,170,no
+Page layout - gutter,2,33,5,96,no
+Parent ARK,12851,4093901,105511,63,yes
+Parent ARK (Festerize),2,248,2,19,no
+Parent ARK (fest),4,7779,4,19,no
+Parent ARK (fester),4,1305,2,19,no
+Parent ARK fester,1,338,1,19,no
+Parent DivID,1,6705,829,9,no
+Parent Range ID,1,63,8,5,no
+Parent Type,1,0,0,0,no
+Participant.Preserve,3,226,19,88,yes
+Participant.preserve,2,98,22,52,yes
+Permissions,6,1082,2,52,no
+Personal Info,3,56,28,231,no
+Photocopier,6,1,1,13,no
+Photographer,4,153,42,35,yes
+Physical Location,8,1620,363,52,no
+Physical status,256,65442,937,218,no
+Physical-Description.dimensions,2,21,18,26,no
+Physical-Description.extent,2,1,1,11,no
+Physical-Description.material,2,360,63,22,yes
+Physical-Description.medium,2,16,7,27,yes
+Physical-Description.technique,2,366,42,55,yes
+PhysicalDescription.extent,17,7226,47,29,no
+PhysicalDescription.form,1,0,0,0,no
+Place,5,1204,127,66,no
+Place Source,6,865,2,5,no
+Place of Origin,1,0,0,0,no
+Place of origin,927,277875,2082,361,yes
+Place of origin.OLD,2,1036,11,52,no
+Preserve_Contributor_Original,2,184,51,144,no
+Preserve_Creator_Original,2,1002,178,127,no
+Preserve_Local-identifier,2,1062,235,35,no
+Preserve_note_internal,4,262,26,237,no
+Preserve_teamNotes,2,2,1,16,no
+"Previous CSV, if applicable",1,1,1,12,no
+Printer,19,208,133,79,no
+Printmaker,12,4,1,13,yes
+Producer,18,1247,38,263,yes
+Program,951,533525,5,38,no
+Project Name,3404,627698,529,127,no
+Prompter,2,4,2,39,no
+Provenance,60,1684,476,1705,yes
+Publication/Origination Information,3,24,5,46,no
+Published in IDEP,3,51,2,3,no
+Publisher,19,3,3,103,no
+Publisher.address_PRESERVE,2,432,68,103,yes
+Publisher.address_Preserve,3,114,27,76,no
+Publisher.edition,23,3,3,48,no
+Publisher.place,17,12065,1,13,no
+Publisher.placeOfOrigin,1143,8275,1028,382,yes
+Publisher.publisherName,1780,208436,31756,441,yes
+Publisher.publisherName (heb),6,1058,405,147,no
+QC Review,1,410,1,65,no
+REPOSITORY,1,56,1,92,no
+RIGHTS STATEMENT,1,1,1,11,no
+Range,1,320,7,39,no
+Range 1,1,1507,4,26,no
+Range 2,1,1507,14,35,no
+Range 3,1,0,0,0,no
+Range ID,1,71,71,12,no
+Reason,1,11,1,102,no
+Reason removed,1,1,1,27,no
+Recipient,13,375,114,369,yes
+Reference,1,1,1,87,no
+References,400,54837,1060,879,yes
+Related,2,0,0,0,no
+Related Item,1,310,305,49,yes
+Related Items,119,1860,680,1690,yes
+Related Items-NEEDS CLEANING,2,240,38,148,no
+Related Records,72,6828,2845,591,yes
+Related Records FIX,6,68,33,53,yes
+Related Resource,1,9,9,12,no
+Related but not published,2,16,5,41,yes
+Related_Records_ToCheck,2,34,13,12,no
+Relation,302,1,1,13,no
+Relation.PageNumber,18,0,0,0,no
+Relation.box,214,355,4,1,no
+Relation.citation,338,18,9,12,no
+Relation.derivedFrom,5,26,12,92,no
+Relation.describedIn,2,206,1,54,no
+Relation.file,210,96,9,35,no
+Relation.folder,4,75,55,2,no
+Relation.hasPart,52,2,1,4,no
+Relation.hasVersion,37,173,73,144,yes
+Relation.isPartOf,1581,115150,2808,779,yes
+Relation.isVersionOf,183,208,84,58,no
+Relation.leafNumber,146,6,2,154,no
+Relation.pageNumber,374,1619,422,11,no
+Relation.rectoVerso,773,182796,8,5,yes
+Relation.relatedTo,23,997,291,192,yes
+Relation.series,232,212,2,75,yes
+Relation.subseries,210,210,4,40,no
+Relation.textDirection,628,444,4,3,no
+Relation.url,9,2,1,97,yes
+Repository,1295,572809,593,369,yes
+Repository.OLD,1,1199,6,47,no
+Representative Image,22,30,29,117,no
+Representative image,129,79,75,120,no
+Researcher,9,6200,6,16,no
+Resource.Type,1,110,1,12,no
+Revised Title,1,839,457,174,no
+Rights,7,904,1,1,no
+Rights Contact,1,0,0,0,no
+Rights Holder,8,25072,1,28,no
+Rights.,3,360,1,22,no
+Rights.URI,5,14,1,46,no
+Rights.copyright status,1,0,0,0,no
+Rights.copyrightStatus,4193,751091,37,425,yes
+Rights.countryCreation,183,28033,8,425,no
+Rights.creatorCorporate,18,3,1,11,no
+Rights.creatorNote,2,1,1,275,no
+Rights.generalNote,2,0,0,0,no
+Rights.localRightsStatement,1,291,1,54,no
+Rights.notice,10,8,3,423,no
+Rights.permission,511,52294,12,429,yes
+Rights.permissionNote,279,148,37,425,yes
+Rights.publicationNote,103,15,2,11,no
+Rights.publicationStatus,1410,277673,18,37,yes
+Rights.publishedStatus,23,21833,3,11,no
+Rights.rightsHolderContact,1294,224536,351,201,yes
+Rights.rightsHolderName,38,3061,51,363,yes
+Rights.rights_holder,17,21959,2,200,no
+Rights.rightsholderName,2,1,1,39,no
+Rights.servicesContact,1586,266612,293,484,yes
+Rights.statemLocal Rights Statement,1,6,1,374,no
+Rights.statementLocal,415,85829,59,781,yes
+Rubricator,9,0,0,0,no
+SITE URL,1,56,56,60,no
+SRLF Barcode,1,13,13,11,no
+STAGE URL,67,4928,4922,66,no
+STAGED URL,2,2,2,64,no
+Scribe,3,3,3,20,no
+Script,23,300,13,30,yes
+Sequence,3,590,61,2,no
+Series,551,287469,1517,280,yes
+Series & Collection,256,95104,408,268,no
+Series 1,1,297,1,40,no
+Series 2,1,297,1,21,no
+Series 3,1,297,1,41,no
+Source,393,7660,1833,543,yes
+Source.videoUrl,1,0,0,0,no
+Source?,6,1352,403,360,no
+SourceID,1,60,50,22,no
+Spreadsheet,11,19668,23,28,no
+Statement of Responsibility,330,54990,1814,2158,yes
+Sub-series,6,914,26,81,no
+Subject,2296,239731,86072,1037,yes
+Subject (Name),2,39,20,165,yes
+"Subject (Topic, Function, Occupation)",1,1,1,78,yes
+Subject (ara),1,0,0,0,no
+Subject 1,18,44311,15395,295,yes
+Subject 2,18,85561,31145,355,yes
+Subject Topic,4,268,150,208,yes
+Subject combined,22,1079,535,165,yes
+Subject geographic,821,323802,17163,829,yes
+Subject name,155,24433,10111,5852,yes
+Subject place,8,889,106,35,no
+Subject temporal,438,77410,822,1480,yes
+Subject topic,969,339148,54900,3496,yes
+"Subject.Jones, Marcia : local",1,0,0,0,no
+Subject.Keywords,3,206,71,104,yes
+Subject.category,5,2673,194,231,yes
+Subject.conceptTopic,791,11457,3280,1307,yes
+Subject.coordinates,256,62062,1332,264,no
+Subject.corporateName,479,10,5,39,no
+Subject.culturalObject,70,3940,1660,236,yes
+Subject.descriptiveTopic,521,7192,2156,609,yes
+Subject.domainTopic,67,1602,511,282,yes
+Subject.geographic,3,888,12,37,yes
+Subject.geographicPlace,14,163,29,94,yes
+Subject.name,1,0,0,0,no
+Subject.name Role,6,5,3,21,yes
+Subject.name Source,6,1329,87,141,yes
+Subject.otherTopic,2,1,1,24,no
+Subject.period,2,400,149,197,yes
+Subject.personalName,1,15,15,67,yes
+Subject.place,2,165,68,39,yes
+Subject.temporal,2,8,1,26,yes
+Subject.topic,193,12502,129,294,yes
+Subject.topic Source,6,1535,28,32,yes
+Subject.topic.OLD,4,5854,455,186,yes
+Subject.uniformTitle,8,12,10,47,no
+Subrange,1,191,49,63,no
+Subseries,1,5,3,64,yes
+Suggestions for review,2,4,4,181,no
+Summary,1193,1606,1363,4722,yes
+Support,70,8036,27,33,yes
+Table of Contents,94,4956,4876,8151,yes
+Table of contents,2,15,15,157,no
+TeamNote_Physical.Storage,2,560,1,13,no
+TeamNote_Preserve,3,285,65,124,no
+Team_notes,2,20,1,13,no
+Text direction,2458,5122,5,13,no
+Text direction ,29,0,0,0,no
+Thumbmail,2069,0,0,0,no
+Thumbnail,2808,216548,183419,125,no
+Thumbnail (ref),84,118345,118156,95,no
+Thumbnail (ref) OLD,1,1,1,94,no
+Title,12861,4096322,568139,1095,yes
+Title ,1,1,1,13,no
+Title (heb),7,1081,992,114,no
+Title (old),1,645,528,108,no
+Title -old,4,1647,1645,74,no
+Title-old,2,9601,9058,50,no
+Title.other,1,2,1,6,no
+Title.uniform,171,0,0,0,no
+Title_XX,1,570,570,62,no
+Title_original_preserve,2,20,9,204,no
+Title_translated_preserve,2,20,9,218,no
+ToC,1,1,1,92,no
+Transcriber,2,4,2,41,no
+Translator,23,93,51,89,yes
+Type,4,315,2,12,no
+Type.collection,2,0,0,0,no
+Type.genre,2764,170660,1645,199,yes
+Type.manuscript,6,2,1,3,no
+Type.typeOfResouce,1,1,1,12,no
+Type.typeOfResource,4103,846491,61,52,yes
+TypeOfResource,17,12064,1,4,no
+URI,1,1050,4,155,no
+URL,6,2212,2212,62,yes
+URL STAGE,1,1,1,64,no
+Unnamed: 0,15,4948,1319,4,no
+Unnamed: 13,1,363,31,4,no
+Violent Content,256,28921,3,6,no
+Visbility,1,2,1,7,no
+Visibility,8516,828035,9,23,no
+Visibility ,1,1,1,5,no
+Volume,30,7563,578,50,no
+Volume/Year,6,3625,98,17,no
+Volume/year,3,8672,42,6,no
+Was,1,1,1,110,no
+Waveform,126,40481,16879,90,no
+Which CSV was it in?,1,1,1,41,no
+Work completed,2,526,29,87,no
+Year,2,52,13,4,no
+[Additions],2,33,2,79,no
+[Binding note.cover],2,80,15,115,no
+[Binding note.title slip],2,60,11,185,no
+[Binding note],2,81,4,136,yes
+[Contents note],2,46,30,599,no
+[Description.note],2,81,15,34,no
+[Page layout - ignore],2,75,19,145,no
+[Printing note],2,28,6,146,yes
+"[Printing type (changed from ""method"")]",2,80,5,149,no
+[extent],2,81,25,68,no
+[folder],2,81,81,37,no
+_source_file,2,5,5,21,no
+actions taken,1,1,1,26,no
+batch,1,18029,8,10,no
+box number,12,2722,448,10,no
+calauem_202504_amp146,1,37,19,21,no
+coll id,256,95104,256,3,no
+collection name,1,0,0,0,no
+collection number,3,1089,2,11,no
+collection.physical,125,19270,21,80,no
+creator.arranger,1,339,178,40,yes
+creator.composer,1,4074,1149,72,yes
+creator.composerLyricist,1,1613,914,159,yes
+creator.graphicArtist,1,409,41,21,yes
+creator.lyricist,1,3903,1222,84,yes
+creator.translator,1,39,27,50,yes
+date removed,1,1,1,10,no
+date.created,2,121,120,37,yes
+file name,2,244,244,19,no
+file title,2,99,99,24,no
+file_name,9,1811,1811,32,no
+folder,5,667,341,28,no
+folder name,3,48,43,27,no
+folder names,1,291,289,34,no
+folder number,9,2401,1677,18,no
+folders,1,291,291,34,no
+format.dimensions,1,1,1,7,no
+format.extent,1,1,1,7,no
+height,1,256,95,4,no
+https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1100ztj/manifest,1,23,23,64,no
+https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1pg5rpw/manifest,1,327,327,64,no
+https://iiif.library.ucla.edu/ark%3A%2F21198%2Fzz00092t12/manifest,1,296,296,66,no
+https://iiif.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz1qk3h3z,1,294,294,62,no
+i,1,1,1,1,no
+ignore-File Name,1,2212,2212,23,no
+iiif_access_url,6,116,116,75,no
+issue,71,35416,3158,38,yes
+key,1,5606,191,63,no
+list of related things,1,70,70,148,yes
+local ID,18,12066,12066,33,no
+local identifier,1,141,141,30,no
+local.ID.reference,5,9909,3300,13,no
+masterImageName,330,99529,81076,35,no
+media.duration,127,49694,20776,12,no
+media.format,383,144796,7,11,no
+media.height,1181,255077,8249,5,no
+media.width,1181,255077,8172,5,no
+note,1,808,487,347,no
+notes,1,1,1,385,no
+oai_set,80,8533,1,4,no
+old file name,1,220,211,103,no
+original bad file,1,1,1,46,no
+originally_in,1,1,1,41,no
+plateno,1,2602,2351,57,no
+pubno,1,637,592,20,no
+staffnote,1,7,5,150,no
+sw43zc5x,1,793,793,8,no
+tempo,1,5088,617,78,no
+test,2,1,1,62,no
+thumbnailImageName,328,99023,80573,95,no
+viewingHint,3246,118241,8,322,no
+vol,2,8,8,3,no
+vol.,5,4,2,1,no
+volume,12,12114,82,7,no
+volume | issue,29,7382,6441,27,yes
+volume/year,76,26579,481,17,no
+volume| issue,1,0,0,0,no
+width,1,256,95,4,no
+xx_AltTitle.uniform[parked_data],1,902,35,28,no
+year,3,5215,153,21,no
